@@ -7,7 +7,7 @@ from scipy.special import gammaln
 
 
 def get_path():
-    return os.path.expanduser("~/Desktop/OUTPUTS")
+    return os.path.expanduser("~/GitHub/MinimalCell/OUTPUTS")
 
 
 # NullMultiplicitySurvivalFunction class is modified from GitHub repo
