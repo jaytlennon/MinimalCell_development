@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from decimal import Decimal
 from matplotlib.ticker import FormatStrFormatter
 
-mydir = os.path.expanduser("~/Desktop/OUTPUTS")
+mydir = os.path.expanduser("~/GitHub/MinimalCell/OUTPUTS")
 output_to_keep = ['INS', 'DEL', 'SNP', 'SUB']
 strains = ['wildtype', 'minimal']
 
@@ -51,6 +51,9 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
                 if line_split[0] not in output_to_keep:
                     continue
                 if line_split[3] + '_' + line_split[4] in sites_to_remove:
+                    continue
+                frequency = float([s for s in line_split if 'frequency=' in s][0].split('=')[1])
+                if frequency != 1:
                     continue
                 if line_split[0] == 'SNP':
                     if [s for s in line_split if 'snp_type=' in s][0].split('=')[1] == 'nonsynonymous':
@@ -207,7 +210,7 @@ def plot_multiplicity_survival():
         ax = fig.add_subplot(2, 1, i+1)
         ax.plot(new_x, new_obs_y, '-', c='royalblue', lw=4, alpha = 0.8, zorder=1)
         ax.plot(new_x, new_null_y, '-', c='dimgrey', lw=4, alpha = 0.8, zorder=0)
-        ax.set_xlim([0.9, 16])
+        ax.set_xlim([0.9, 9])
 
         taxon_par = df_par.loc[df_par['Strain'] == strain]
 
@@ -259,7 +262,7 @@ def plot_logpvalue_survival():
             ax.plot([-3,pstar_i],[num_significant_i, num_significant_i],'k-',linewidth=0.5, zorder=3)
             ax.plot([pstar_i], [num_significant_i], c='r', marker='o', zorder=4)
 
-        ax.set_xlim([0.25, 13])
+        ax.set_xlim([0.25, 8])
 
         ax.title.set_text(strain)
 
@@ -278,7 +281,6 @@ def plot_logpvalue_survival():
 # equal rate of evolution
 #print(ttest_ind([14,23,15,20], [19,14,13,9],equal_var=False))
 
-
-#get_multiplicity('wildtype')
+#get_multiplicity()
 #plot_multiplicity_survival()
 plot_logpvalue_survival()
