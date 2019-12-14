@@ -214,14 +214,17 @@ def plot_multiplicity_survival():
 
         taxon_par = df_par.loc[df_par['Strain'] == strain]
 
-        ax.annotate(r'$\Delta \ell= $'+ str(round(float(taxon_par.G_score), 3)), (0.6 *max(new_x), 0.9), fontsize=8)
+        ax.annotate(r'$\Delta \ell= $'+ str(round(float(taxon_par.G_score), 3)), (0.6 *9, 0.9), fontsize=8)
         if np.log10(float(taxon_par.p_value)) < -3:
-            ax.annotate(r'$\mathrm{p} = $'+ str('%.2E' % Decimal(float(taxon_par.p_value))), (0.6 *max(new_x), 0.75), fontsize=8)
+            ax.annotate(r'$\mathrm{p} = $'+ str('%.2E' % Decimal(float(taxon_par.p_value))), (0.6 *9, 0.75), fontsize=8)
         else:
-            ax.annotate(r'$\mathrm{p} = $'+ str(round(float(taxon_par.p_value),3)), (0.6 *max(new_x), 0.75), fontsize=8)
+            ax.annotate(r'$\mathrm{p} = $'+ str(round(float(taxon_par.p_value),3)), (0.6 *9, 0.75), fontsize=8)
 
-        ax.title.set_text(strain)
-        ax.title.set_fontsize(8.5)
+        if strain == 'wildtype':
+            ax.title.set_text('Wildtype')
+        elif strain == 'minimal':
+            ax.title.set_text('Minimal')
+        ax.title.set_fontsize(12)
         ax.xaxis.set_major_formatter(FormatStrFormatter('%d'))
 
     fig.text(0.5, 0.02, 'Gene multiplicity, ' + '$m$', ha='center', fontsize=16)
@@ -265,8 +268,7 @@ def plot_logpvalue_survival():
         ax.set_xlim([0.25, 8])
 
         ax.title.set_text(strain)
-
-        ax.title.set_fontsize(8.5)
+        ax.title.set_fontsize(12)
 
     fig.text(0.5, 0.02, '$-\mathrm{log}_{10}P$', ha='center', fontsize=16)
     fig.text(0.02, 0.5, 'Number of genes', va='center', rotation='vertical', fontsize=16)
@@ -282,5 +284,5 @@ def plot_logpvalue_survival():
 #print(ttest_ind([14,23,15,20], [19,14,13,9],equal_var=False))
 
 #get_multiplicity()
-#plot_multiplicity_survival()
-plot_logpvalue_survival()
+plot_multiplicity_survival()
+#plot_logpvalue_survival()
