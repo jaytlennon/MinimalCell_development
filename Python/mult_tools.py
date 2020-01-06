@@ -4,10 +4,48 @@ from Bio import SeqIO
 import numpy as np
 from scipy.stats import poisson
 from scipy.special import gammaln
+from scipy.linalg import block_diag
 
+#from sklearn.metrics import pairwise_distances
+from sklearn.metrics.pairwise import euclidean_distances
 
 def get_path():
-    return os.path.expanduser("~/GitHub/MinimalCell/OUTPUTS")
+    return os.path.expanduser("~/GitHub/MinimalCell")
+
+def get_pop_dict():
+    # min mininmal wt wildtype
+    pop_dict = {'mm13':'min', 'mm11':'min', 'mm10':'min', 'mm9':'min',
+                'mm6':'wt', 'mm4':'wt', 'mm3':'wt','mm1':'wt'}
+    return pop_dict
+
+
+
+
+def get_F_2(X, N1, N2):
+    '''
+    Modified F-statistic from Anderson et al., 2017 doi: 10.1111/anzs.12176
+    Function assumes that the rows of the count matrix are sorted by group
+    i.e., group one is first N1 rows, rest of the N2 rows are group two
+    '''
+    N = N1+N2
+    dist_matrix = euclidean_distances(X, X)
+    A = -(1/2) * (dist_matrix ** 2)
+    I = np.identity(N)
+    J_N = np.full((N, N), 1)
+    G = (I - ((1/N) * J_N )) @ A @ (I - ((1/N) * J_N ))
+    n1 = (1/N1) * np.full((N1, N1), 1)
+    n2 = (1/N2) * np.full((N2, N2), 1)
+    H = block_diag(n1, n2) - ((1/N) * J_N )
+    # indicator matrices
+    U_1 = np.diag( (N1*[1]) + (N2*[0]))
+    U_2 = np.diag( (N1*[0]) + (N2*[1]))
+
+    V_1 = np.trace(((I - H) @ U_1 @ (I - H)) @ G ) / (N1-1)
+    V_2 = np.trace(((I - H) @ U_2 @ (I - H)) @ G ) / (N2-1)
+
+    F_2 = np.trace(H @ G) / (((1- (N1/N)) * V_1) + ((1- (N2/N)) * V_2))
+
+    return F_2, V_1, V_2
 
 
 # NullMultiplicitySurvivalFunction class is modified from GitHub repo
