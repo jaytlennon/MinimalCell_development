@@ -2,14 +2,10 @@ from __future__ import division
 import os, math, pickle
 import mult_tools as mt
 import numpy as np
-from scipy.stats import ttest_ind
 import pandas as pd
 
-import matplotlib.pyplot as plt
 from decimal import Decimal
-from matplotlib.ticker import FormatStrFormatter
 
-mydir = os.path.expanduser("~/GitHub/MinimalCell/OUTPUTS")
 output_to_keep = ['INS', 'DEL', 'SNP', 'SUB']
 strains = ['wildtype', 'minimal']
 
@@ -18,9 +14,9 @@ strains = ['wildtype', 'minimal']
 
 def get_sites_to_remove(strain):
     if strain == 'minimal':
-        acnestor_path = mydir + '/syn3B_minimal/mmW_3B.ancestor/output.gd'
+        acnestor_path = mt.get_path() + '/data/syn3B_minimal/mmW_3B.ancestor/output.gd'
     elif strain == 'wildtype':
-        acnestor_path = mydir + '/syn1.0_wildtype/mm8_syn1.0.ancestor/output.gd'
+        acnestor_path = mt.get_path() + '/data/syn1.0_wildtype/mm8_syn1.0.ancestor/output.gd'
     sites_to_remove = []
     for i, line in enumerate(open(acnestor_path, 'r')):
         line_split = line.strip().split('\t')
@@ -33,20 +29,21 @@ def get_sites_to_remove(strain):
 def get_multiplicity(nmin = 2, FDR = 0.05):
     p_star_dict = {}
     G_score_list = []
+
+    gene_by_pop_dict = {}
     for strain in strains:
 
         sites_to_remove = get_sites_to_remove(strain)
         gene_count_dict = {}
         if strain == 'minimal':
             dirs = ['syn3B_minimal/mm13', 'syn3B_minimal/mm11', 'syn3B_minimal/mm10', 'syn3B_minimal/mm9']
-            ref_path = mydir + '/syn3B_minimal/reference/Synthetic.bacterium_JCVI-Syn3A.gb'
+            ref_path = mt.get_path() + '/data/syn3B_minimal/reference/Synthetic.bacterium_JCVI-Syn3A.gb'
         elif strain == 'wildtype':
             dirs = ['syn1.0_wildtype/mm6', 'syn1.0_wildtype/mm4', 'syn1.0_wildtype/mm3', 'syn1.0_wildtype/mm1']
-            ref_path = mydir + '/syn1.0_wildtype/reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.gb'
+            ref_path = mt.get_path() + '/data/syn1.0_wildtype/reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.gb'
         effective_gene_lengths, effective_gene_lengths_syn, Lsyn, Lnon, substitution_specific_synonymous_fraction = mt.calculate_synonymous_nonsynonymous_target_sizes(ref_path)
         for dir in dirs:
-            muts = 0
-            for i, line in enumerate(open(mydir+'/'+dir+'/annotated.gd', 'r')):
+            for i, line in enumerate(open(mt.get_path()+'/data/'+dir+'/annotated.gd', 'r')):
                 line_split = line.strip().split('\t')
                 if line_split[0] not in output_to_keep:
                     continue
@@ -124,7 +121,7 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
         #threshold_idx = numpy.nonzero((null_multiplicity_survival(observed_ms)*1.0/observed_multiplicity_survival)<FDR)[0][0]
         mult_survival_dict = {'Mult': pooled_multiplicities, 'Obs_fract': pooled_tupe_multiplicities_y, 'Null_fract': null_multiplicity_survival_copy}
         mult_survival_df = pd.DataFrame(mult_survival_dict)
-        mult_survival_df_out = mydir + '/mult_survival_curves_' + strain + '.txt'
+        mult_survival_df_out = mt.get_path() + '/data/mult_survival_curves_' + strain + '.txt'
         mult_survival_df.to_csv(mult_survival_df_out, sep = '\t', index = True)
 
 
@@ -145,7 +142,6 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
         if len(pooled_pvalues) == 0:
             continue
 
-
         null_pvalue_survival = mt.NullGeneLogpSurvivalFunction.from_parallelism_statistics( gene_parallelism_statistics, nmin=nmin)
         observed_ps, observed_pvalue_survival = mt.calculate_unnormalized_survival_from_vector(pooled_pvalues, min_x=-4)
         # Pvalue version
@@ -162,13 +158,13 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
         # make it log base 10
         logpvalues_dict = {'P_value': observed_ps/math.log(10), 'Obs_num': observed_pvalue_survival, 'Null_num': null_pvalue_survival(observed_ps)}
         logpvalues_df = pd.DataFrame(logpvalues_dict)
-        logpvalues_df_out = mydir + '/logpvalues_' + strain + '.txt'
+        logpvalues_df_out = mt.get_path() + '/data/logpvalues_' + strain + '.txt'
         logpvalues_df.to_csv(logpvalues_df_out, sep = '\t', index = True)
 
         p_star_dict[strain] = (num_significant, pstar/math.log(10))
 
 
-        output_mult_gene_filename = mydir + '/mult_genes_sig_' + strain + '.txt'
+        output_mult_gene_filename = mt.get_path() + '/data/mult_genes_sig_' + strain + '.txt'
         output_mult_gene = open(output_mult_gene_filename,"w")
         output_mult_gene.write(",".join(["Gene", "Length", "Observed", "Expected", "Multiplicity", "-log10(P)"]))
         for gene_name in sorted(gene_parallelism_statistics, key=lambda x: gene_parallelism_statistics.get(x)['observed'],reverse=True):
@@ -179,7 +175,7 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
         output_mult_gene.close()
 
 
-    total_parallelism_path = mydir + '/total_parallelism.txt'
+    total_parallelism_path = mt.get_path() + '/data/total_parallelism.txt'
     total_parallelism = open(total_parallelism_path,"w")
     total_parallelism.write("\t".join(["Strain", "G_score", "p_value"]))
     for i in range(len(G_score_list)):
@@ -190,99 +186,106 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
         total_parallelism.write("\t".join([taxon_i, str(G_score_i), str(p_value_i)]))
 
     total_parallelism.close()
-    with open(mydir + '/p_star.txt', 'wb') as file:
+    with open(mt.get_path() + '/data/p_star.txt', 'wb') as file:
         file.write(pickle.dumps(p_star_dict)) # use `pickle.loads` to do the reverse
 
 
+def get_multiplicity_matrix():
 
-def plot_multiplicity_survival():
-    df_par = pd.read_csv(mydir + '/total_parallelism.txt', sep = '\t' )
-    fig = plt.figure()
-    fig.subplots_adjust(hspace=0.35, wspace=0.35)
-    for i in range(0, len(strains)):
-        strain = strains[i]
-        df_path = mydir + '/mult_survival_curves_' + strain + '.txt'
-        df = pd.read_csv(df_path, sep = '\t', index_col=0)
-        new_x = [1.0] + df.Mult.tolist() + [df.Mult.tolist()[-1]]
-        new_obs_y =[1.0] + df.Obs_fract.tolist() + [ 0.0001]
-        new_null_y = [1.0] + df.Null_fract.tolist() + [ 0.0001]
+    gene_by_pop_dict = {}
+    for strain in strains:
+        sites_to_remove = get_sites_to_remove(strain)
+        if strain == 'minimal':
+            dirs = ['syn3B_minimal/mm13', 'syn3B_minimal/mm11', 'syn3B_minimal/mm10', 'syn3B_minimal/mm9']
+            ref_path = mt.get_path() + '/data/syn3B_minimal/reference/Synthetic.bacterium_JCVI-Syn3A.gb'
+        elif strain == 'wildtype':
+            dirs = ['syn1.0_wildtype/mm6', 'syn1.0_wildtype/mm4', 'syn1.0_wildtype/mm3', 'syn1.0_wildtype/mm1']
+            ref_path = mt.get_path() + '/data/syn1.0_wildtype/reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.gb'
 
-        ax = fig.add_subplot(2, 1, i+1)
-        ax.plot(new_x, new_obs_y, '-', c='royalblue', lw=4, alpha = 0.8, zorder=1)
-        ax.plot(new_x, new_null_y, '-', c='dimgrey', lw=4, alpha = 0.8, zorder=0)
-        ax.set_xlim([0.9, 9])
+        effective_gene_lengths, effective_gene_lengths_syn, Lsyn, Lnon, substitution_specific_synonymous_fraction = mt.calculate_synonymous_nonsynonymous_target_sizes(ref_path)
+        for dir in dirs:
+            pop = dir.split('/')[1]
+            gene_count_dict_pop = {}
+            gene_by_pop_dict[pop] = {}
+            for i, line in enumerate(open(mt.get_path()+'/data/'+dir+'/annotated.gd', 'r')):
+                line_split = line.strip().split('\t')
+                if line_split[0] not in output_to_keep:
+                    continue
+                if line_split[3] + '_' + line_split[4] in sites_to_remove:
+                    continue
+                frequency = float([s for s in line_split if 'frequency=' in s][0].split('=')[1])
+                if frequency != 1:
+                    continue
+                if line_split[0] == 'SNP':
+                    if [s for s in line_split if 'snp_type=' in s][0].split('=')[1] == 'nonsynonymous':
+                        locus_tag = [s for s in line_split if 'locus_tag=' in s][0].split('=')[1]
+                        frequency = float([s for s in line_split if 'frequency=' in s][0].split('=')[1])
+                        if ';' in locus_tag:
+                            for locus_tag_j in locus_tag.split(';'):
+                                if locus_tag_j not in gene_count_dict_pop:
+                                    gene_count_dict_pop[locus_tag_j] = 0
+                                gene_count_dict_pop[locus_tag_j] += 1
+                        else:
+                            if locus_tag not in gene_count_dict_pop:
+                                gene_count_dict_pop[locus_tag] = 0
+                            gene_count_dict_pop[locus_tag] += 1
 
-        taxon_par = df_par.loc[df_par['Strain'] == strain]
+                    else:
+                        continue
+                else:
+                    if len([s for s in line_split if 'gene_position=coding' in s]) >= 1:
+                        locus_tag = [s for s in line_split if 'locus_tag=' in s][0].split('=')[1]
+                        frequency = float([s for s in line_split if 'frequency=' in s][0].split('=')[1])
+                        if ';' in locus_tag:
+                            for locus_tag_j in locus_tag.split(';'):
+                                if locus_tag_j not in gene_count_dict_pop:
+                                    gene_count_dict_pop[locus_tag_j] = 0
+                                gene_count_dict_pop[locus_tag_j] += 1
 
-        ax.annotate(r'$\Delta \ell= $'+ str(round(float(taxon_par.G_score), 3)), (0.6 *9, 0.9), fontsize=8)
-        if np.log10(float(taxon_par.p_value)) < -3:
-            ax.annotate(r'$\mathrm{p} = $'+ str('%.2E' % Decimal(float(taxon_par.p_value))), (0.6 *9, 0.75), fontsize=8)
-        else:
-            ax.annotate(r'$\mathrm{p} = $'+ str(round(float(taxon_par.p_value),3)), (0.6 *9, 0.75), fontsize=8)
+                        else:
+                            if locus_tag not in gene_count_dict_pop:
+                                gene_count_dict_pop[locus_tag] = 0
+                            gene_count_dict_pop[locus_tag] += 1
 
-        if strain == 'wildtype':
-            ax.title.set_text('Wildtype')
-        elif strain == 'minimal':
-            ax.title.set_text('Minimal')
-        ax.title.set_fontsize(12)
-        ax.xaxis.set_major_formatter(FormatStrFormatter('%d'))
+            gene_parallelism_statistics = {}
+            for gene_i, length_i in effective_gene_lengths.items():
+                gene_parallelism_statistics[gene_i] = {}
+                gene_parallelism_statistics[gene_i]['length'] = length_i
+                gene_parallelism_statistics[gene_i]['observed'] = 0
+                gene_parallelism_statistics[gene_i]['multiplicity'] = 0
 
-    fig.text(0.5, 0.02, 'Gene multiplicity, ' + '$m$', ha='center', fontsize=16)
-    fig.text(0.02, 0.5, 'Fraction mutations ' + '$\geq m$', va='center', rotation='vertical', fontsize=16)
+            # save number of mutations for multiplicity
+            for locus_tag_i, n_muts_i in gene_count_dict_pop.items():
+                gene_parallelism_statistics[locus_tag_i]['observed'] = n_muts_i
 
-    fig_name = mydir + '/mult_survival.png'
-    fig.savefig(fig_name, bbox_inches = "tight", pad_inches = 0.4, dpi = 600)
-    plt.close()
+            # save number of mutations for multiplicity
+            L_mean = np.mean(list(effective_gene_lengths.values()))
+            L_tot = sum(list(effective_gene_lengths.values()))
+            n_tot = sum(gene_count_dict_pop.values())
+            # go back over and calculate multiplicity
+            for locus_tag_i in gene_parallelism_statistics.keys():
+                # double check the measurements from this
+                gene_parallelism_statistics[locus_tag_i]['multiplicity'] = gene_parallelism_statistics[locus_tag_i]['observed'] *1.0/ effective_gene_lengths[locus_tag_i] * L_mean
+                gene_parallelism_statistics[locus_tag_i]['expected'] = n_tot*gene_parallelism_statistics[locus_tag_i]['length']/L_tot
 
+            # split locus tags
+            for locus_tag_i in gene_parallelism_statistics.keys():
+                mult_i = gene_parallelism_statistics[locus_tag_i]['multiplicity']
+                if mult_i > 0:
+                    locus_tag_i_num = locus_tag_i.split('_')[1]
+                    gene_by_pop_dict[pop][locus_tag_i_num] = mult_i
 
+    gene_by_pop_df = pd.DataFrame(gene_by_pop_dict)
+    gene_by_pop_df = gene_by_pop_df.T
+    gene_by_pop_df.fillna(0, inplace=True)
 
-
-
-def plot_logpvalue_survival():
-    fig = plt.figure()
-    fig.subplots_adjust(hspace=0.35, wspace=0.35)
-    pstar_dict = pickle.load(open(mydir + '/p_star.txt', 'rb'))
-    for i in range(0, len(strains)):
-        strain = strains[i]
-        pstar_i = pstar_dict[strain][1]
-        num_significant_i = pstar_dict[strain][0] -1
-        df = pd.read_csv(mydir + '/logpvalues_' + strain + '.txt', sep = '\t', index_col=0)
-        new_x = df.P_value.tolist()
-        new_obs_y = df.Obs_num.tolist()
-        new_null_y = df.Null_num.tolist()
-
-        ax = fig.add_subplot(2, 1, i+1)
-
-        ax.plot(new_x, new_null_y, '-', c='dimgrey', lw=4, alpha = 0.8, zorder=0)
-        ax.plot(new_x, new_obs_y, '-', c='royalblue', lw=4, alpha = 0.8, zorder=1)
-        if pstar_i <0:
-            y_range = [f[1] for f in list(zip(new_x, new_obs_y)) if f[0] > 0]
-            ax.plot([1, 1],[5e-02,max(y_range)],'k-',linewidth=0.5, zorder=2)
-            ax.plot([-3,1],[max(y_range), max(y_range)],'k-',linewidth=0.5, zorder=3)
-            ax.plot([1], [max(y_range)], c='r', marker='o', zorder=4)
-        else:
-            ax.plot([pstar_i, pstar_i],[5e-02,num_significant_i],'k-',linewidth=0.5, zorder=2)
-            ax.plot([-3,pstar_i],[num_significant_i, num_significant_i],'k-',linewidth=0.5, zorder=3)
-            ax.plot([pstar_i], [num_significant_i], c='r', marker='o', zorder=4)
-
-        ax.set_xlim([0.25, 8])
-
-        ax.title.set_text(strain)
-        ax.title.set_fontsize(12)
-
-    fig.text(0.5, 0.02, '$-\mathrm{log}_{10}P$', ha='center', fontsize=16)
-    fig.text(0.02, 0.5, 'Number of genes', va='center', rotation='vertical', fontsize=16)
-
-    fig_name = mydir + '/logpvalue_survival.png'
-    fig.savefig(fig_name, bbox_inches = "tight", pad_inches = 0.4, dpi = 600)
-    plt.close()
+    gene_by_pop_df_out = mt.get_path() + '/data/mult_by_pop.txt'
+    gene_by_pop_df.to_csv(gene_by_pop_df_out, sep = '\t', index = True)
 
 
 
 
+#get_multiplicity_matrix()
 # equal rate of evolution
-#print(ttest_ind([14,23,15,20], [19,14,13,9],equal_var=False))
 
 #get_multiplicity()
-plot_multiplicity_survival()
-#plot_logpvalue_survival()
