@@ -192,7 +192,7 @@ def get_multiplicity(nmin = 2, FDR = 0.05):
 
 def get_multiplicity_matrix():
 
-    gene_by_pop_dict = {}
+    gene_by_pop_dict = {}#initialize GxP matrix
     for strain in strains:
         sites_to_remove = get_sites_to_remove(strain)
         if strain == 'minimal':
@@ -206,7 +206,7 @@ def get_multiplicity_matrix():
         for dir in dirs:
             pop = dir.split('/')[1]
             gene_count_dict_pop = {}
-            gene_by_pop_dict[pop] = {}
+            gene_by_pop_dict[pop] = {}#GxP matrix add "rows", i.e., sub-dicts
             for i, line in enumerate(open(mt.get_path()+'/data/'+dir+'/annotated.gd', 'r')):
                 line_split = line.strip().split('\t')
                 if line_split[0] not in output_to_keep:
@@ -275,7 +275,7 @@ def get_multiplicity_matrix():
                     locus_tag_i_num = locus_tag_i.split('_')[1]
                     gene_by_pop_dict[pop][locus_tag_i_num] = mult_i
 
-    gene_by_pop_df = pd.DataFrame(gene_by_pop_dict)
+    gene_by_pop_df = pd.DataFrame(gene_by_pop_dict)#outputs the GxP matrix
     gene_by_pop_df = gene_by_pop_df.T
     gene_by_pop_df.fillna(0, inplace=True)
 
