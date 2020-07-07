@@ -1,0 +1,9 @@
+mut,strain,prop,count
+Insertion,3B,0.033112583,20
+Deletion,3B,0.104304636,63
+Over 100 bp,3B,0,0
+SNM,3B,0.862582781,521
+Insertion,s1,0.022648941,46
+Deletion,s1,0.082717873,168
+Over 100 bp,s1,0.003446578,7
+SNM,s1,0.891186608,1810

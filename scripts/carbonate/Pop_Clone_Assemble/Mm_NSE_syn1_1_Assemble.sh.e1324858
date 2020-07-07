@@ -1,0 +1,421 @@
+samtools version 1.9 loaded.
+Python programming language version 2.7.16 unloaded.
+Python programming language version 2.7.13 loaded.
+cutadapt version 1.9.1 loaded.
+fastqc version 0.11.5 loaded.
+bwa version 0.7.12 loaded.
+BWA
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 330764 sequences (10000058 bp)...
+[M::process] read 330772 sequences (10000045 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330764 reads in 4.369 CPU sec, 4.078 real sec
+[M::process] read 330882 sequences (10000038 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330772 reads in 5.213 CPU sec, 4.676 real sec
+[M::process] read 330788 sequences (10000044 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330882 reads in 5.072 CPU sec, 4.472 real sec
+[M::process] read 331042 sequences (10000023 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330788 reads in 5.020 CPU sec, 4.480 real sec
+[M::process] read 330960 sequences (10000046 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 331042 reads in 5.005 CPU sec, 4.435 real sec
+[M::process] read 330894 sequences (10000025 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330960 reads in 4.988 CPU sec, 4.461 real sec
+[M::process] read 330918 sequences (10000050 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330894 reads in 5.254 CPU sec, 4.674 real sec
+[M::process] read 330824 sequences (10000019 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330918 reads in 4.542 CPU sec, 4.018 real sec
+[M::process] read 330744 sequences (10000018 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330824 reads in 4.494 CPU sec, 3.927 real sec
+[M::process] read 330812 sequences (10000059 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330744 reads in 4.736 CPU sec, 4.194 real sec
+[M::process] read 330814 sequences (10000043 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330812 reads in 5.246 CPU sec, 4.736 real sec
+[M::process] read 330814 sequences (10000028 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330814 reads in 5.086 CPU sec, 4.568 real sec
+[M::process] read 330830 sequences (10000029 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330814 reads in 5.117 CPU sec, 4.580 real sec
+[M::process] read 330912 sequences (10000032 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330830 reads in 5.110 CPU sec, 4.578 real sec
+[M::process] read 330684 sequences (10000051 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330912 reads in 4.963 CPU sec, 4.449 real sec
+[M::process] read 330754 sequences (10000023 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330684 reads in 5.059 CPU sec, 4.547 real sec
+[M::process] read 330762 sequences (10000017 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330754 reads in 4.628 CPU sec, 4.059 real sec
+[M::process] read 330716 sequences (10000020 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330762 reads in 5.177 CPU sec, 4.638 real sec
+[M::process] read 330784 sequences (10000051 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330716 reads in 5.217 CPU sec, 4.655 real sec
+[M::process] read 330736 sequences (10000055 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330784 reads in 4.951 CPU sec, 4.481 real sec
+[M::process] read 330884 sequences (10000042 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330736 reads in 4.995 CPU sec, 4.471 real sec
+[M::process] read 330782 sequences (10000034 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330884 reads in 4.966 CPU sec, 4.467 real sec
+[M::process] read 330778 sequences (10000011 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330782 reads in 5.264 CPU sec, 4.691 real sec
+[M::process] read 330696 sequences (10000047 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330778 reads in 4.340 CPU sec, 3.920 real sec
+[M::process] read 330604 sequences (10000020 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330696 reads in 4.486 CPU sec, 3.906 real sec
+[M::process] read 330776 sequences (10000044 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330604 reads in 4.924 CPU sec, 4.405 real sec
+[M::process] read 330790 sequences (10000028 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330776 reads in 5.049 CPU sec, 4.529 real sec
+[M::process] read 330788 sequences (10000048 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330790 reads in 4.918 CPU sec, 4.434 real sec
+[M::process] read 330794 sequences (10000001 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330788 reads in 4.926 CPU sec, 4.400 real sec
+[M::process] read 93440 sequences (2823826 bp)...
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 330794 reads in 4.805 CPU sec, 4.422 real sec
+[M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 0, 0, 0)
+[M::mem_pestat] skip orientation FF as there are not enough pairs
+[M::mem_pestat] skip orientation FR as there are not enough pairs
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 93440 reads in 1.725 CPU sec, 1.408 real sec
+[main] Version: 0.7.12-r1039
+[main] CMD: bwa mem /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta Sample_syn1_1_R1_trimmed.fastq Sample_syn1_1_R2_trimmed.fastq
+[main] Real time: 134.652 sec; CPU: 150.030 sec
+
+real	2m14.666s
+user	2m20.444s
+sys	0m9.596s
+SAMTOOLS
+[bam_sort] Use -T PREFIX / -o FILE to specify temporary and final output files
+Usage: samtools sort [options...] [in.bam]
+Options:
+  -l INT     Set compression level, from 0 (uncompressed) to 9 (best)
+  -m INT     Set maximum memory per thread; suffix K/M/G recognized [768M]
+  -n         Sort by read name
+  -t TAG     Sort by value of TAG. Uses position as secondary index (or read name if -n is set)
+  -o FILE    Write final output to FILE rather than standard output
+  -T PREFIX  Write temporary files to PREFIX.nnnn.bam
+      --input-fmt-option OPT[=VAL]
+               Specify a single input file format option in the form
+               of OPTION or OPTION=VALUE
+  -O, --output-fmt FORMAT[,OPT[=VAL]]...
+               Specify output format (SAM, BAM, CRAM)
+      --output-fmt-option OPT[=VAL]
+               Specify a single output file format option in the form
+               of OPTION or OPTION=VALUE
+      --reference FILE
+               Reference sequence FASTA FILE [null]
+  -@, --threads INT
+               Number of additional threads to use [0]
+[E::hts_open_format] Failed to open file Sample_syn1_1.sorted.bam
+samtools index: failed to open "Sample_syn1_1.sorted.bam": No such file or directory
+[Fri Aug 16 16:24:37 EDT 2019] net.sf.picard.sam.AddOrReplaceReadGroups INPUT=Sample_syn1_1.sorted.bam OUTPUT=Sample_syn1_1.sorted.fixed.bam SORT_ORDER=coordinate RGID=GeneConv RGLB=bar RGPL=illumina RGPU=6 RGSM=Sample_syn1_1 VALIDATION_STRINGENCY=LENIENT CREATE_INDEX=true    VERBOSITY=INFO QUIET=false COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_MD5_FILE=false
+OpenJDK 64-Bit Server VM warning: You have loaded library /gpfs/hps/soft/rhel6/picard/picard-tools-1.107/libIntelDeflater.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+[Fri Aug 16 16:24:37 EDT 2019] Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04; Picard version: 1.107(1667) IntelDeflater
+[Fri Aug 16 16:24:37 EDT 2019] net.sf.picard.sam.AddOrReplaceReadGroups done. Elapsed time: 0.00 minutes.
+Runtime.totalMemory()=2058354688
+To get help, see http://picard.sourceforge.net/index.shtml#GettingHelp
+Exception in thread "main" net.sf.picard.PicardException: Cannot read non-existent file: /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.bam
+	at net.sf.picard.io.IoUtil.assertFileIsReadable(IoUtil.java:57)
+	at net.sf.picard.sam.AddOrReplaceReadGroups.doWork(AddOrReplaceReadGroups.java:72)
+	at net.sf.picard.cmdline.CommandLineProgram.instanceMain(CommandLineProgram.java:179)
+	at net.sf.picard.cmdline.CommandLineProgram.instanceMainWithExit(CommandLineProgram.java:120)
+	at net.sf.picard.sam.AddOrReplaceReadGroups.main(AddOrReplaceReadGroups.java:68)
+[Fri Aug 16 16:24:37 EDT 2019] net.sf.picard.sam.MarkDuplicates INPUT=[Sample_syn1_1.sorted.fixed.bam] OUTPUT=Sample_syn1_1.sorted.fixed.marked.bam METRICS_FILE=Sample_syn1_1.metrics VALIDATION_STRINGENCY=LENIENT CREATE_INDEX=true    PROGRAM_RECORD_ID=MarkDuplicates PROGRAM_GROUP_NAME=MarkDuplicates REMOVE_DUPLICATES=false ASSUME_SORTED=false MAX_SEQUENCES_FOR_DISK_READ_ENDS_MAP=50000 MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=8000 SORTING_COLLECTION_SIZE_RATIO=0.25 READ_NAME_REGEX=[a-zA-Z0-9]+:[0-9]:([0-9]+):([0-9]+):([0-9]+).* OPTICAL_DUPLICATE_PIXEL_DISTANCE=100 VERBOSITY=INFO QUIET=false COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_MD5_FILE=false
+OpenJDK 64-Bit Server VM warning: You have loaded library /gpfs/hps/soft/rhel6/picard/picard-tools-1.107/libIntelDeflater.so which might have disabled stack guard. The VM will try to fix the stack guard now.
+It's highly recommended that you fix the library with 'execstack -c <libfile>', or link it with '-z noexecstack'.
+[Fri Aug 16 16:24:37 EDT 2019] Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04; Picard version: 1.107(1667) IntelDeflater
+[Fri Aug 16 16:24:37 EDT 2019] net.sf.picard.sam.MarkDuplicates done. Elapsed time: 0.00 minutes.
+Runtime.totalMemory()=2058354688
+To get help, see http://picard.sourceforge.net/index.shtml#GettingHelp
+Exception in thread "main" net.sf.picard.PicardException: Cannot read non-existent file: /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.fixed.bam
+	at net.sf.picard.io.IoUtil.assertFileIsReadable(IoUtil.java:57)
+	at net.sf.picard.sam.MarkDuplicates.doWork(MarkDuplicates.java:155)
+	at net.sf.picard.cmdline.CommandLineProgram.instanceMain(CommandLineProgram.java:179)
+	at net.sf.picard.sam.MarkDuplicates.main(MarkDuplicates.java:145)
+INFO  16:24:39,078 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:39,080 HelpFormatter - The Genome Analysis Toolkit (GATK) v3.4-0-g7e26428, Compiled 2015/05/15 03:25:41 
+INFO  16:24:39,080 HelpFormatter - Copyright (c) 2010 The Broad Institute 
+INFO  16:24:39,080 HelpFormatter - For support and documentation go to http://www.broadinstitute.org/gatk 
+INFO  16:24:39,083 HelpFormatter - Program Args: -R /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta -I Sample_syn1_1.sorted.fixed.marked.bam -T RealignerTargetCreator -o Sample_syn1_1.intervals 
+INFO  16:24:39,089 HelpFormatter - Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04. 
+INFO  16:24:39,089 HelpFormatter - Date/Time: 2019/08/16 16:24:39 
+INFO  16:24:39,089 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:39,089 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:39,151 GenomeAnalysisEngine - Strictness is SILENT 
+INFO  16:24:39,216 GenomeAnalysisEngine - Downsampling Settings: Method: BY_SAMPLE, Target Coverage: 1000 
+INFO  16:24:39,221 SAMDataSource$SAMReaders - Initializing SAMRecords in serial 
+INFO  16:24:39,860 GATKRunReport - Uploaded run statistics report to AWS S3 
+##### ERROR ------------------------------------------------------------------------------------------
+##### ERROR A USER ERROR has occurred (version 3.4-0-g7e26428): 
+##### ERROR
+##### ERROR This means that one or more arguments or inputs in your command are incorrect.
+##### ERROR The error message below tells you what is the problem.
+##### ERROR
+##### ERROR If the problem is an invalid argument, please check the online documentation guide
+##### ERROR (or rerun your command with --help) to view allowable command-line arguments for this tool.
+##### ERROR
+##### ERROR Visit our website and forum for extensive documentation and answers to 
+##### ERROR commonly asked questions http://www.broadinstitute.org/gatk
+##### ERROR
+##### ERROR Please do NOT post this error to the GATK forum unless you have really tried to fix it yourself.
+##### ERROR
+##### ERROR MESSAGE: Couldn't read file /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.fixed.marked.bam because java.io.FileNotFoundException: Sample_syn1_1.sorted.fixed.marked.bam (No such file or directory)
+##### ERROR ------------------------------------------------------------------------------------------
+INFO  16:24:41,194 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:41,196 HelpFormatter - The Genome Analysis Toolkit (GATK) v3.4-0-g7e26428, Compiled 2015/05/15 03:25:41 
+INFO  16:24:41,197 HelpFormatter - Copyright (c) 2010 The Broad Institute 
+INFO  16:24:41,197 HelpFormatter - For support and documentation go to http://www.broadinstitute.org/gatk 
+INFO  16:24:41,199 HelpFormatter - Program Args: -R /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta -I Sample_syn1_1.sorted.fixed.marked.bam -T IndelRealigner -targetIntervals Sample_syn1_1.intervals --filter_bases_not_stored -o Sample_syn1_1.sorted.fixed.marked.realigned.bam 
+INFO  16:24:41,205 HelpFormatter - Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04. 
+INFO  16:24:41,205 HelpFormatter - Date/Time: 2019/08/16 16:24:41 
+INFO  16:24:41,205 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:41,205 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:41,310 GenomeAnalysisEngine - Strictness is SILENT 
+INFO  16:24:41,354 GenomeAnalysisEngine - Downsampling Settings: No downsampling 
+INFO  16:24:41,360 SAMDataSource$SAMReaders - Initializing SAMRecords in serial 
+INFO  16:24:42,062 GATKRunReport - Uploaded run statistics report to AWS S3 
+##### ERROR ------------------------------------------------------------------------------------------
+##### ERROR A USER ERROR has occurred (version 3.4-0-g7e26428): 
+##### ERROR
+##### ERROR This means that one or more arguments or inputs in your command are incorrect.
+##### ERROR The error message below tells you what is the problem.
+##### ERROR
+##### ERROR If the problem is an invalid argument, please check the online documentation guide
+##### ERROR (or rerun your command with --help) to view allowable command-line arguments for this tool.
+##### ERROR
+##### ERROR Visit our website and forum for extensive documentation and answers to 
+##### ERROR commonly asked questions http://www.broadinstitute.org/gatk
+##### ERROR
+##### ERROR Please do NOT post this error to the GATK forum unless you have really tried to fix it yourself.
+##### ERROR
+##### ERROR MESSAGE: Couldn't read file /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.fixed.marked.bam because java.io.FileNotFoundException: Sample_syn1_1.sorted.fixed.marked.bam (No such file or directory)
+##### ERROR ------------------------------------------------------------------------------------------
+INFO  16:24:43,421 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:43,423 HelpFormatter - The Genome Analysis Toolkit (GATK) v3.4-0-g7e26428, Compiled 2015/05/15 03:25:41 
+INFO  16:24:43,423 HelpFormatter - Copyright (c) 2010 The Broad Institute 
+INFO  16:24:43,423 HelpFormatter - For support and documentation go to http://www.broadinstitute.org/gatk 
+INFO  16:24:43,426 HelpFormatter - Program Args: -nt 4 -T UnifiedGenotyper -R /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta -I Sample_syn1_1.sorted.fixed.marked.realigned.bam -glm BOTH -rf BadCigar -o Sample_syn1_1.sorted.fixed.marked.realigned.vcf 
+INFO  16:24:43,431 HelpFormatter - Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04. 
+INFO  16:24:43,432 HelpFormatter - Date/Time: 2019/08/16 16:24:43 
+INFO  16:24:43,432 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:43,432 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:43,501 GenomeAnalysisEngine - Strictness is SILENT 
+INFO  16:24:43,566 GenomeAnalysisEngine - Downsampling Settings: Method: BY_SAMPLE, Target Coverage: 250 
+INFO  16:24:43,572 SAMDataSource$SAMReaders - Initializing SAMRecords in serial 
+INFO  16:24:44,202 GATKRunReport - Uploaded run statistics report to AWS S3 
+##### ERROR ------------------------------------------------------------------------------------------
+##### ERROR A USER ERROR has occurred (version 3.4-0-g7e26428): 
+##### ERROR
+##### ERROR This means that one or more arguments or inputs in your command are incorrect.
+##### ERROR The error message below tells you what is the problem.
+##### ERROR
+##### ERROR If the problem is an invalid argument, please check the online documentation guide
+##### ERROR (or rerun your command with --help) to view allowable command-line arguments for this tool.
+##### ERROR
+##### ERROR Visit our website and forum for extensive documentation and answers to 
+##### ERROR commonly asked questions http://www.broadinstitute.org/gatk
+##### ERROR
+##### ERROR Please do NOT post this error to the GATK forum unless you have really tried to fix it yourself.
+##### ERROR
+##### ERROR MESSAGE: Couldn't read file /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.fixed.marked.realigned.bam because java.io.FileNotFoundException: Sample_syn1_1.sorted.fixed.marked.realigned.bam (No such file or directory)
+##### ERROR ------------------------------------------------------------------------------------------
+INFO  16:24:45,574 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:45,576 HelpFormatter - The Genome Analysis Toolkit (GATK) v3.4-0-g7e26428, Compiled 2015/05/15 03:25:41 
+INFO  16:24:45,577 HelpFormatter - Copyright (c) 2010 The Broad Institute 
+INFO  16:24:45,577 HelpFormatter - For support and documentation go to http://www.broadinstitute.org/gatk 
+INFO  16:24:45,580 HelpFormatter - Program Args: -T BaseRecalibrator -I Sample_syn1_1.sorted.fixed.marked.realigned.bam -R /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta -rf BadCigar --filter_bases_not_stored -knownSites Sample_syn1_1.sorted.fixed.marked.realigned.vcf -o Sample_syn1_1.recal_data.grp 
+INFO  16:24:45,585 HelpFormatter - Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04. 
+INFO  16:24:45,585 HelpFormatter - Date/Time: 2019/08/16 16:24:45 
+INFO  16:24:45,585 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:45,586 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:46,306 GATKRunReport - Uploaded run statistics report to AWS S3 
+##### ERROR ------------------------------------------------------------------------------------------
+##### ERROR A USER ERROR has occurred (version 3.4-0-g7e26428): 
+##### ERROR
+##### ERROR This means that one or more arguments or inputs in your command are incorrect.
+##### ERROR The error message below tells you what is the problem.
+##### ERROR
+##### ERROR If the problem is an invalid argument, please check the online documentation guide
+##### ERROR (or rerun your command with --help) to view allowable command-line arguments for this tool.
+##### ERROR
+##### ERROR Visit our website and forum for extensive documentation and answers to 
+##### ERROR commonly asked questions http://www.broadinstitute.org/gatk
+##### ERROR
+##### ERROR Please do NOT post this error to the GATK forum unless you have really tried to fix it yourself.
+##### ERROR
+##### ERROR MESSAGE: Couldn't read file /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.sorted.fixed.marked.realigned.vcf because file 'Sample_syn1_1.sorted.fixed.marked.realigned.vcf' does not exist
+##### ERROR ------------------------------------------------------------------------------------------
+INFO  16:24:47,706 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:47,709 HelpFormatter - The Genome Analysis Toolkit (GATK) v3.4-0-g7e26428, Compiled 2015/05/15 03:25:41 
+INFO  16:24:47,709 HelpFormatter - Copyright (c) 2010 The Broad Institute 
+INFO  16:24:47,709 HelpFormatter - For support and documentation go to http://www.broadinstitute.org/gatk 
+INFO  16:24:47,713 HelpFormatter - Program Args: -R /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta -I Sample_syn1_1.sorted.fixed.marked.realigned.bam -T PrintReads -rf BadCigar -o Sample_syn1_1.mapped.bam -BQSR Sample_syn1_1.recal_data.grp 
+INFO  16:24:47,719 HelpFormatter - Executing as rzmogerr@c56 on Linux 3.10.0-957.21.3.el7.x86_64 amd64; OpenJDK 64-Bit Server VM 1.8.0_212-b04. 
+INFO  16:24:47,720 HelpFormatter - Date/Time: 2019/08/16 16:24:47 
+INFO  16:24:47,720 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:47,720 HelpFormatter - -------------------------------------------------------------------------------- 
+INFO  16:24:47,852 GenomeAnalysisEngine - Strictness is SILENT 
+INFO  16:24:48,599 GATKRunReport - Uploaded run statistics report to AWS S3 
+##### ERROR ------------------------------------------------------------------------------------------
+##### ERROR A USER ERROR has occurred (version 3.4-0-g7e26428): 
+##### ERROR
+##### ERROR This means that one or more arguments or inputs in your command are incorrect.
+##### ERROR The error message below tells you what is the problem.
+##### ERROR
+##### ERROR If the problem is an invalid argument, please check the online documentation guide
+##### ERROR (or rerun your command with --help) to view allowable command-line arguments for this tool.
+##### ERROR
+##### ERROR Visit our website and forum for extensive documentation and answers to 
+##### ERROR commonly asked questions http://www.broadinstitute.org/gatk
+##### ERROR
+##### ERROR Please do NOT post this error to the GATK forum unless you have really tried to fix it yourself.
+##### ERROR
+##### ERROR MESSAGE: Couldn't read file /N/dc2/scratch/rzmogerr/scratchy20190802/Mm_NSE/Sample_syn1_1/Sample_syn1_1.recal_data.grp because it does not exist
+##### ERROR ------------------------------------------------------------------------------------------

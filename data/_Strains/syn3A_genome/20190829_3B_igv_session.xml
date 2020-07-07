@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Session genome="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\Synthetic.bacterium_JCVI-Syn3A.fasta" hasGeneTrack="false" hasSequenceTrack="true" locus="CP016816.2:1-543379" nextAutoscaleGroup="2" path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\20190829_3B_igv_session.xml" version="8">
+    <Resources>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\Synthetic.bacterium_JCVI-Syn3A.gff3"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_11.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_12.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_16_anc.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_13.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_14.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_9.sorted.fixed.marked.realigned.vcf"/>
+        <Resource path="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_10.sorted.fixed.marked.realigned.vcf"/>
+    </Resources>
+    <Panel height="1025" name="DataPanel" width="2541">
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_10.sorted.fixed.marked.realigned.vcf" name="Sample_3B_10.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_11.sorted.fixed.marked.realigned.vcf" name="Sample_3B_11.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_12.sorted.fixed.marked.realigned.vcf" name="Sample_3B_12.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_13.sorted.fixed.marked.realigned.vcf" name="Sample_3B_13.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_14.sorted.fixed.marked.realigned.vcf" name="Sample_3B_14.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_16_anc.sorted.fixed.marked.realigned.vcf" name="Sample_3B_16_anc.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+        <Track clazz="org.broad.igv.variant.VariantTrack" color="0,0,178" displayMode="EXPANDED" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\GATK--vcf\Sample_3B_9.sorted.fixed.marked.realigned.vcf" name="Sample_3B_9.sorted.fixed.marked.realigned.vcf" siteColorMode="ALLELE_FREQUENCY" squishedHeight="1" visible="true"/>
+    </Panel>
+    <Panel height="132" name="FeaturePanel" width="2541">
+        <Track clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" visible="true"/>
+        <Track clazz="org.broad.igv.track.FeatureTrack" color="0,0,178" fontSize="10" id="C:\Users\rmoge\Box Sync\Mycoplasma\Strains\syn3A_genome\Synthetic.bacterium_JCVI-Syn3A.gff3" name="Synthetic.bacterium_JCVI-Syn3A.gff3" visible="true"/>
+    </Panel>
+    <PanelLayout dividerFractions="0.8823024054982818"/>
+    <HiddenAttributes>
+        <Attribute name="DATA FILE"/>
+        <Attribute name="DATA TYPE"/>
+        <Attribute name="NAME"/>
+    </HiddenAttributes>
+</Session>

@@ -1,0 +1,51 @@
+Make x-y plot with error bars by environment 
+# ```{r}
+# png(filename="../figures/Figure2-Prop_eDNA.png",
+#     width = 800, height = 800, res = 96*2)
+# 
+# par(mar = c(3, 5, 1, 1))
+# non.bp <- plot(eDNA.table$mean, ylim = c(0, 0.6),
+#                xlim = c(0.5, 4.5), pch = 22, bg = "gray90", lwd = 2,
+#                cex = 3, yaxt = "n", xaxt = "n", cex.lab = 2, cex.axis = 1.5,
+#                las = 1, ylab = "", xlab = "")
+# box(lwd = 2)
+# 
+# mtext(expression('Proportion Relic DNA'), side = 2,
+#       outer = FALSE, cex = 1.5, line = 3, adj = 0.5)
+# 
+# # Major Axes
+# axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+#      labels = c(0.0, 0.2, 0.4, 0.6), at = c(0.0, 0.2, 0.4, 0.6))
+# 
+# axis(side = 4, lwd.ticks = 2, cex.axis = 1.5, las = 1,
+#      at=c(0.0, 0.2, 0.4, 0.6), labels = F, tck = -0.02)
+# 
+# axis(side = 1, lwd.ticks = 2, cex.axis = 0.9, las = 1,
+#      labels = c("Soil", "Sediment", "Gut", "Water"), at = c(1, 2, 3, 4))
+# 
+# axis(side = 3, lwd.ticks = 2, cex.axis = 1.5, las = 1,
+#      at = c(1, 2, 3, 4), labels = F, tck = -0.02)
+# 
+# axis(side = 1, labels = F, lwd.ticks = 2, tck = 0.02, at = c(1, 2, 3, 4))
+# axis(side = 2, labels = F, lwd.ticks = 2, tck = 0.02, at = c(0, 0.2, 0.4, 0.6))
+# axis(side = 3, labels = F, lwd.ticks = 2, tck = 0.02, at = c(1, 2, 3, 4))
+# axis(side = 4, labels = F, lwd.ticks = 2, tck = 0.02, at = c(0, 0.2, 0.4, 0.6))
+# 
+# arrows(x0 = c(1, 2, 3, 4), y0 = eDNA.table$mean,
+#        y1 = eDNA.table$mean - eDNA.table$sem, angle = 90,
+#        length = 0.1, lwd = 2)
+# 
+# arrows(x0 = c(1,2,3,4), y0 = eDNA.table$mean,
+#        y1 = eDNA.table$mean + eDNA.table$sem, angle = 90,
+#        length=0.1, lwd = 2)
+# 
+# points(x = c(1:4), eDNA.table$mean,
+#       pch = 22, bg = "gray90", lwd = 2, cex = 3)
+# 
+# # Close Plot Device
+# dev.off()
+# graphics.off()
+# 
+# # Show Plot
+# img <- readPNG("../figures/Figure2-Prop_eDNA.png")
+# grid.raster(img)

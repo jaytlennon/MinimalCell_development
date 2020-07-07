@@ -1,0 +1,169 @@
+This is cutadapt 1.14+13.gaa4450c with Python 2.7.13
+Command line parameters: -a AGATCGGAAGAGC -A AGATCGGAAGAGC -o Sample_syn1_1_R1_rmadapter.fastq -p Sample_syn1_1_R2_rmadapter.fastq Sample_syn1_1_R1.fastq Sample_syn1_1_R2.fastq
+Trimming 2 adapters with at most 10.0% errors in paired-end mode ...
+Finished in 95.64 s (19 us/read; 3.14 M reads/minute).
+
+=== Summary ===
+
+Total read pairs processed:          5,008,769
+  Read 1 with adapter:                 196,279 (3.9%)
+  Read 2 with adapter:                 124,403 (2.5%)
+Pairs written (passing filters):     5,008,769 (100.0%)
+
+Total basepairs processed:   380,666,444 bp
+  Read 1:   190,333,222 bp
+  Read 2:   190,333,222 bp
+Total written (filtered):    377,098,323 bp (99.1%)
+  Read 1:   187,183,956 bp
+  Read 2:   189,914,367 bp
+
+=== First read: Adapter 1 ===
+
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 196279 times.
+
+No. of allowed errors:
+0-9 bp: 0; 10-13 bp: 1
+
+Bases preceding removed adapters:
+  A: 26.9%
+  C: 7.6%
+  G: 6.4%
+  T: 22.5%
+  none/other: 36.6%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+3	86726	78262.0	0	86726
+4	32396	19565.5	0	32396
+5	4866	4891.4	0	4866
+6	217	1222.8	0	217
+7	28	305.7	0	28
+8	3	76.4	0	3
+9	30	19.1	0	6 24
+10	27	4.8	1	4 23
+11	30	1.2	1	2 28
+12	11	0.3	1	2 9
+13	9	0.1	1	2 7
+14	4	0.1	1	2 2
+15	2	0.1	1	1 1
+16	3	0.1	1	1 2
+17	5	0.1	1	0 5
+18	8	0.1	1	1 7
+19	2	0.1	1	1 1
+20	3	0.1	1	1 2
+21	2	0.1	1	2
+22	5	0.1	1	0 5
+23	4	0.1	1	1 3
+24	2	0.1	1	0 2
+25	3	0.1	1	0 3
+26	3	0.1	1	1 2
+27	2	0.1	1	0 2
+28	5	0.1	1	1 4
+29	1	0.1	1	0 1
+30	2	0.1	1	0 2
+31	4	0.1	1	0 4
+33	1	0.1	1	0 1
+34	1	0.1	1	0 1
+35	2	0.1	1	0 2
+36	7	0.1	1	0 7
+37	39	0.1	1	0 39
+38	71826	0.1	1	4 71822
+
+=== Second read: Adapter 2 ===
+
+Sequence: AGATCGGAAGAGC; Type: regular 3'; Length: 13; Trimmed: 124403 times.
+
+No. of allowed errors:
+0-9 bp: 0; 10-13 bp: 1
+
+Bases preceding removed adapters:
+  A: 42.8%
+  C: 11.8%
+  G: 10.2%
+  T: 35.1%
+  none/other: 0.0%
+
+Overview of removed sequences
+length	count	expect	max.err	error counts
+3	86603	78262.0	0	86603
+4	32404	19565.5	0	32404
+5	4956	4891.4	0	4956
+6	220	1222.8	0	220
+7	25	305.7	0	25
+8	6	76.4	0	6
+9	31	19.1	0	8 23
+10	32	4.8	1	5 27
+11	28	1.2	1	4 24
+12	12	0.3	1	2 10
+13	6	0.1	1	4 2
+14	5	0.1	1	2 3
+15	2	0.1	1	1 1
+16	6	0.1	1	0 6
+17	3	0.1	1	0 3
+18	4	0.1	1	1 3
+19	4	0.1	1	2 2
+20	4	0.1	1	1 3
+21	3	0.1	1	2 1
+22	7	0.1	1	0 7
+23	3	0.1	1	1 2
+24	3	0.1	1	0 3
+25	5	0.1	1	0 5
+26	2	0.1	1	1 1
+28	2	0.1	1	1 1
+29	6	0.1	1	0 6
+30	1	0.1	1	0 1
+31	2	0.1	1	0 2
+32	3	0.1	1	0 3
+33	3	0.1	1	0 3
+35	1	0.1	1	0 1
+36	1	0.1	1	0 1
+38	10	0.1	1	4 6
+
+This is cutadapt 1.14+13.gaa4450c with Python 2.7.13
+Command line parameters: -q 15,10 -o Sample_syn1_1_R1_filtered.fastq -p Sample_syn1_1_R2_filtered.fastq Sample_syn1_1_R1_rmadapter.fastq Sample_syn1_1_R2_rmadapter.fastq
+Trimming 0 adapters with at most 10.0% errors in paired-end legacy mode ...
+WARNING: Legacy mode is enabled. Read modification and filtering
+options *ignore* the second read. To switch to regular paired-end
+mode, provide the --pair-filter=any option or use any of the
+-A/-B/-G/-U/--interleaved options.
+Finished in 44.77 s (9 us/read; 6.71 M reads/minute).
+
+=== Summary ===
+
+Total read pairs processed:          5,008,769
+  Read 1 with adapter:                       0 (0.0%)
+  Read 2 with adapter:                       0 (0.0%)
+Pairs written (passing filters):     5,008,769 (100.0%)
+
+Total basepairs processed:   377,098,323 bp
+  Read 1:   187,183,956 bp
+  Read 2:   189,914,367 bp
+Quality-trimmed:                 220,091 bp (0.1%)
+  Read 1:       220,091 bp
+  Read 2:             0 bp
+Total written (filtered):    376,878,232 bp (99.9%)
+  Read 1:   186,963,865 bp
+  Read 2:   189,914,367 bp
+
+This is cutadapt 1.14+13.gaa4450c with Python 2.7.13
+Command line parameters: -u 15 -o Sample_syn1_1_R1_trimmed.fastq -p Sample_syn1_1_R2_trimmed.fastq Sample_syn1_1_R1_filtered.fastq Sample_syn1_1_R2_filtered.fastq
+Trimming 0 adapters with at most 10.0% errors in paired-end legacy mode ...
+Finished in 41.45 s (8 us/read; 7.25 M reads/minute).
+
+=== Summary ===
+
+Total read pairs processed:          5,008,769
+  Read 1 with adapter:                       0 (0.0%)
+  Read 2 with adapter:                       0 (0.0%)
+Pairs written (passing filters):     5,008,769 (100.0%)
+
+Total basepairs processed:   376,878,232 bp
+  Read 1:   186,963,865 bp
+  Read 2:   189,914,367 bp
+Total written (filtered):    302,824,875 bp (80.4%)
+  Read 1:   112,910,508 bp
+  Read 2:   189,914,367 bp
+
+1326258.s1
+Analysis complete for Sample_syn1_1_R1_trimmed.fastq
+Analysis complete for Sample_syn1_1_R2_trimmed.fastq

@@ -1,0 +1,24 @@
+bwa mem -M -t 16 /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta GSF2294-NSE-8_S68_R1_001.fastq GSF2294-NSE-8_S68_R2_001.fastq | samtools view -Sb - | samtools sort - Sample_syn1_anc.sorted && samtools index Sample_syn1_anc.sorted.bam
+
+
+
+time bwa mem /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta GSF2294-NSE-1_S61_R1_001.fastq GSF2294-NSE-1_S61_R2_001.fastq > Sample_syn1_1.sam
+
+time bwa mem /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta Sample_syn1_1_R1_trimmed.fastq Sample_syn1_1_R2_trimmed.fastq > Sample_syn1_1.sam
+
+samtools view -bS -T /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta Sample_syn1_1.sam > Sample_syn1_1.bam
+
+samtools sort -o Sample_syn1_1.sorted.bam Sample_syn1_1.bam
+
+samtools index Sample_syn1_1.sorted.bam
+
+
+
+
+time bwa mem /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta GSF2294-NSE-8_S68_R1_001.fastq GSF2294-NSE-8_S68_R2_001.fastq > Sample_syn1_anc.sam
+
+samtools view -bS -T /gpfs/home/r/z/rzmogerr/Carbonate/JCVI-syn1.0_reference/Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta Sample_syn1_anc.sam > Sample_syn1_anc.bam
+
+samtools sort -o Sample_syn1_anc.sorted.bam Sample_syn1_anc.bam
+
+samtools index Sample_syn1_anc.sorted.bam
