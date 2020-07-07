@@ -1,0 +1,5 @@
+java -jar  /N/soft/rhel6/picard/picard-tools-1.107/picard-1.107.jar CreateSequenceDictionary REFERENCE=Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta OUTPUT=Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.dict 
+
+You want to use second command, as far as I can tell. I don't know for sure if it worked, but at least the command itself didnt throw an error lol.
+
+java -jar /N/soft/rhel6/picard/picard-tools-1.107/CreateSequenceDictionary.jar REFERENCE=Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.fasta OUTPUT=Synthetic.Mycoplasma.mycoides.JCVI-syn1.0_CP002027.1.dict

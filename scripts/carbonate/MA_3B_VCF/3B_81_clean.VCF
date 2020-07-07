@@ -1,0 +1,19 @@
+##fileformat=VCFv4.1
+##fileDate
+##source=breseq_GD2VCF_converterter
+##contig=<ID=CP016816,length=543379>
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+##INFO=<ID=AD,Number=1,Type=Float,Description="Allele Depth (avg read count)">
+##INFO=<ID=DP,Number=1,Type=Float,Description="Total Depth (avg read count)">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+CP016816	20938	.	T	TT	86.8	PASS	AF=0.1215;AD=26;DP=27
+CP016816	51592	.	G	A	28.7	PASS	AF=1.0000;AD=10;DP=10
+CP016816	66548	.	G	T	23.5	PASS	AF=1.0000;AD=8;DP=8
+CP016816	90112	.	C	A	8.7	PASS	AF=0.5008;AD=4;DP=8
+CP016816	110599	.	C	A	45.0	PASS	AF=1.0000;AD=14;DP=14
+CP016816	261064	.	C	T	15.2	PASS	AF=1.0000;AD=6;DP=6
+CP016816	334197	.	TT	T	17.9	PASS	AF=1.0000;AD=7;DP=7
+CP016816	355668	.	C	A	23.6	PASS	AF=1.0000;AD=8;DP=8
+CP016816	433640	.	G	A	11.2	PASS	AF=1.0000;AD=5;DP=5
+CP016816	489876	.	C	T	30.1	PASS	AF=1.0000;AD=10;DP=10

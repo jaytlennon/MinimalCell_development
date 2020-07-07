@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<!-- saved from url=(0110)https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk -->
+<html lang="en" class="sticky-footer-html"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>(howto) Prepare a reference for use with BWA and GATK — GATK-Forum</title>
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/style.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/style-compat.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/vanillicon.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/editor.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/advanced-search.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/badges.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/lastedited.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/reactions.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/groups.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/tag.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/custom_yeti.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/rev_716_2019-05-01-04-40-38.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/ShareThis.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jsconnect.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/ideation.css" media="all">
+<link rel="stylesheet" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/spoilers.css" media="all">
+<link rel="shortcut icon" href="https://us.v-cdn.net/5019796/uploads/favicon_90936d1a56089c39ef319479d91254f2.ico" type="image/x-icon">
+<link rel="canonical" href="https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="GATK-Forum">
+<meta name="twitter:title" property="og:title" content="(howto) Prepare a reference for use with BWA and GATK">
+<meta property="og:url" content="https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk">
+<meta name="description" property="og:description" content="NOTE: This tutorial has been replaced by a more recent version that uses GRCh38 that you can find here. Objective">
+<meta property="og:image" content="https://us.v-cdn.net/5019796/uploads/fbd713e8f3d000d6e12c49da77bc07c7.png">
+<meta name="twitter:description" content="NOTE: This tutorial has been replaced by a more recent version that uses GRCh38 that you can find here. Objective">
+<meta name="twitter:card" content="summary">
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/all.js.download" async="" crossorigin="anonymous"></script><script id="facebook-jssdk" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/all.js(1).download"></script><script type="text/javascript" async="" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/ga.js.download"></script><script>gdn=window.gdn||{};gdn.meta={"currentThemePath":"\/themes\/bootstrap3","ConfirmDeleteCommentHeading":"Delete Comment","ConfirmDeleteCommentText":"Are you sure you want to delete this comment?","DiscussionID":"2798","Category":"Archive","editorVersion":"1.8.1","editorPluginAssets":"\/plugins\/editor","fileUpload-remove":"Remove file","fileUpload-reattach":"Click to re-attach","fileUpload-inserted":"Inserted","fileUpload-insertedTooltip":"This image has been inserted into the body of text.","wysiwygHelpText":"You are using <a href=\"https:\/\/en.wikipedia.org\/wiki\/WYSIWYG\" target=\"_new\">WYSIWYG<\/a> in your post.","bbcodeHelpText":"You can use <a href=\"http:\/\/en.wikipedia.org\/wiki\/BBCode\" target=\"_new\">BBCode<\/a> in your post.","htmlHelpText":"You can use <a href=\"http:\/\/htmlguide.drgrog.com\/cheatsheet.php\" target=\"_new\">Simple HTML<\/a> in your post.","markdownHelpText":"You can use <a href=\"http:\/\/en.wikipedia.org\/wiki\/Markdown\" target=\"_new\">Markdown<\/a> in your post.","textHelpText":"You are using plain text in your post.","editorWysiwygCSS":"\/plugins\/editor\/design\/wysiwyg.css","canUpload":false,"fileErrorSize":"File size is too large.","fileErrorFormat":"File format is not allowed.","fileErrorAlreadyExists":"File already uploaded.","fileErrorSizeFormat":"File size is too large and format is not allowed.","maxUploadSize":52428800,"editorFileInputName":"editorupload","allowedImageExtensions":"{\"1\":\"jpg\",\"2\":\"jpeg\",\"3\":\"gif\",\"4\":\"png\",\"5\":\"bmp\",\"6\":\"tiff\"}","allowedFileExtensions":"[\"txt\",\"jpg\",\"jpeg\",\"gif\",\"png\",\"bmp\",\"tiff\",\"ico\",\"zip\",\"gz\",\"tar.gz\",\"tgz\",\"psd\",\"ai\",\"fla\",\"pdf\",\"doc\",\"xls\",\"ppt\",\"docx\",\"xlsx\",\"pptx\",\"log\",\"rar\",\"7z\"]","maxFileUploads":"20","TagHint":"Start to type...","TagSearching":"Searching...","TagNoResults":"No results","keenio.projectID":"59943e21c9e77c0001ce0d79","keenio.writeKey":"33F5A02804AA7E7D3A42313C43277A0603F57D39D0353F21069131C9A936F9D19C162E83DC476BA757A77679574627B5BF79760D179DB10A21D6691D3A06A829AA480F9C854E91E4CFCFCB5A700BBE7CD9F4D4C784708BF6EF8CD7142A9385D2","vaCookieName":"vf_gatk_STS1Q-vA","eventData":{"ip":"0.0.0.0","method":"GET","site":{"accountID":5017303,"name":"gatk.vanillacommunities.com","siteID":5019796},"url":"https:\/\/gatkforums.broadinstitute.org\/gatk\/discussion\/2798\/howto-prepare-a-reference-for-use-with-bwa-and-gatk","_country":"US","user":{"dateFirstVisit":null,"name":"@guest","roleType":"guest","userID":0},"userAgent":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/76.0.3809.100 Safari\/537.36","keen":{"addons":[{"name":"keen:ip_to_geo","input":{"ip":"ip"},"output":"ipGeo"},{"name":"keen:url_parser","input":{"url":"url"},"output":"urlParsed"},{"name":"keen:ua_parser","input":{"ua_string":"userAgent"},"output":"userAgentParsed"},{"name":"keen:referrer_parser","input":{"referrer_url":"referrer","page_url":"url"},"output":"referrerParsed"}]},"Subcommunity":{"Locale":"en","Folder":"gatk","Name":"GATK","SubcommunityID":7},"discussion":{"category":{"categoryID":71,"name":"Archive","slug":"archive"},"categoryAncestors":{"cat01":{"categoryID":100,"name":"GATK Support Forum","slug":"gatk-support-forum"},"cat02":{"categoryID":29,"name":"GATK3 User Guide","slug":"gatk-guide"},"cat03":{"categoryID":71,"name":"Archive","slug":"archive"}},"commentMetric":{"firstComment":false,"time":null},"countComments":30,"dateInserted":{"year":2013,"month":6,"day":17,"hour":20,"minute":44,"dayOfWeek":1,"startOfWeek":1371340800,"timestamp":1371501849,"timeZone":"UTC"},"discussionID":2798,"discussionType":null,"discussionUser":{"commentCount":11811,"dateFirstVisit":{"year":2012,"month":7,"day":19,"hour":1,"minute":5,"dayOfWeek":4,"startOfWeek":1342310400,"timestamp":1342659910,"timeZone":"UTC"},"dateRegistered":{"year":2012,"month":7,"day":19,"hour":1,"minute":5,"dayOfWeek":4,"startOfWeek":1342310400,"timestamp":1342659910,"timeZone":"UTC"},"discussionCount":588,"name":"Geraldine_VdAuwera","roles":[{"name":"Member","roleID":8},{"name":"Administrator","roleID":16},{"name":"Broadie","roleID":38}],"roleType":"admin","userID":7,"uuid":"5019796-7","sessionID":null,"sinceFirstVisit":223323435,"sinceRegistered":223323435,"points":8138,"rank":{"label":"admin","level":110,"name":"Administrator","rankID":110}},"name":"(howto) Prepare a reference for use with BWA and GATK"}},"viewEventType":"discussion_view","ShowUserReactions":"1","Spoiler":"Spoiler","show":"show","hide":"hide","AnalyticsTask":"tick","TaggingAdd":false,"TaggingSearchUrl":"\/gatk\/tags\/search","MaxTagsAllowed":30,"LastCommentID":34557,"RedirectTo":"","RedirectUrl":"","TransportError":"A fatal error occurred while processing the request.<br \/>The server returned the following response: %s","TransientKey":false,"WebRoot":"https:\/\/gatkforums.broadinstitute.org\/gatk","UrlFormat":"\/gatk\/{Path}","Path":"discussion\/2798\/howto-prepare-a-reference-for-use-with-bwa-and-gatk","Args":"","ResolvedPath":"vanilla\/discussion\/index","ResolvedArgs":{"DiscussionID":"2798","DiscussionStub":"howto-prepare-a-reference-for-use-with-bwa-and-gatk","Page":""},"SignedIn":0,"ConfirmHeading":"Confirm","ConfirmText":"Are you sure you want to do that?","Okay":"Okay","Cancel":"Cancel","Search":"Search","ui":{"siteName":"GATK-Forum","siteTitle":"GATK Support Forum","locale":"en","inputFormat":"markdown"},"context":{"host":"","basePath":"\/gatk","assetPath":"","debug":false},"upload":{"maxSize":52428800,"allowedExtensions":["txt","jpg","jpeg","gif","png","bmp","tiff","ico","zip","gz","tar.gz","tgz","psd","ai","fla","pdf","doc","xls","ppt","docx","xlsx","pptx","log","rar","7z"]},"useNewFlyouts":false};
+gdn.permissions={"permissions":{"activity.view":true,"profiles.view":true,"badges.view":true,"discussions.view":[-1,9,11,12,14,17,22,23,24,25,26,29,31,32,37,41,55,69,71,74,76,79,82,83,84,85,86,89,91,92,93,94,95,96,97,100,101,104,106,107,108,112,113,114,115,116,117,118,119,120,122,123,124,125,126,127,128,129,130,131,132,133,134,135,137]},"bans":[],"isAdmin":false};
+window.__ACTIONS__=[];
+</script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.form.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.popup.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.popin.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.gardenhandleajaxform.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.atwho.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/global.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/flyouts.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.autosize.min.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/autosave.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/discussion.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.tokeninput.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/authorselector.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/quotes.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery-ui.min.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/reactions.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jsconnect.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/editor.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.ui.widget.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.iframe-transport.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/jquery.fileupload.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/advanced-search.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/js.cookie.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/keen.min.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/keenio.min.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/spoilers.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/tagging.js.download"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/custom.js.download"></script><style type="text/css"></style><style></style>
+<script>var supportsAllFeatures = window.Promise && window.fetch && window.Symbol&& window.CustomEvent && Element.prototype.remove && Element.prototype.closest&& window.NodeList && NodeList.prototype.forEach;if (!supportsAllFeatures) {var head = document.getElementsByTagName('head')[0];var script = document.createElement('script');script.src = 'https://gatkforums.broadinstitute.org/dist/polyfills.min.js?h=5d56c7a4';head.appendChild(script);} else {  }</script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/translations.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/runtime.min.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/vendors.min.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/shared.min.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/rich-editor.min.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/dashboard.min.js.download" defer="defer"></script>
+<script src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/bootstrap.min.js.download" defer="defer"></script>
+<script type="application/ld+json">{"headline":"(howto) Prepare a reference for use with BWA and GATK","description":"NOTE: This tutorial has been replaced by a more recent version that uses GRCh38 that you can find here. Objective Prepare a reference sequence so that it is suitable for use with BWA and GATK. Prerequisites * Installed BWA * Installed SAMTools * Installed Picard Steps * Generate the BWA index * Generate the Fasta file\u2026","discussionUrl":"https:\/\/gatkforums.broadinstitute.org\/gatk\/discussion\/2798\/howto-prepare-a-reference-for-use-with-bwa-and-gatk","dateCreated":"2013-06-17 20:44:09","author":{"@context":"https:\/\/schema.org","@type":"Person","name":"Geraldine_VdAuwera","image":"https:\/\/us.v-cdn.net\/5019796\/uploads\/userpics\/163\/n0OU3FZMKRC2V.jpg","url":"https:\/\/gatkforums.broadinstitute.org\/gatk\/profile\/Geraldine_VdAuwera"},"@context":"https:\/\/schema.org","@type":"DiscussionForumPosting"}</script>
+
+<script charset="utf-8" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/async_highlightJs.min.js.download"></script><style>@keyframes f32033o{0%{transform:rotate(73deg)}100%{transform:rotate(433deg)}}</style><script async="" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/adblocker-chromeglobalinjectjs.js.download"></script><link rel="stylesheet" type="text/css" href="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/highlightJs-light.min.css"><script charset="utf-8" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/highlightJs-light.min.js.download"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#1d3c78;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style></head>
+<body id="vanilla_discussion_index" class="Vanilla Discussion isDesktop index Section-Discussion sticky-footer-body js-focus-visible editor-active" onload="$(&#39;table&#39;).addClass(&#39;table table-striped table-bordered table-condensed&#39;)" style="">
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33535118-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+    </script>
+
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<div class="container">
+<div class="navbar-header">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gatk-navbar">
+<span class="sr-only">{t c="Toggle navigation"}</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a class="brand" href="http://software.broadinstitute.org/gatk/"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/logo-gatk.png" alt="GATK" style="height:40px;width:123px;" class="logo"></a>
+</div>
+<div class="navbar-collapse collapse" id="gatk-navbar">
+<ul class="nav navbar-nav">
+<li class=""><a href="https://software.broadinstitute.org/gatk/best-practices/"><i class="fa fa-check-square-o"></i> Best Practices</a></li>
+<li class=""><a href="https://software.broadinstitute.org/gatk/documentation/"><i class="fa fa-book"></i> User Guide</a></li>
+<li class=""><a href="https://software.broadinstitute.org/gatk/blog"><i class="fa fa-bullhorn"></i> Blog</a></li>
+<li class="active"><a href="https://gatkforums.broadinstitute.org/"><i class="fa fa-comments-o"></i> Forum <span class="sr-only">(current)</span></a></li>
+<li class=""><a href="https://software.broadinstitute.org/gatk/events"><i class="fa fa-calendar"></i> Events</a></li>
+<li class=""><a href="https://software.broadinstitute.org/gatk/download"><i class="fa fa-download"></i> Download</a></li>
+</ul>
+<form class="navbar-form navbar-right" id="searchform" method="get" action="https://software.broadinstitute.org/gatk/search">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Search" name="q" id="q">
+</div>
+<label for="s" class="assistive-text hidden">Search</label>
+</form>
+</div>
+</div>
+</nav>
+
+<section class="container">
+<div class="row">
+<aside class="page-sidebar" role="complementary">
+<span class="Breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span class="CrumbLabel CrumbLabel HomeCrumb"><a href="https://gatkforums.broadinstitute.org/gatk/" itemprop="url"><span itemprop="title">Home</span></a></span> <span itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span class="Crumb">›</span> <span class="CrumbLabel Category-gatk-support-forum"><a href="https://gatkforums.broadinstitute.org/gatk/categories" itemprop="url"><span itemprop="title">GATK Support Forum</span></a></span> <span itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span class="Crumb">›</span> <span class="CrumbLabel Category-gatk-guide"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk-guide" itemprop="url"><span itemprop="title">GATK3 User Guide</span></a></span> <span itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><span class="Crumb">›</span> <span class="CrumbLabel  Last"><a href="https://gatkforums.broadinstitute.org/gatk/categories/archive" itemprop="url"><span itemprop="title">Archive</span></a></span> </span></span></span></span>
+<div class="AdvancedSearch ">
+<form method="get" action="https://gatkforums.broadinstitute.org/gatk/search">
+<div>
+<input type="hidden" id="Form_adv" name="adv" value=""> <div class="KeywordsWrap InputAndButton">
+<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" id="Form_search1" name="search" value="" class="InputBox BigInput js-search ui-autocomplete-input" placeholder="Search" autocomplete="off" aria-label="Enter your search term."> <a href="https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk#" class="Handle" title="Options"><span class="Arrow"></span></a> <span class="bwrap"><button type="submit" class="Button" title="Search"><span aria-hidden="true" class="Sprite SpSearch"></span></button></span> 
+</div>
+<div class="AdvancedWrap">
+<div class="P AdvancedSearch-DiscussionID">
+<label for="Form_discussionid" class="Heading">Discussion</label>
+<label for="Form_discussionid" class="CheckBoxLabel icheck-label icheck[nhpo6]"><div class="icheckbox icheck-item icheck[nhpo6]"><input type="checkbox" id="Form_discussionid1" name="discussionid" value="2798" class="icheck-input icheck[nhpo6]"></div> (howto) Prepare a reference for use with BWA and GATK</label> </div>
+<div class="P TitleRow AdvancedSearch-Title Hidden">
+<label for="Form_title" class="Heading">Title</label>
+<input type="text" id="Form_title" name="title" value="" class="InputBox BigInput"> </div>
+<div class="P AdvancedSearch-Author">
+<label for="Form_author" class="Heading">Author</label>
+<ul class="token-input-list"><li class="token-input-input-token"><input type="text" autocomplete="off" autocapitalize="off" id="token-input-Form_author" style="outline: none; width: 106px;"><tester style="position: absolute; top: -9999px; left: -9999px; width: auto; font-size: 15px; font-family: &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: 400; letter-spacing: 0px; white-space: nowrap;"></tester></li></ul><input type="text" id="Form_author" name="author" value="" class="InputBox BigInput" style="display: none;"> </div>
+<div class="P AdvancedSearch-Category">
+<label for="Form_cat" class="Heading">Category</label>
+<select id="Form_cat" name="cat" permission="view" headings="" enableheadings="" class="BigInput">
+<option value="all">(All)</option>
+<option value="100" selected="selected">GATK Support Forum</option>
+<option value="17">&nbsp;&nbsp;&nbsp;&nbsp;Announcements</option>
+<option value="14">&nbsp;&nbsp;&nbsp;&nbsp;Ask the GATK team</option>
+<option value="124">&nbsp;&nbsp;&nbsp;&nbsp;GATK4 User Guide</option>
+<option value="134">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Best Practices Workflows</option>
+<option value="128">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Methods and Algorithms</option>
+<option value="125">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tutorials</option>
+<option value="129">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary</option>
+<option value="126">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frequently Asked Questions</option>
+<option value="127">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solutions to Problems</option>
+<option value="133">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Computing Platforms</option>
+<option value="29">&nbsp;&nbsp;&nbsp;&nbsp;GATK3 User Guide</option>
+<option value="9">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tutorials</option>
+<option value="12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frequently Asked Questions</option>
+<option value="69">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Solutions to Problems</option>
+<option value="11">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Methods and Algorithms</option>
+<option value="79">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary</option>
+<option value="89">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GATK 4 Beta</option>
+<option value="71">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Archive</option>
+<option value="132">&nbsp;&nbsp;&nbsp;&nbsp;Zoo &amp; Garden</option>
+<option value="23">&nbsp;&nbsp;&nbsp;&nbsp;Tools related to GATK</option>
+<option value="96">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MuTect v1</option>
+<option value="25">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MuTect v1 Documentation</option>
+<option value="55">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReCapSeg</option>
+<option value="95">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ReCapSeg Documentation</option>
+<option value="41">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oncotator </option>
+<option value="94">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Oncotator documentation</option>
+<option value="24">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GenomeSTRiP</option>
+<option value="26">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GenomeSTRiP Documentation</option>
+</select> <div class="Checkboxes Inline">
+<label for="Form_subcats" class="CheckBoxLabel icheck-label icheck[cieu9]"><div class="icheckbox icheck-item icheck[cieu9]"><input type="checkbox" id="Form_subcats" name="subcats" value="1" class="icheck-input icheck[cieu9]"></div> search subcategories</label> <label for="Form_archived" class="CheckBoxLabel icheck-label icheck[px07g]"><div class="icheckbox icheck-item icheck[px07g]"><input type="checkbox" id="Form_archived" name="archived" value="1" class="icheck-input icheck[px07g]"></div> search archived</label> </div>
+</div>
+<div class="P AdvancedSearch-Tags">
+<label for="Form_tags" class="Heading">Tags</label>
+<ul class="token-input-list"><li class="token-input-input-token"><input type="text" autocomplete="off" autocapitalize="off" id="token-input-Form_tags" style="outline: none; width: 106px;"><tester style="position: absolute; top: -9999px; left: -9999px; width: auto; font-size: 15px; font-family: &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: 400; letter-spacing: 0px; white-space: nowrap;"></tester></li></ul><input type="text" id="Form_tags" name="tags" value="" class="InputBox BigInput" data-tags="&quot;&quot;" style="display: none;"> </div>
+<div class="P AdvancedSearch-Author-WhatToSearch">
+<label for="Form_Whattosearch" class="Heading">What to search</label>
+<div class="Inline"> <label for="Form_discussion_d" class="CheckBoxLabel icheck-label icheck[fkiu1]"><div class="icheckbox icheck-item icheck[fkiu1] checked"><input type="checkbox" id="Form_discussion_d" name="discussion_d" value="1" checked="checked" class="icheck-input icheck[fkiu1]"></div> discussions</label> <label for="Form_discussion_question" class="CheckBoxLabel icheck-label icheck[tsp57]"><div class="icheckbox icheck-item icheck[tsp57] checked"><input type="checkbox" id="Form_discussion_question" name="discussion_question" value="1" checked="checked" class="icheck-input icheck[tsp57]"></div> questions</label> <label for="Form_comment_c" class="CheckBoxLabel icheck-label icheck[t2jw9]"><div class="icheckbox icheck-item icheck[t2jw9] checked"><input type="checkbox" id="Form_comment_c" name="comment_c" value="1" checked="checked" class="icheck-input icheck[t2jw9]"></div> comments</label> <label for="Form_comment_answer" class="CheckBoxLabel icheck-label icheck[geego]"><div class="icheckbox icheck-item icheck[geego] checked"><input type="checkbox" id="Form_comment_answer" name="comment_answer" value="1" checked="checked" class="icheck-input icheck[geego]"></div> answers</label> <label for="Form_group_group" class="CheckBoxLabel icheck-label icheck[k65yp]"><div class="icheckbox icheck-item icheck[k65yp] checked"><input type="checkbox" id="Form_group_group" name="group_group" value="1" checked="checked" class="icheck-input icheck[k65yp]"></div> groups</label> </div> </div>
+<div class="P Inline AdvancedSearch-Date">
+<label for="Form_within">Date within</label>
+<select id="Form_within" name="within" class="">
+<option value="1 day">1 day</option>
+<option value="3 days">3 days</option>
+<option value="1 week">1 week</option>
+<option value="2 weeks">2 weeks</option>
+<option value="1 month">1 month</option>
+<option value="2 months">2 months</option>
+<option value="6 months">6 months</option>
+<option value="1 year">1 year</option>
+</select> <label for="Form_date">of</label>
+<input type="text" id="Form_date" name="date" value="" class="InputBox DateBox"> <span class="Gloss">Examples: Monday, today, last week, Mar 26, 3/26/04</span> </div>
+<div class="P Buttons">
+<button type="submit" class="Button" title="Search" aria-label="Search">Search</button> </div>
+</div>
+</div>
+</form></div>
+<div class="Box GuestBox">
+<h4>Howdy, Stranger!</h4>
+<p>It looks like you're new here. If you want to get involved, click one of these buttons!</p>
+<p>
+<a href="https://gatkforums.broadinstitute.org/gatk/entry/twauthorize?Target=discussion%2F2798%2Fhowto-prepare-a-reference-for-use-with-bwa-and-gatk" class="SocialIcon SocialIcon-Twitter js-extern" rel="nofollow" title="Sign In with Twitter"><span class="Icon"></span></a> <a href="https://gatkforums.broadinstitute.org/gatk/entry/googleplusauthredirect?Target=/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk" class="SocialIcon SocialIcon-Google " rel="nofollow" title="Sign In with Google"><span class="Icon"></span></a>
+<a href="https://gatkforums.broadinstitute.org/gatk/entry/openid?Target=%2Fdiscussion%2F2798%2Fhowto-prepare-a-reference-for-use-with-bwa-and-gatk" class="SocialIcon SocialIcon-OpenID js-extern" rel="nofollow" title="Sign In with OpenID"><span class="Icon"></span></a></p>
+<div class="P"><a href="https://gatkforums.broadinstitute.org/gatk/entry/signin?Target=discussion%2F2798%2Fhowto-prepare-a-reference-for-use-with-bwa-and-gatk" class="Button Primary SignInPopup" rel="nofollow">Sign In</a> <a href="https://gatkforums.broadinstitute.org/gatk/entry/register?Target=discussion%2F2798%2Fhowto-prepare-a-reference-for-use-with-bwa-and-gatk" class="Button ApplyButton" rel="nofollow">Register</a></div> </div>
+<div class="BoxFilter BoxDiscussionFilter">
+<span class="sr-only BoxFilter-HeadingWrap">
+<h2 class="BoxFilter-Heading">
+Quick Links </h2>
+</span>
+<ul role="nav" class="FilterMenu">
+<li class="AllCategories"><a href="https://gatkforums.broadinstitute.org/gatk/categories"><span aria-hidden="true" class="Sprite SpAllCategories"></span> Categories</a></li> <li class="Discussions"><a href="https://gatkforums.broadinstitute.org/gatk/discussions" class=""><span aria-hidden="true" class="Sprite SpDiscussions"></span> Recent Discussions</a></li>
+<li class="Activities"><a href="https://gatkforums.broadinstitute.org/gatk/activity" class=""><span aria-hidden="true" class="Sprite SpActivity"></span> Activity</a></li> <li class="Reactions-BestOf"><a href="https://gatkforums.broadinstitute.org/gatk/bestof/everything"><span aria-hidden="true" class="Sprite SpBestOf"></span> Best Of...</a></li><li class="QnA-UnansweredQuestions "><a href="https://gatkforums.broadinstitute.org/gatk/discussions/unanswered" class="UnansweredQuestions"><span aria-hidden="true" class="Sprite SpUnansweredQuestions"></span> Unanswered <span class="Aside"><span class="Popin Count" rel="/discussions/unansweredcount">33</span></span></a></li><li class="Groups"><a href="https://gatkforums.broadinstitute.org/gatk/groups"><span aria-hidden="true" class="Sprite SpGroups"></span> Groups</a></li> </ul>
+</div>
+<div class="Box BoxCategories">
+<h4 aria-level="2">Categories</h4> <ul class="PanelInfo PanelCategories">
+<li><a href="https://gatkforums.broadinstitute.org/gatk/categories" class="ItemLink"><span class="Aside"><span class="Count"><span title="10,058 discussions" class="Number">10.1K</span></span></span> All Categories</a></li><li class="ClearFix Depth1 Category-announcements"><a href="https://gatkforums.broadinstitute.org/gatk/categories/announcements" class="ItemLink"><span class="Aside"><span class="Count"><span title="266 discussions" class="Number">266</span></span></span> Announcements</a></li>
+<li class="ClearFix Depth1 Category-ask-the-team"><a href="https://gatkforums.broadinstitute.org/gatk/categories/ask-the-team" class="ItemLink"><span class="Aside"><span class="Count"><span title="16,977 discussions" class="Number">17K</span></span></span> Ask the GATK team</a></li>
+<li class="ClearFix Depth1 Category-gatk4-user-guide"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-user-guide" class="ItemLink"><span class="Aside"><span class="Count"><span title="141 discussions" class="Number">141</span></span></span> GATK4 User Guide</a></li>
+<li class="ClearFix Depth2 Category-best-practices-workflows"><a href="https://gatkforums.broadinstitute.org/gatk/categories/best-practices-workflows" class="ItemLink"><span class="Aside"><span class="Count"><span title="8 discussions" class="Number">8</span></span></span> Best Practices Workflows</a></li>
+<li class="ClearFix Depth2 Category-gatk4-methods"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-methods" class="ItemLink"><span class="Aside"><span class="Count"><span title="18 discussions" class="Number">18</span></span></span> Methods and Algorithms</a></li>
+<li class="ClearFix Depth2 Category-gatk4-tutorials"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-tutorials" class="ItemLink"><span class="Aside"><span class="Count"><span title="18 discussions" class="Number">18</span></span></span> Tutorials</a></li>
+<li class="ClearFix Depth2 Category-gatk4-dictionary"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-dictionary" class="ItemLink"><span class="Aside"><span class="Count"><span title="50 discussions" class="Number">50</span></span></span> Dictionary</a></li>
+<li class="ClearFix Depth2 Category-gatk4-faqs"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-faqs" class="ItemLink"><span class="Aside"><span class="Count"><span title="18 discussions" class="Number">18</span></span></span> Frequently Asked Questions</a></li>
+<li class="ClearFix Depth2 Category-gatk4-solutions"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk4-solutions" class="ItemLink"><span class="Aside"><span class="Count"><span title="19 discussions" class="Number">19</span></span></span> Solutions to Problems</a></li>
+<li class="ClearFix Depth2 Category-pipelining"><a href="https://gatkforums.broadinstitute.org/gatk/categories/pipelining" class="ItemLink"><span class="Aside"><span class="Count"><span title="6 discussions" class="Number">6</span></span></span> Computing Platforms</a></li>
+<li class="ClearFix Depth1 Category-gatk-guide"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk-guide" class="ItemLink"><span class="Aside"><span class="Count"><span title="196 discussions" class="Number">196</span></span></span> GATK3 User Guide</a></li>
+<li class="ClearFix Depth2 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/tutorials" class="ItemLink"><span class="Aside"><span class="Count"><span title="32 discussions" class="Number">32</span></span></span> Tutorials</a></li>
+<li class="ClearFix Depth2 Category-faqs"><a href="https://gatkforums.broadinstitute.org/gatk/categories/faqs" class="ItemLink"><span class="Aside"><span class="Count"><span title="43 discussions" class="Number">43</span></span></span> Frequently Asked Questions</a></li>
+<li class="ClearFix Depth2 Category-problems"><a href="https://gatkforums.broadinstitute.org/gatk/categories/problems" class="ItemLink"><span class="Aside"><span class="Count"><span title="11 discussions" class="Number">11</span></span></span> Solutions to Problems</a></li>
+<li class="ClearFix Depth2 Category-methods"><a href="https://gatkforums.broadinstitute.org/gatk/categories/methods" class="ItemLink"><span class="Aside"><span class="Count"><span title="29 discussions" class="Number">29</span></span></span> Methods and Algorithms</a></li>
+<li class="ClearFix Depth2 Category-dictionary"><a href="https://gatkforums.broadinstitute.org/gatk/categories/dictionary" class="ItemLink"><span class="Aside"><span class="Count"><span title="22 discussions" class="Number">22</span></span></span> Dictionary</a></li>
+<li class="ClearFix Depth2 Category-gatk-4-alpha"><a href="https://gatkforums.broadinstitute.org/gatk/categories/gatk-4-beta" class="ItemLink"><span class="Aside"><span class="Count"><span title="17 discussions" class="Number">17</span></span></span> GATK 4 Beta</a></li>
+<li class="ClearFix Depth2 Active "><a href="https://gatkforums.broadinstitute.org/gatk/categories/archive" class="ItemLink"><span class="Aside"><span class="Count"><span title="52 discussions" class="Number">52</span></span></span> Archive</a></li>
+<li class="ClearFix Depth1 Category-zoo-garden"><a href="https://gatkforums.broadinstitute.org/gatk/categories/zoo-garden" class="ItemLink"><span class="Aside"><span class="Count"><span title="671 discussions" class="Number">671</span></span></span> Zoo &amp; Garden</a></li>
+<li class="ClearFix Depth1 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/third-party-tools" class="ItemLink"><span class="Aside"><span class="Count"><span title="786 discussions" class="Number">786</span></span></span> Tools related to GATK</a></li>
+<li class="ClearFix Depth2 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/mutect" class="ItemLink"><span class="Aside"><span class="Count"><span title="187 discussions" class="Number">187</span></span></span> MuTect v1</a></li>
+<li class="ClearFix Depth2 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/recapseg" class="ItemLink"><span class="Aside"><span class="Count"><span title="17 discussions" class="Number">17</span></span></span> ReCapSeg</a></li>
+<li class="ClearFix Depth2 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/oncotator" class="ItemLink"><span class="Aside"><span class="Count"><span title="42 discussions" class="Number">42</span></span></span> Oncotator </a></li>
+<li class="ClearFix Depth2 "><a href="https://gatkforums.broadinstitute.org/gatk/categories/genomestrip" class="ItemLink"><span class="Aside"><span class="Count"><span title="540 discussions" class="Number">540</span></span></span> GenomeSTRiP</a></li>
+</ul>
+</div>
+<div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div><iframe name="fb_xdm_frame_https" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/xd_arbiter.html" style="border: none;"></iframe></div><div></div></div></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script><div class="DismissMessage InfoMessage"><h4><i class="fa fa-rocket"></i> GATK Showcase in Terra</h4><br>
+Check out these <a href="https://app.terra.bio/#library/showcase">fully configured workspaces</a> to <b>test drive the Best Practices pipelines</b> and <b>workshop tutorials</b> with zero installation required!</div><div class="DismissMessage InfoMessage"><h4><i class="fa fa-envelope-o"></i> Get email notifications!</h4> <br>
+You can opt in to receive email notifications, for example when your questions get answered or when there are new announcements on the blog, by following the instructions given <a href="https://software.broadinstitute.org/gatk/documentation/article?id=11026">here</a>.</div><div class="DismissMessage InfoMessage"><h4><i class="fa fa-life-saver"></i> Got a problem?</h4><br>
+1. Search using the <i>upper-right</i> search box, e.g. using the error message.<br>
+2. Try the latest version of tools.<br>
+3. When reporting a problem, include tool and Java versions. <br>
+4. Tell us whether you are following <a href="https://software.broadinstitute.org/gatk/best-practices/">GATK Best Practices</a>. <br>
+5. Include relevant details, e.g. platform, DNA- or RNA-Seq, WES (+capture kit) or WGS (PCR-free or PCR+), paired- or single-end, read length, expected average coverage, somatic data, etc. <br>
+6. For tool errors, include the error stacktrace as well as the exact command.<br>
+7. For format issues, include the result of running <a href="https://software.broadinstitute.org/gatk/documentation/article?id=11095">ValidateSamFile</a> for BAMs or <a href="https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_hellbender_tools_walkers_variantutils_ValidateVariants.php">ValidateVariants</a> for VCFs.<br>
+8. For weird results, include an illustrative example, e.g. attach IGV screenshots according to <a href="https://software.broadinstitute.org/gatk/guide/article?id=5484">Article#5484</a>.<br>
+<br>
+<h4><i class="fa fa-bug"></i> Did we ask for a bug report?</h4><br>
+Then follow instructions in <a href="https://software.broadinstitute.org/gatk/guide/article?id=1894">Article#1894</a>. <br>
+<br>
+<h4><i class="fa fa-bug"></i> Did we give you a GitHub issue to track?</h4><br>
+For GitHub basics see <a href="https://software.broadinstitute.org/gatk/documentation/article?id=23405">Article#23405</a>. </div><div class="DismissMessage InfoMessage"><h4><i class="fa fa-lightbulb-o"></i> Formatting tip!</h4> <br>
+Wrap blocks of code, error messages and BAM/VCF snippets--especially content with hashes (#)--with lines with three backticks ( ``` ) each to make a code block as demonstrated <a href="http://gatkforums.broadinstitute.org/gatk/discussion/8856">here</a>.<br>
+</div>
+<hr>
+<h6 style="margin: 5px 0px 10px 4px; font-weight: bold;">Jump to another community</h6>
+<select class="subcommunity-toggle js-nav-dropdown">
+<option value="//gatkforums.broadinstitute.org/firecloud">FireCloud</option>
+<option value="//gatkforums.broadinstitute.org/gatk" selected="">GATK</option>
+<option value="//gatkforums.broadinstitute.org/wdl">Cromwell + WDL</option>
+</select>
+</aside>
+<main class="page-content" role="main">
+<div class="DismissMessage AlertMessage"><h4>Test-drive the GATK tools and Best Practices pipelines on Terra</h4><br>
+<b>Check out <a href="https://software.broadinstitute.org/gatk/blog">this blog post</a> to learn how you can get started with GATK and try out the pipelines in <a href="https://app.terra.bio/#library/showcase">preconfigured workspaces</a> (with a user-friendly interface!) without having to install anything.</b></div><div class="MessageList Discussion">
+<div id="Item_0" class="PageTitle"><div class="Options"></div><h1>(howto) Prepare a reference for use with BWA and GATK</h1></div>
+<div id="Discussion_2798" class="Item ItemDiscussion  Role_Member Role_Administrator Role_Broadie Rank-Admin">
+<div class="Discussion">
+<div class="Item-Header DiscussionHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Geraldine_VdAuwera" href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n0OU3FZMKRC2V.webp" alt="Geraldine_VdAuwera" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="Username">Geraldine_VdAuwera</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge, MA</span><span class="MItem RoleTitle">Member, Administrator, Broadie</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta DiscussionMeta">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk" class="Permalink" rel="nofollow"><time title="June 17, 2013  8:44PM" datetime="2013-06-17T20:44:09+00:00">June 2013</time></a> </span>
+<span class="MItem"> <span title="Edited August 15, 2016 10:04PM by shlee." class="DateUpdated">edited August 2016</span> </span> <span class="MItem Category"> in <a href="https://gatkforums.broadinstitute.org/gatk/categories/archive">Archive</a></span> </div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<h3>NOTE: This tutorial has been replaced by a more recent version that uses GRCh38 that you can find <a rel="nofollow" href="https://www.broadinstitute.org/gatk/guide/article?id=8017">here</a>.</h3>
+<hr>
+<h4>Objective</h4>
+<p>Prepare a reference sequence so that it is suitable for use with BWA and GATK.</p>
+<h4>Prerequisites</h4>
+<ul>
+<li>Installed BWA</li>
+<li>Installed SAMTools</li>
+<li>Installed Picard</li>
+</ul>
+<h4>Steps</h4>
+<ol>
+<li>Generate the BWA index</li>
+<li>Generate the Fasta file index</li>
+<li>Generate the sequence dictionary</li>
+</ol>
+<hr>
+<h3>1. Generate the BWA index</h3>
+<h4>Action</h4>
+<p>Run the following BWA command:</p>
+<pre><code>bwa index -a bwtsw reference.fa 
+</code></pre>
+<p>where <code>-a bwtsw</code> specifies that we want to use the indexing algorithm that is capable of handling the whole human genome.</p>
+<h4>Expected Result</h4>
+<p>This creates a collection of files used by BWA to perform the alignment.</p>
+<hr>
+<h3>2. Generate the fasta file index</h3>
+<h4>Action</h4>
+<p>Run the following SAMtools command:</p>
+<pre><code>samtools faidx reference.fa 
+</code></pre>
+<h4>Expected Result</h4>
+<p>This creates a file called <code>reference.fa.fai</code>, with one record per line for each of the contigs in the FASTA reference file. Each record is composed of the contig name, size, location, basesPerLine and bytesPerLine.</p>
+<hr>
+<h3>3. Generate the sequence dictionary</h3>
+<h4>Action</h4>
+<p>Run the following Picard command:</p>
+<pre><code>java -jar picard.jar CreateSequenceDictionary \
+    REFERENCE=reference.fa \ 
+    OUTPUT=reference.dict 
+</code></pre>
+<p>Note that this is the new syntax for use with the latest version of Picard. Older versions used a slightly different syntax because all the tools were in separate jars, so you'd call e.g. <code>java -jar CreateSequenceDictionary.jar</code> directly.</p>
+<h4>Expected Result</h4>
+<p>This creates a file called <code>reference.dict</code> formatted like a SAM header, describing the contents of your reference FASTA file.</p>
+</div>
+<div class="fb-like fb_iframe_widget" data-href="https://gatkforums.broadinstitute.org/gatk/discussion/2798/howto-prepare-a-reference-for-use-with-bwa-and-gatk" data-send="false" data-width="450" data-show-faces="false" data-font="lucida grande" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=&amp;container_width=0&amp;font=lucida%20grande&amp;href=https%3A%2F%2Fgatkforums.broadinstitute.org%2Fgatk%2Fdiscussion%2F2798%2Fhowto-prepare-a-reference-for-use-with-bwa-and-gatk&amp;locale=en_GB&amp;sdk=joey&amp;send=false&amp;show_faces=false&amp;width=450"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="fa0976d76f91b4" width="450px" height="1000px" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px; display: none !important;"></iframe></span></div><div class="PostEdited">Post edited by shlee on <time title="August 15, 2016 10:04PM" datetime="2016-08-15T22:04:30+00:00">August 2016</time></div> <script type="text/javascript">var switchTo5x=true;</script>
+<script type="text/javascript" src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/buttons.js.download"></script>
+<script type="text/javascript">stLight.options({
+         publisher: "Publisher Number",
+         doNotHash: true,
+         doNotCopy: true,
+         hashAddressBar: false
+      });</script>
+<div class="ShareThisButtonWrapper Right">
+<span class="st_twitter_hcount ShareThisButton" st_via="" displaytext="Tweet"></span>
+<span class="st_facebook_hcount ShareThisButton" displaytext="Facebook"></span>
+<span class="st_linkedin_hcount ShareThisButton " displaytext="LinkedIn"></span>
+<span class="st_googleplus_hcount ShareThisButton Hidden" displaytext="Google +"></span>
+<span class="st_reddit_hcount ShareThisButton Hidden" displaytext="Reddit"></span>
+<span class="st_pinterest_hcount ShareThisButton Hidden" displaytext="Pinterest"></span>
+<span class="st_email_hcount ShareThisButton" displaytext="Email"></span>
+<span class="st_sharethis_hcount ShareThisButton Hidden" displaytext="ShareThis"></span>
+</div> <div class="InlineTags Meta">
+Tagged:
+<ul>
+<li><a href="https://gatkforums.broadinstitute.org/gatk/discussions/tagged/picard" class="Tag_picard">picard</a></li>
+</ul>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/discussion?id=2798" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/discussion?id=2798" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</div>
+</div><div class="CommentsWrap"><span class="BeforeCommentHeading"></span><div class="DataBox DataBox-Comments"><h2 class="CommentHeading">Comments</h2> <ul class="MessageList DataList Comments">
+<li class="Item Alt ItemComment Role_Member" id="Comment_6899">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="pdexheimer" href="https://gatkforums.broadinstitute.org/gatk/profile/pdexheimer" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource" alt="pdexheimer" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/pdexheimer" class="Username">pdexheimer</a> </span>
+<span class="AuthorInfo">
+<span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 4">✭✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/6899/#Comment_6899" class="Permalink" name="Item_1" rel="nofollow"><time title="June 18, 2013  5:56PM" datetime="2013-06-18T17:56:13+00:00">June 2013</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hey Geraldine - I suspect that these howtos are still being written, but I wanted to point out a couple of issues with the BWA index step (#1 above): 1) The default mode in bwa index won't handle a mammalian-sized genome, you need to supply the <code>-a bwtsw</code> argument, and 2) I'm pretty sure that bwa index doesn't generate .fai files (though I haven't tested and could certainly be wrong)</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=6899" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=6899" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_6900">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Kurt" href="https://gatkforums.broadinstitute.org/gatk/profile/Kurt" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(1)" alt="Kurt" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Kurt" class="Username">Kurt</a> </span>
+<span class="AuthorInfo">
+<span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 3">✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/6900/#Comment_6900" class="Permalink" name="Item_2" rel="nofollow"><time title="June 18, 2013  6:05PM" datetime="2013-06-18T18:05:22+00:00">June 2013</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/pdexheimer" rel="nofollow">@pdexheimer</a> said, "I'm pretty sure that bwa index doesn't generate .fai files (though I haven't tested and could certainly be wrong)". This is true. Otherwise samtools faidx ref.fa would be redundant.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=6900" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=6900" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Rank-Admin isOriginalPoster Role_Member Role_Administrator Role_Broadie" id="Comment_6902">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Geraldine_VdAuwera" href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n0OU3FZMKRC2V.webp" alt="Geraldine_VdAuwera" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="Username">Geraldine_VdAuwera</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge, MA</span><span class="MItem RoleTitle">Member, Administrator, Broadie</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/6902/#Comment_6902" class="Permalink" name="Item_3" rel="nofollow"><time title="June 18, 2013  6:27PM" datetime="2013-06-18T18:27:22+00:00">June 2013</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Well spotted guys, thank you! I'll blame bad editing.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=6902" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=6902" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_12655">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="michaelchao" href="https://gatkforums.broadinstitute.org/gatk/profile/michaelchao" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(2)" alt="michaelchao" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/michaelchao" class="Username">michaelchao</a> </span>
+<span class="AuthorInfo">
+<span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/12655/#Comment_12655" class="Permalink" name="Item_4" rel="nofollow"><time title="March 24, 2014 10:19PM" datetime="2014-03-24T22:19:00+00:00">March 2014</time></a> </span>
+<span class="MItem"> <span title="Edited March 24, 2014 10:19PM by michaelchao." class="DateUpdated">edited March 2014</span> </span> </div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi</p>
+<p>Do we still follow this process if we use the GATK's resource bundle? The bundle already contains:</p>
+<p>human_g1k_v37.fasta</p>
+<p>human_g1k_v37.dict</p>
+<p>human_g1k_v37.fasta.fai</p>
+<p>For the files provided in the bundle, do we just need to create the bwa indices for GRCh37 using the following command:</p>
+<p>bwa index human_g1k_v37.fasta</p>
+<p>or are there any additional preparations for the reference genome before the alignment stage?</p>
+<p>Thank you for your help</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=12655" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=12655" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_12656">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Kurt" href="https://gatkforums.broadinstitute.org/gatk/profile/Kurt" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(1)" alt="Kurt" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Kurt" class="Username">Kurt</a> </span>
+<span class="AuthorInfo">
+<span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 3">✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/12656/#Comment_12656" class="Permalink" name="Item_5" rel="nofollow"><time title="March 24, 2014 10:50PM" datetime="2014-03-24T22:50:04+00:00">March 2014</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>You can, just need to note the addition that <a href="https://gatkforums.broadinstitute.org/gatk/profile/pdexheimer" rel="nofollow">@pdexheimer</a> mentions above in regards to bwa index. On a more subtle note, indexes generated via <code>bwa index -a bwtsw</code> for pre/post bwa 0.6 versions are different (due to the coding that allows bwa indexing of genomes greater than 4Gb). In short, all you should have to do with any version of bwa greater than 0.5-9 is index the genome with bwa index -a bwtsw. You get the rest you need when you unzip the files that the GATK resource bundle provides.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=12656" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=12656" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_17550">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="engrasif09" href="https://gatkforums.broadinstitute.org/gatk/profile/engrasif09" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(3)" alt="engrasif09" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/engrasif09" class="Username">engrasif09</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Pakistan</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/17550/#Comment_17550" class="Permalink" name="Item_6" rel="nofollow"><time title="November 25, 2014  2:36PM" datetime="2014-11-25T14:36:16+00:00">November 2014</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Looks like a stupid ask but can somebody tell me from where can I get .fa file?</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=17550" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=17550" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_17551">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/17551/#Comment_17551" class="Permalink" name="Item_7" rel="nofollow"><time title="November 25, 2014  3:28PM" datetime="2014-11-25T15:28:03+00:00">November 2014</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/engrasif09%E2%80%8C" rel="nofollow">@engrasif09‌</a></p>
+<p>Hi,</p>
+<p>If you are working with human samples, we provide the reference builds. They are located in our resource bundle. Please read about the resource bundle here: <a href="http://gatkforums.broadinstitute.org/discussion/1215/how-can-i-access-the-gsa-public-ftp-server" rel="nofollow">http://gatkforums.broadinstitute.org/discussion/1215/how-can-i-access-the-gsa-public-ftp-server</a><br>
+Once you log in, you can click on bundle then 2.8 where you will find the latest builds.</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=17551" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=17551" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_18851">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="sadiq" href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nDXHJ8CN8D5B4.jpg" alt="sadiq" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="Username">sadiq</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">pakistan</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/18851/#Comment_18851" class="Permalink" name="Item_8" rel="nofollow"><time title="February  4, 2015  2:47PM" datetime="2015-02-04T14:47:16+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>hello All<br>
+java -jar CreateSequenceDictionary.jar \<br>
+REFERENCE=reference.fa \ <br>
+OUTPUT=reference.dict<br>
+doesnt not work for me. How to give path to this command i am new to ubuntu. Thanks</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=18851" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=18851" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_18852">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/18852/#Comment_18852" class="Permalink" name="Item_9" rel="nofollow"><time title="February  4, 2015  2:59PM" datetime="2015-02-04T14:59:44+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" rel="nofollow">@sadiq</a></p>
+<p>Hi,</p>
+<p>The best thing to do is google how to set a path. You need to find where exactly your picard folder is stored on your computer and specify that location in the command.</p>
+<p>For example, my picard folder is in my Applications directory, so my path looks like this:<br>
+/Applications/picard/CreateSequenceDictionary.jar</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=18852" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=18852" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_18869">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="sadiq" href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nDXHJ8CN8D5B4.jpg" alt="sadiq" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="Username">sadiq</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">pakistan</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/18869/#Comment_18869" class="Permalink" name="Item_10" rel="nofollow"><time title="February  5, 2015  7:47AM" datetime="2015-02-05T07:47:22+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hello sheila,</p>
+<p>Thank you for your abrupt reply.<br>
+I am facing this issue <br>
+muhammad@muhammad-7G-Series:~/Desktop/Gatk$ /home/muhammad/Desktop java -jar CreateSequenceDictionary.jar \ REFERENCE=ucsc.hg19.fasta \OUTPUT=ucsc.hg19.dict<br>
+bash: /home/muhammad/Desktop: Is a directory<br>
+Picard folder is located on my desktop.<br>
+Please help.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=18869" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=18869" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_18870">
+<div class="Comment">
+<div class="Options">
+ </div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="sadiq" href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nDXHJ8CN8D5B4.jpg" alt="sadiq" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/sadiq" class="Username">sadiq</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">pakistan</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/18870/#Comment_18870" class="Permalink" name="Item_11" rel="nofollow"><time title="February  5, 2015  8:35AM" datetime="2015-02-05T08:35:56+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Ok i have fixed it. Thanks shiela for being innovative.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=18870" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=18870" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_19127">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="lcollopy" href="https://gatkforums.broadinstitute.org/gatk/profile/lcollopy" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(4)" alt="lcollopy" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/lcollopy" class="Username">lcollopy</a> </span>
+<span class="AuthorInfo">
+<span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/19127/#Comment_19127" class="Permalink" name="Item_12" rel="nofollow"><time title="February 17, 2015 11:03AM" datetime="2015-02-17T11:03:30+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>I've seem some people have similar issues but I can't fix that I get the error 'Unable to access jarfile CreateSequenceDictionary.jar'.</p>
+<p>I just spend several hours trying to add the GenomeAnalysisTK.jar file to my PATH and I think it worked because the test 'java -jar GenomeAnalysisTK.jar -h' shows something!</p>
+<p>So forgive my ignorance but I thought commands for that folder were accessible without having to specify complicated paths. Anyway I have opened the Picard folder in the GenomeAnalysisTK.jar file to and I don't have a CreateSequenceDictionary.jar folder at all - I thought I might just move it manually to the same directory as my reference.fa.</p>
+<p>Where am I going wrong?!</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=19127" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=19127" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_19131">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/19131/#Comment_19131" class="Permalink" name="Item_13" rel="nofollow"><time title="February 17, 2015  3:11PM" datetime="2015-02-17T15:11:10+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/lcollopy" rel="nofollow">@lcollopy</a> <br>
+Hi,</p>
+<p>CreateSequenceDictionary.jar is not part of GATK, it is part of Picard. You need to specify the path to your Picard folder, not your GATK folder. For example, my Picard folder is in my Applications folder, so my command looks like:</p>
+<p>java -jar /Applications/picard/CreateSequenceDictionary.jar</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=19131" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=19131" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Rank-Admin isOriginalPoster Role_Member Role_Administrator Role_Broadie" id="Comment_19219">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Geraldine_VdAuwera" href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n0OU3FZMKRC2V.webp" alt="Geraldine_VdAuwera" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="Username">Geraldine_VdAuwera</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge, MA</span><span class="MItem RoleTitle">Member, Administrator, Broadie</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/19219/#Comment_19219" class="Permalink" name="Item_14" rel="nofollow"><time title="February 21, 2015  6:14PM" datetime="2015-02-21T18:14:50+00:00">February 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/lcollopy" rel="nofollow">@lcollopy</a> Part of your confusion may be because you're familiar with invoking self-contained programs (like BWA) that you can add to your path and simply call by name. With java programs it's different because you invoke java itself by name, but then you have to tell it which jar file you want to run. That you cannot simply call by name in the "usual" way; you have to specify the full path to the jar. But you can set up an environment variable to avoid retyping it each time.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=19219" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=19219" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_23074">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Jeegar" href="https://gatkforums.broadinstitute.org/gatk/profile/Jeegar" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/photo.jpg" alt="Jeegar" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Jeegar" class="Username">Jeegar</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Canada</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/23074/#Comment_23074" class="Permalink" name="Item_15" rel="nofollow"><time title="August  1, 2015 10:12PM" datetime="2015-08-01T22:12:32+00:00">August 2015</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>This the error which I got after folllowing a proper command:</p>
+<p>lindas-mac-pro:~ lindakohn$ java -jar /Users/lindakohn/desktop/tools/picard/CreateSequenceDictionary.jar \REFERENCE= Users/lindakohn/desktop/PD/geomyces_destructans_20631-21_1_supercontigs.fasta \OUTPUT=geomyces_destructans_20631-21_1_supercontigs.dict<br>
+[Sat Aug 01 17:48:36 EDT 2015] picard.sam.CreateSequenceDictionary REFERENCE=Users/lindakohn/desktop/PD/geomyces_destructans_20631-21_1_supercontigs.fasta OUTPUT=geomyces_destructans_20631-21_1_supercontigs.dict TRUNCATE_NAMES_AT_WHITESPACE=true NUM_SEQUENCES=2147483647 VERBOSITY=INFO QUIET=false VALIDATION_STRINGENCY=STRICT COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false<br>
+[Sat Aug 01 17:48:36 EDT 2015] Executing as lindakohn@lindas-mac-pro.utmfs.ads.utm.utoronto.ca on Mac OS X 10.10.3 x86_64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_45-b14; Picard version: 1.119(d44cdb51745f5e8075c826430a39d8a61f1dd832_1408991805) JdkDeflater<br>
+[Sat Aug 01 17:48:36 EDT 2015] picard.sam.CreateSequenceDictionary done. Elapsed time: 0.00 minutes.<br>
+Runtime.totalMemory()=1029177344<br>
+To get help, see <a href="http://picard.sourceforge.net/index.shtml#GettingHelp" rel="nofollow">http://picard.sourceforge.net/index.shtml#GettingHelp</a><br>
+Exception in thread "main" htsjdk.samtools.SAMException: Error opening file: geomyces_destructans_20631-21_1_supercontigs.fasta<br>
+at htsjdk.samtools.util.IOUtil.openFileForReading(IOUtil.java:427)<br>
+at htsjdk.samtools.reference.FastaSequenceFile.(FastaSequenceFile.java:53)<br>
+at htsjdk.samtools.reference.ReferenceSequenceFileFactory.getReferenceSequenceFile(ReferenceSequenceFileFactory.java:81)<br>
+at picard.sam.CreateSequenceDictionary.makeSequenceDictionary(CreateSequenceDictionary.java:136)<br>
+at picard.sam.CreateSequenceDictionary.doWork(CreateSequenceDictionary.java:121)<br>
+at picard.cmdline.CommandLineProgram.instanceMain(CommandLineProgram.java:183)<br>
+at picard.sam.CreateSequenceDictionary.main(CreateSequenceDictionary.java:97)<br>
+Caused by: java.io.FileNotFoundException: Users/lindakohn/desktop/PD/geomyces_destructans_20631-21_1_supercontigs.fasta (No such file or directory)<br>
+at java.io.FileInputStream.open0(Native Method)<br>
+at java.io.FileInputStream.open(FileInputStream.java:195)<br>
+at java.io.FileInputStream.(FileInputStream.java:138)<br>
+at htsjdk.samtools.util.IOUtil.openFileForReading(IOUtil.java:423)<br>
+... 6 more</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=23074" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=23074" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_23104">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/23104/#Comment_23104" class="Permalink" name="Item_16" rel="nofollow"><time title="August  3, 2015  3:13PM" datetime="2015-08-03T15:13:28+00:00">August 2015</time></a> </span>
+ </div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/Jeegar" rel="nofollow">@Jeegar</a> <br>
+Hi,</p>
+<p>The error message tells me the fasta file is either not in the path you specified, or the directory does not exist. You will have to check which one is the problem.</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=23104" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=23104" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_28776">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="tc19" href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(5)" alt="tc19" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="Username">tc19</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Seoul, Korea</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/28776/#Comment_28776" class="Permalink" name="Item_17" rel="nofollow"><time title="March 23, 2016  3:08AM" datetime="2016-03-23T03:08:52+00:00">March 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hello</p>
+<p>I have installed bwa-0.7.13 successfully and tried to index the UCSC reference genome hg19 but got a "can not allocate memory" error.<br>
+I have downloaded the reference file from the resources files here. I have searched google for solution but could not get anything specific.<br>
+I am using a virtual machine of ubuntu 14.04 with 4GB RAM and 60 GB hard disk space. Kindly help.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=28776" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=28776" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> <div class="item-attachments">
+<div class="item-attachment">
+<div class="alert">
+<div class="media item">
+<div class="pull-left">
+<div class="media-object">
+<i class="icon icon-github"></i>
+</div>
+</div>
+<div class="media-body">
+<div class="item-header">
+<h4 class="media-heading item-heading">Issue ·
+<a href="https://github.com/broadinstitute/dsde-docs/issues/735" target="_blank" rel="noopener">Github</a>
+<div class="item-meta">
+<span><time title="March 23, 2016  5:47PM" datetime="2016-03-23T17:47:33+00:00">March 2016</time> by <a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila">Sheila</a></span>
+</div>
+</h4></div>
+<div class="item-body">
+<dl class="dl-columns">
+<dt>Issue Number</dt>
+<dd><a href="https://github.com/broadinstitute/dsde-docs/issues/735" target="_blank" rel="noopener">735</a></dd>
+<dt>State</dt>
+<dd>closed</dd>
+<dt>Last Updated</dt>
+<dd><time title="March 23, 2016  6:21PM" datetime="2016-03-23T18:21:49+00:00">March 2016</time></dd>
+<dt>Assignee</dt>
+<dd>Array</dd>
+<dt>Milestone</dt>
+<dd>Array</dd>
+<dt>Closed By</dt>
+<dd><a href="http://github.com/vdauwera" target="_blank" rel="noopener">vdauwera</a> </dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_28828">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/28828/#Comment_28828" class="Permalink" name="Item_18" rel="nofollow"><time title="March 25, 2016  1:20AM" datetime="2016-03-25T01:20:20+00:00">March 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" rel="nofollow">@tc19</a> <br>
+Hi,</p>
+<p>Unfortunately, we cannot help you as you are running BWA, not GATK tools.</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=28828" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=28828" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_28831">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="tc19" href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(5)" alt="tc19" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="Username">tc19</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Seoul, Korea</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/28831/#Comment_28831" class="Permalink" name="Item_19" rel="nofollow"><time title="March 25, 2016  3:09AM" datetime="2016-03-25T03:09:02+00:00">March 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi Sheila</p>
+<p>Thank you for your response. I seem to have found the solution.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=28831" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=28831" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Rank-Admin Role_Member Role_Broadie Role_Moderator" id="Comment_28849">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Sheila" href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n3CKLJTLRLMQD.webp" alt="Sheila" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila" class="Username">Sheila</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Broad Institute</span><span class="MItem RoleTitle">Member, Broadie, Moderator</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/28849/#Comment_28849" class="Permalink" name="Item_20" rel="nofollow"><time title="March 25, 2016  9:18PM" datetime="2016-03-25T21:18:16+00:00">March 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" rel="nofollow">@tc19</a> <br>
+Hi,</p>
+<p>Great! If you would like to share your resolution here, perhaps your solution will help others on the forum.</p>
+<p>-Sheila</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=28849" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=28849" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_28882">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="tc19" href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(5)" alt="tc19" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/tc19" class="Username">tc19</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Seoul, Korea</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/28882/#Comment_28882" class="Permalink" name="Item_21" rel="nofollow"><time title="March 29, 2016  8:35AM" datetime="2016-03-29T08:35:20+00:00">March 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi<br>
+I found out from the BWA site that to index human genome BWA needs atleast 5GB memory. I was running it with 4GB RAM hence I was getting the "cannot allocate memory error". I increased my RAM to 5.5GB in the virtual machine and was able to index the hg19 reference gene.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=28882" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=28882" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_31965">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="RaviKumarSindhu" href="https://gatkforums.broadinstitute.org/gatk/profile/RaviKumarSindhu" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(6)" alt="RaviKumarSindhu" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/RaviKumarSindhu" class="Username">RaviKumarSindhu</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Silver Spring, MD</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/31965/#Comment_31965" class="Permalink" name="Item_22" rel="nofollow"><time title="July 29, 2016  9:08PM" datetime="2016-07-29T21:08:31+00:00">July 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi, <br>
+I have a question about index of human reference genome using BWA. Is it ok to index the "zipped" fasta file of Human reference genome or one should ist unzip it and then index it using BWA ?.</p>
+<p>(1). bwa index -a bwtsw human_g1k_v37.fasta.gz<br>
+OR<br>
+(2). bwa index -a bwtsw human_g1k_v37.fasta</p>
+<p>Although BWA index both these ways but i want to know whether indexing zipped fasta file is OK or not ?. thanks - Ravi</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=31965" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=31965" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member" id="Comment_32006">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="RaviKumarSindhu" href="https://gatkforums.broadinstitute.org/gatk/profile/RaviKumarSindhu" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(6)" alt="RaviKumarSindhu" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/RaviKumarSindhu" class="Username">RaviKumarSindhu</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Silver Spring, MD</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/32006/#Comment_32006" class="Permalink" name="Item_23" rel="nofollow"><time title="August  2, 2016  2:23PM" datetime="2016-08-02T14:23:04+00:00">August 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>"Gzipped fasta files will not work with the GATK, so please make sure to unzip them first."</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">1</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=32006" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=32006" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_34276">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="airuck" href="https://gatkforums.broadinstitute.org/gatk/profile/airuck" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/saved_resource(7)" alt="airuck" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/airuck" class="Username">airuck</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">California</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34276/#Comment_34276" class="Permalink" name="Item_24" rel="nofollow"><time title="November 15, 2016  4:10PM" datetime="2016-11-15T16:10:50+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>One of my colleagues was confused by the lack of angle brackets around "reference.fa". Without brackets it appears as a literal. It seems like a minor issue, but this is much more common and less confusing to CS folks:</p>
+<p>bwa index -a bwtsw &lt;reference.fa&gt;</p>
+<p>samtools faidx &lt;reference.fa&gt;</p>
+<p>java -jar picard.jar CreateSequenceDictionary \<br>
+REFERENCE=&lt;reference.fa&gt; \ <br>
+OUTPUT=&lt;reference.dict&gt;</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34276" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34276" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Rank-Admin isOriginalPoster Role_Member Role_Administrator Role_Broadie" id="Comment_34282">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Geraldine_VdAuwera" href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n0OU3FZMKRC2V.webp" alt="Geraldine_VdAuwera" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="Username">Geraldine_VdAuwera</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge, MA</span><span class="MItem RoleTitle">Member, Administrator, Broadie</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34282/#Comment_34282" class="Permalink" name="Item_25" rel="nofollow"><time title="November 15, 2016  5:02PM" datetime="2016-11-15T17:02:43+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/airuck" rel="nofollow">@airuck</a> The difficulty here is that we've got a very mixed audience; overall we believe we have more users who have more bio science than CS background, and understand the literal form better. If we include angle brackets we have many users who will type them into their command. If we don't, they typically understand that they need to edit the file name value to match what they are working with. So we cater more to that part of our audience, and assume that CS folks will figure it out reasonably quickly what our conventions are.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34282" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34282" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member" id="Comment_34410">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="dotkesner" href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/photo(1).jpg" alt="dotkesner" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" class="Username">dotkesner</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">mgh</span><span class="MItem RoleTitle">Member</span> <span class="Rank MItem" title="Level 1">✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34410/#Comment_34410" class="Permalink" name="Item_26" rel="nofollow"><time title="November 22, 2016  7:54AM" datetime="2016-11-22T07:54:47+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>You you have an equivalent for STAR. I am running PICARD to in preparation for running GATK and am running into errors.</p>
+<p>Here for instance:</p>
+<p>I am running into a problem with PICARD where by the validation of PICARD does not expect extended CIGAR operators. There is an S and and H in the offending CIGAR.</p>
+<p>HERE are the offending reads:</p>
+<p>D64TDFP1:323:C83UKACXX:1:1309:1615:65600 99 chr1 71619089 60 50M = 71619128 59 TCCCGGCTTCGGTGCAGCGCACCGAGGTCCCCAGGCACAGGACTGCCAGC BBCFFFFFHHHHFHHIJIIJJJJJJJJHIJJJJJJJJJJJHHHHFFFFFD MD:Z:50 PG:Z:MarkDuplicates RG:Z:1 NH:i:1 HI:i:1 jI:B:i,-1 NM:i:0 jM:B:c,-1 nM:i:0 AS:i:69<br>
+D64TDFP1:323:C83UKACXX:1:1309:1615:65600 147 chr1 71619178 60 25H25S = 71619089 -59 GACTGACAGCCACCGGGGATTGAGG JJJJIJJJJJJJHHHHHFFFFFCC@ MD:Z:20 PG:Z:MarkDuplicates RG:Z:1 NH:i:1 HI:i:1 jI:B:i,-1 NM:i:0 jM:B:c,-1 nM:i:0 AS:i:69</p>
+<hr>
+<p>Here is the error message when I try to index the split.bam in preparing to do<br>
+var calls.</p>
+<p>[Tue Nov 22 02:34:21 EST 2016] picard.sam.BuildBamIndex INPUT=split.bam VERBOSITY=INFO QUIET=false VALIDATION_STRINGENCY=STRICT COMPRESSION_LEVEL=5 MAX_RECORDS_IN_RAM=500000 CREATE_INDEX=false CREATE_MD5_FILE=false GA4GH_CLIENT_SECRETS=client_secrets.json<br>
+[Tue Nov 22 02:34:21 EST 2016] Executing as bak22@cmu111.research.partners.org on Linux 2.6.32-431.29.2.el6.x86_64 amd64; Java HotSpot(TM) 64-Bit Server VM 1.8.0_40-b26; Picard version: 2.7.1-20-gf8a93c9-SNAPSHOT<br>
+[Tue Nov 22 02:34:25 EST 2016] picard.sam.BuildBamIndex done. Elapsed time: 0.08 minutes.<br>
+Runtime.totalMemory()=1417674752<br>
+To get help, see <a href="http://broadinstitute.github.io/picard/index.html#GettingHelp" rel="nofollow">http://broadinstitute.github.io/picard/index.html#GettingHelp</a><br>
+Exception in thread "main" htsjdk.samtools.SAMFormatException: SAM validation error: ERROR: Read name D64TDFP1:323:C83UKACXX:1:1309:1615:65600, No real operator (M|I|D|N) in CIGAR<br>
+at htsjdk.samtools.SAMUtils.processValidationErrors(SAMUtils.java:448)<br>
+at htsjdk.samtools.BAMRecord.getCigar(BAMRecord.java:252)<br>
+at htsjdk.samtools.SAMRecord.getAlignmentEnd(SAMRecord.java:600)<br>
+at htsjdk.samtools.SAMRecord.computeIndexingBin(SAMRecord.java:1531)<br>
+at htsjdk.samtools.SAMRecord.isValid(SAMRecord.java:2038)<br>
+at htsjdk.samtools.BAMFileReader$BAMFileIterator.advance(BAMFileReader.java:664)<br>
+at htsjdk.samtools.BAMFileReader$BAMFileIterator.next(BAMFileReader.java:650)<br>
+at htsjdk.samtools.BAMFileReader$BAMFileIterator.next(BAMFileReader.java:620)<br>
+at htsjdk.samtools.SamReader$AssertingIterator.next(SamReader.java:545)<br>
+at htsjdk.samtools.SamReader$AssertingIterator.next(SamReader.java:519)<br>
+at htsjdk.samtools.BAMIndexer.createIndex(BAMIndexer.java:305)<br>
+at htsjdk.samtools.BAMIndexer.createIndex(BAMIndexer.java:289)<br>
+at picard.sam.BuildBamIndex.doWork(BuildBamIndex.java:147)<br>
+1,9 Top</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34410" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34410" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> <div class="item-attachments">
+<div class="item-attachment">
+<div class="alert">
+<div class="media item">
+<div class="pull-left">
+<div class="media-object">
+<i class="icon icon-github"></i>
+</div>
+</div>
+<div class="media-body">
+<div class="item-header">
+<h4 class="media-heading item-heading">Issue ·
+<a href="https://github.com/broadinstitute/dsde-docs/issues/1466" target="_blank" rel="noopener">Github</a>
+<div class="item-meta">
+<span><time title="November 23, 2016  4:21PM" datetime="2016-11-23T16:21:01+00:00">November 2016</time> by <a href="https://gatkforums.broadinstitute.org/gatk/profile/Sheila">Sheila</a></span>
+</div>
+</h4></div>
+<div class="item-body">
+<dl class="dl-columns">
+<dt>Issue Number</dt>
+<dd><a href="https://github.com/broadinstitute/dsde-docs/issues/1466" target="_blank" rel="noopener">1466</a></dd>
+<dt>State</dt>
+<dd>closed</dd>
+<dt>Last Updated</dt>
+<dd><time title="November 30, 2016  6:29PM" datetime="2016-11-30T18:29:10+00:00">November 2016</time></dd>
+<dt>Assignee</dt>
+<dd>Array</dd>
+<dt>Milestone</dt>
+<dd>Array</dd>
+<dt>Closed By</dt>
+<dd><a href="http://github.com/sooheelee" target="_blank" rel="noopener">sooheelee</a> </dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member Role_Broadie" id="Comment_34467">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="shlee" href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nTFJG7EC081EO.webp" alt="shlee" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="Username">shlee</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge</span><span class="MItem RoleTitle">Member, Broadie</span> <span class="Rank MItem" title="Level 5">✭✭✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34467/#Comment_34467" class="Permalink" name="Item_27" rel="nofollow"><time title="November 28, 2016  3:35AM" datetime="2016-11-28T03:35:24+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi <a href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" rel="nofollow">@dotkesner</a>,</p>
+<p>Your second in pair read, with CIGAR <code>25H25S</code>, does not adhere to SAM specifications. Half the read is gone (hardclipped) and the other half is softclipped making none of the sequence aligned. The position field is meant to indicate the leftmost mapping base and in this case such a coordinate does not make sense.</p>
+<p>I would think such a read should instead be <a rel="nofollow" href="https://software.broadinstitute.org/gatk/guide/article?id=6976">unmapped</a>.</p>
+<p>Can you tell me are there many such odd reads in your BAM and are these intended by your aligner? Also, are you following the 2-pass method for RNA-Seq workflows?</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34467" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34467" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Role_Member Role_Broadie" id="Comment_34490">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="shlee" href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nTFJG7EC081EO.webp" alt="shlee" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="Username">shlee</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge</span><span class="MItem RoleTitle">Member, Broadie</span> <span class="Rank MItem" title="Level 5">✭✭✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34490/#Comment_34490" class="Permalink" name="Item_28" rel="nofollow"><time title="November 28, 2016  9:29PM" datetime="2016-11-28T21:29:17+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p>Hi <a href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" rel="nofollow">@dotkesner</a>, I've talked to some folks here and apparently such odd alignments occur fairly frequently. My first suggestion is that you try to index with <code>samtools index</code>. My other less likely suggestion is to try Picard SortSam to index. I'm going to guess this latter tool will give the same error as BuildBamIndex but it is worth confirming this (if you don't mind). Let me know if one or both of these work for you.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34490" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34490" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item Alt ItemComment Role_Member Role_Broadie" id="Comment_34545">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="shlee" href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="PhotoWrap"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/nTFJG7EC081EO.webp" alt="shlee" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/shlee" class="Username">shlee</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge</span><span class="MItem RoleTitle">Member, Broadie</span> <span class="Rank MItem" title="Level 5">✭✭✭✭✭</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34545/#Comment_34545" class="Permalink" name="Item_29" rel="nofollow"><time title="November 30, 2016  4:06PM" datetime="2016-11-30T16:06:55+00:00">November 2016</time></a> </span>
+<span class="MItem"> <span title="Edited November 30, 2016 4:43PM by shlee." class="DateUpdated">edited November 2016</span> </span> </div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" rel="nofollow">@dotkesner</a>, It occurs to me that if you want to remove such problematic reads, you can also use GATK's <a rel="nofollow" href="https://software.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_gatk_tools_walkers_readutils_PrintReads.php">PrintReads</a> in <code>--unsafe</code> mode (so the tool will take an unindexed BAM). This allows you to utilize GATK Engine filters. For example, one of the default filters, <a rel="nofollow" href="https://software.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_gatk_engine_filters_BadCigarFilter.php">BadCigarFilter</a>, should remove such reads based on the "fully hard or soft clipped" criteria. This PrintReads step should generate an index but because you're running the tool in unsafe mode, just to be safe, I would regenerate the index in a separate step with the resulting file.</p>
+<p>Also, take a look at the <a rel="nofollow" href="https://software.broadinstitute.org/gatk/guide/article?id=7571">ValidateSamFile document</a>.</p>
+</div>
+<div class="PostEdited">Post edited by shlee on <time title="November 30, 2016  4:43PM" datetime="2016-11-30T16:43:54+00:00">November 2016</time></div><div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34545" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34545" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+<li class="Item ItemComment Rank-Admin isOriginalPoster Role_Member Role_Administrator Role_Broadie" id="Comment_34557">
+<div class="Comment">
+<div class="Options">
+</div>
+<div class="Item-Header CommentHeader">
+<div class="AuthorWrap">
+<span class="Author">
+<a title="Geraldine_VdAuwera" href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="PhotoWrap Rank-Admin"><img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/n0OU3FZMKRC2V.webp" alt="Geraldine_VdAuwera" class="ProfilePhoto ProfilePhotoMedium"></a><a href="https://gatkforums.broadinstitute.org/gatk/profile/Geraldine_VdAuwera" class="Username">Geraldine_VdAuwera</a> </span>
+<span class="AuthorInfo">
+<span class="MItem AuthorLocation">Cambridge, MA</span><span class="MItem RoleTitle">Member, Administrator, Broadie</span> <span class="Rank MItem Rank-Admin" title="Administrator">admin</span> </span>
+</div>
+<div class="Meta CommentMeta CommentInfo">
+<span class="MItem DateCreated">
+<a href="https://gatkforums.broadinstitute.org/gatk/discussion/comment/34557/#Comment_34557" class="Permalink" name="Item_30" rel="nofollow"><time title="November 30, 2016  5:38PM" datetime="2016-11-30T17:38:55+00:00">November 2016</time></a> </span>
+</div>
+</div>
+<div class="Item-BodyWrap">
+<div class="Item-Body">
+<div class="Message userContent">
+<p><a href="https://gatkforums.broadinstitute.org/gatk/profile/dotkesner" rel="nofollow">@dotkesner</a> More immediately, try relaxing the validation stringency parameter -- that will tell Picard not to flip out on reads that don't make sense but aren't actually broken. By default it's set to <code>VALIDATION_STRINGENCY=STRICT</code> but you can set it to <code>LENIENT</code>, I believe.</p>
+<p>This is safer than trying to use GATK in unsafe mode.</p>
+</div>
+<div class="Reactions"><span class="Column-Score Hidden">0</span><span class="ReactMenu"><span class="ReactButtons"> </span></span> <span class="Bullet">·</span> <a href="https://gatkforums.broadinstitute.org/gatk/post/twitter/comment?id=34557" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="Sprite ReactSprite ReactTwitter"></span><span class="sr-only">Share on Twitter</span></a> <a href="https://gatkforums.broadinstitute.org/gatk/post/googleplus/comment?id=34557" class="ReactButton PopupWindow" rel="nofollow"><span aria-hidden="true" class="ReactSprite ReactGooglePlus"></span><span class="sr-only">Share on Google+</span></a> </div> </div>
+</div>
+</div>
+</li>
+</ul>
+</div><div class="P PagerWrap"></div></div> <div class="Foot Closed">
+<div class="Note Closed">This discussion has been closed.</div>
+</div>
+</main>
+</div>
+<br><br>
+</section>
+<footer class="page-footer sticky-footer">
+<div class="container">
+<div class="clearfix">
+<a href="https://software.broadinstitute.org/">
+<img src="./(howto) Prepare a reference for use with BWA and GATK — GATK-Forum_files/broad-logo-333.png" width="118" height="35" href="https://www.broadinstitute.org/">
+</a>
+<br><small>Copyright © 2019</small>
+</div>
+</div>
+</footer>
+
+
+<ul class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content ui-corner-all MenuItems MenuItems-Input" id="ui-id-1" tabindex="0" style="display: none;"></ul><div class="token-input-dropdown" style="display: none;"></div><div class="token-input-dropdown" style="display: none;"></div><div id="atwho-container"></div></body></html>

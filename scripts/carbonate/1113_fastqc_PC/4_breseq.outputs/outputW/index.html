@@ -1,0 +1,409 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html>
+<head>
+<title>BRESEQ :: Mutation Predictions</title>
+<style type = "text/css">
+body {font-family: sans-serif; font-size: 11pt;}
+th {background-color: rgb(0,0,0); color: rgb(255,255,255);}
+table {background-color: rgb(1,0,0); color: rgb(0,0,0);}
+tr {background-color: rgb(255,255,255);}
+.mutation_in_codon {color:red; text-decoration : underline;}
+.snp_type_synonymous{color:green;}
+.snp_type_nonsynonymous{color:blue;}
+.snp_type_nonsense{color:red;}
+.mutation_header_row {background-color: rgb(0,130,0);}
+.read_alignment_header_row {background-color: rgb(255,0,0);}
+.missing_coverage_header_row {background-color: rgb(0,100,100);}
+.new_junction_header_row {background-color: rgb(0,0,155);}
+.copy_number_header_row {background-color: rgb(153,102,0);}
+.alternate_table_row_0 {background-color: rgb(255,255,255);}
+.alternate_table_row_1 {background-color: rgb(235,235,235);}
+.gray_table_row {background-color: rgb(230,230,245);}
+.polymorphism_table_row {background-color: rgb(160,255,160);}
+.highlight_table_row {background-color: rgb(192,255,255);}
+.reject_table_row {background-color: rgb(255,200,165);}
+.user_defined_table_row {background-color: rgb(255,255,0);}
+.information_table_row {background-color: rgb(200,255,255);}
+.junction_repeat {background-color: rgb(255,165,0)}
+.junction_gene {}
+.hidden { display: none; }
+.unhidden { display: block; }
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<script type="text/javascript">
+  function hideTog(divID) {
+    var item = document.getElementById(divID);
+    if (item) {
+      item.className=(item.className=='hidden')?'unhidden':'hidden';
+    }
+  }
+  function showTog(butID) {
+    var button = document.getElementById(butID);
+    if (button) {
+      button.value=(button.value=='Show')?'Hide':'Show';
+    }
+  }
+</script>
+
+</head>
+<body>
+<table width="100%" border="0" cellspacing="0" cellpadding="3">
+<tr>
+<td><a href="http://barricklab.org/breseq"><img src="evidence/breseq_small.png" /></a></td>
+<td width="100%">
+<b><i>breseq</i></b>&nbsp;&nbsp;version 0.32.0&nbsp;&nbsp;revision 6ff6de7d1b87
+<br><a href="index.html">mutation predictions</a> | 
+<a href="marginal.html">marginal predictions</a> | 
+<a href="summary.html">summary statistics</a> | 
+<a href="output.gd">genome diff</a> | 
+<a href="log.txt">command line log</a>
+</td></tr></table>
+
+<p>
+<!--Mutation Predictions -->
+<p>
+<!--Output Html_Mutation_Table_String-->
+<table border="0" cellspacing="1" cellpadding="3">
+<tr><th colspan="7" align="left" class="mutation_header_row">Predicted mutations</th></tr><tr>
+<th>evidence</th>
+<th>position</th>
+<th>mutation</th>
+<th>freq</th>
+<th>annotation</th>
+<th>gene</th>
+<th width="100%">description</th>
+</tr>
+
+<!-- Item Lines -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SUB_1.html">RA</a></td><!-- Evidence -->
+<td align="right">20,023</td><!-- Position -->
+<td align="center">2&nbsp;bp&rarr;TA</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;645/&#8209;392)</td>
+<td align="center"><i>JCVISYN3A_0918</i>&nbsp;&larr;&nbsp;/&nbsp;&rarr;&nbsp;<i>tetM</i></td>
+<td align="left">Imidazoleglycerol&#8209;phosphate dehydratase/Tetracycline resistance ribosomal protection protein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_2.html">RA</a></td><!-- Evidence -->
+<td align="right">34,602</td><!-- Position -->
+<td align="center">G&rarr;A</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center"><font class="snp_type_nonsynonymous">M1698I</font>&nbsp;(AT<font class="mutation_in_codon">G</font>&rarr;AT<font class="mutation_in_codon">A</font>)&nbsp;</td>
+<td align="center"><i>JCVISYN3A_0034</i>&nbsp;&rarr;</td>
+<td align="left">Uncharacterized efflux ABC transporter permease</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/INS_3.html">RA</a></td><!-- Evidence -->
+<td align="right">34,960:1</td><!-- Position -->
+<td align="center">(A)<sub>15&rarr;16</sub></td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+64/+102)</td>
+<td align="center"><i>JCVISYN3A_0034</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>ftsH</i></td>
+<td align="left">Uncharacterized efflux ABC transporter permease/Membrane anchored AAA+ protease</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/DEL_4.html">RA</a></td><!-- Evidence -->
+<td align="right">76,908</td><!-- Position -->
+<td align="center">(T)<sub>16&rarr;15</sub></td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;157/+28)</td>
+<td align="center"><i>galU,&nbsp;gtaB</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>JCVISYN3A_0116</i></td>
+<td align="left">UTP&#8209;&#8209;glucose&#8209;1&#8209;phosphate uridylyltransferase/Uncharacterized protein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/DEL_5.html">RA</a></td><!-- Evidence -->
+<td align="right">87,917</td><!-- Position -->
+<td align="center">(T)<sub>15&rarr;14</sub></td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+44/&#8209;816)</td>
+<td align="center"><i>ietS</i>&nbsp;&rarr;&nbsp;/&nbsp;&rarr;&nbsp;<i>rpmE</i></td>
+<td align="left">Toxin&#8209;antitoxin serine protease/50S ribosomal protein L31</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_6.html">RA</a></td><!-- Evidence -->
+<td align="right">105,339</td><!-- Position -->
+<td align="center">T&rarr;G</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+834/+92)</td>
+<td align="center"><i>JCVISYN3A_0151</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>alaRS</i></td>
+<td align="left">Translation elongation factor Tu/Alanine&#8209;&#8209;tRNA ligase</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_7.html">RA</a></td><!-- Evidence -->
+<td align="right">165,218</td><!-- Position -->
+<td align="center">A&rarr;T</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+182/&#8209;360)</td>
+<td align="center"><i>tsaB,&nbsp;yeaZ</i>&nbsp;&rarr;&nbsp;/&nbsp;&rarr;&nbsp;<i>tRNA&#8209;Ser</i></td>
+<td align="left">tRNA N6&#8209;adenosine(37)&#8209;N6&#8209;threonylcarbamoyltransferase complex dimerization subunit/tRNA&#8209;Ser</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_8.html">RA</a></td><!-- Evidence -->
+<td align="right">165,222</td><!-- Position -->
+<td align="center">G&rarr;A</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+186/&#8209;356)</td>
+<td align="center"><i>tsaB,&nbsp;yeaZ</i>&nbsp;&rarr;&nbsp;/&nbsp;&rarr;&nbsp;<i>tRNA&#8209;Ser</i></td>
+<td align="left">tRNA N6&#8209;adenosine(37)&#8209;N6&#8209;threonylcarbamoyltransferase complex dimerization subunit/tRNA&#8209;Ser</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/JC_50.html">JC</a></td><!-- Evidence -->
+<td align="right">202,487</td><!-- Position -->
+<td align="center">&Delta;3&nbsp;bp</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+265/&#8209;408)</td>
+<td align="center"><i>JCVISYN3A_0332</i>&nbsp;&rarr;&nbsp;/&nbsp;&rarr;&nbsp;<i>JCVISYN3A_0338</i></td>
+<td align="left">Uncharacterized protein/Uncharacterized lipoprotein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_10.html">RA</a></td><!-- Evidence -->
+<td align="right">202,496</td><!-- Position -->
+<td align="center">A&rarr;T</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+274/&#8209;401)</td>
+<td align="center"><i>JCVISYN3A_0332</i>&nbsp;&rarr;&nbsp;/&nbsp;&rarr;&nbsp;<i>JCVISYN3A_0338</i></td>
+<td align="left">Uncharacterized protein/Uncharacterized lipoprotein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/INS_11.html">RA</a></td><!-- Evidence -->
+<td align="right">203,911:1</td><!-- Position -->
+<td align="center">(T)<sub>16&rarr;17</sub></td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+295/+163)</td>
+<td align="center"><i>JCVISYN3A_0338</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>ppa</i></td>
+<td align="left">Uncharacterized lipoprotein/Inorganic diphosphatase</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="polymorphism_table_row">
+<td align="center"><a href="evidence/SNP_12.html">RA</a></td><!-- Evidence -->
+<td align="right">361,200</td><!-- Position -->
+<td align="center">G&rarr;A</td><!-- Cell Mutation -->
+<td align="right">27.8%</td>
+<td align="center">intergenic&nbsp;(+189/+375)</td>
+<td align="center"><i>met14p</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>JCVISYN3A_0592</i></td>
+<td align="left">Adenylyl&#8209;sulfate kinase/Uncharacterized protein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SUB_13.html">RA</a></td><!-- Evidence -->
+<td align="right">420,157</td><!-- Position -->
+<td align="center">2&nbsp;bp&rarr;TT</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;440/+402)</td>
+<td align="center"><i>rpsJ</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>tRNA&#8209;Thr</i></td>
+<td align="left">30S ribosomal protein S10/tRNA&#8209;Thr</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SUB_14.html">RA</a></td><!-- Evidence -->
+<td align="right">420,163</td><!-- Position -->
+<td align="center">2&nbsp;bp&rarr;TT</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;446/+396)</td>
+<td align="center"><i>rpsJ</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>tRNA&#8209;Thr</i></td>
+<td align="left">30S ribosomal protein S10/tRNA&#8209;Thr</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_15.html">RA</a></td><!-- Evidence -->
+<td align="right">449,180</td><!-- Position -->
+<td align="center">G&rarr;A</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+38/+15)</td>
+<td align="center"><i>JCVISYN3A_0730</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>deoC</i></td>
+<td align="left">Uncharacterized protein/Deoxyribose&#8209;phosphate aldolase</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_16.html">RA</a></td><!-- Evidence -->
+<td align="right">484,791</td><!-- Position -->
+<td align="center">T&rarr;A</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;100/+71)</td>
+<td align="center"><i>JCVISYN3A_0805</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>rplG</i></td>
+<td align="left">Uncharacterized protein/50S ribosomal protein L7/L12</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_17.html">RA</a></td><!-- Evidence -->
+<td align="right">484,793</td><!-- Position -->
+<td align="center">A&rarr;T</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;102/+69)</td>
+<td align="center"><i>JCVISYN3A_0805</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>rplG</i></td>
+<td align="left">Uncharacterized protein/50S ribosomal protein L7/L12</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_18.html">RA</a></td><!-- Evidence -->
+<td align="right">484,795</td><!-- Position -->
+<td align="center">A&rarr;T</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;104/+67)</td>
+<td align="center"><i>JCVISYN3A_0805</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>rplG</i></td>
+<td align="left">Uncharacterized protein/50S ribosomal protein L7/L12</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_19.html">RA</a></td><!-- Evidence -->
+<td align="right">484,801</td><!-- Position -->
+<td align="center">A&rarr;G</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(&#8209;110/+61)</td>
+<td align="center"><i>JCVISYN3A_0805</i>&nbsp;&larr;&nbsp;/&nbsp;&larr;&nbsp;<i>rplG</i></td>
+<td align="left">Uncharacterized protein/50S ribosomal protein L7/L12</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_20.html">RA</a></td><!-- Evidence -->
+<td align="right">516,354</td><!-- Position -->
+<td align="center">A&rarr;T</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+185/+321)</td>
+<td align="center"><i>nusG</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>JCVISYN3A_0851</i></td>
+<td align="left">Antitermination protein/Uncharacterized lipoprotein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_21.html">RA</a></td><!-- Evidence -->
+<td align="right">516,356</td><!-- Position -->
+<td align="center">G&rarr;A</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+187/+319)</td>
+<td align="center"><i>nusG</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>JCVISYN3A_0851</i></td>
+<td align="left">Antitermination protein/Uncharacterized lipoprotein</td>
+</tr>
+<!-- End Table Row -->
+
+<!-- Print The Table Row -->
+<tr class="normal_table_row">
+<td align="center"><a href="evidence/SNP_22.html">RA</a></td><!-- Evidence -->
+<td align="right">516,362</td><!-- Position -->
+<td align="center">T&rarr;C</td><!-- Cell Mutation -->
+<td align="right">100%</td>
+<td align="center">intergenic&nbsp;(+193/+313)</td>
+<td align="center"><i>nusG</i>&nbsp;&rarr;&nbsp;/&nbsp;&larr;&nbsp;<i>JCVISYN3A_0851</i></td>
+<td align="left">Antitermination protein/Uncharacterized lipoprotein</td>
+</tr>
+<!-- End Table Row -->
+</table>
+<p>
+<table border="0" cellspacing="1" cellpadding="3">
+<tr><th colspan="12" align="left" class="new_junction_header_row">Unassigned new junction evidence</th></tr>
+<!-- Header Lines for New Junction -->
+<tr>
+<th colspan="2">&nbsp;</th>
+<th>seq&nbsp;id</th>
+<th>position</th>
+<th>reads&nbsp;(cov)</th>
+<th>reads&nbsp;(cov)</th>
+<th>score</th>
+<th>skew</th>
+<th>freq</th>
+<th>annotation</th>
+<th>gene</th>
+<th width="100%">product</th>
+</tr>
+
+<!-- Item Lines for New Junction -->
+<!-- Side 1 Item Lines for New Junction -->
+<tr class="mutation_table_row_0">
+<td rowspan="2"><a href="evidence/JC_48.html">*</a></td>
+<td rowspan="1"><a href="evidence/JC_SIDE_1_48.html">?</a></td>
+<td rowspan="1" class="junction_gene">CP016816</td>
+<td align="center" class="junction_gene">=&nbsp;19566</td><td align="center" class="junction_gene">0 (0.000)</td><td rowspan="2" align="center">32 (0.300)</td>
+<td rowspan="2" align="center">8/78</td>
+<td rowspan="2" align="center">NT</td>
+<td rowspan="2" align="center">60.4%</td>
+<td align="center" class="junction_gene">intergenic&nbsp;(&#8209;188/&#8209;850)</td>
+<td align="center" class="junction_gene"><i>JCVISYN3A_0918/tetM</i></td>
+<td class="junction_gene">Imidazoleglycerol&#8209;phosphate dehydratase/Tetracycline resistance ribosomal protection protein</td>
+</tr>
+<!-- Side 2 Item Lines for New Junction -->
+<tr class="mutation_table_row_0">
+<td rowspan="1"><a href="evidence/JC_SIDE_2_48.html">?</a></td><td rowspan="1" class="junction_gene">CP016816</td>
+<td align="center" class="junction_gene">361195&nbsp;=</td>
+<td align="center" class="junction_gene">42 (0.390)</td><td align="center" class="junction_gene">intergenic&nbsp;(+184/+380)</td>
+<td align="center" class="junction_gene"><i>met14p/JCVISYN3A_0592</i></td>
+<td class="junction_gene">Adenylyl&#8209;sulfate kinase/Uncharacterized protein</td>
+</tr>
+<!-- Side 1 Item Lines for New Junction -->
+<tr class="mutation_table_row_1">
+<td rowspan="2"><a href="evidence/JC_49.html">*</a></td>
+<td rowspan="1"><a href="evidence/JC_SIDE_1_49.html">?</a></td>
+<td rowspan="1" class="junction_gene">CP016816</td>
+<td align="center" class="junction_gene">=&nbsp;165268</td><td align="center" class="junction_gene">79 (0.720)</td><td rowspan="2" align="center">19 (0.180)</td>
+<td rowspan="2" align="center">5/76</td>
+<td rowspan="2" align="center">NT</td>
+<td rowspan="2" align="center">14.5%</td>
+<td align="center" class="junction_gene">intergenic&nbsp;(+232/&#8209;310)</td>
+<td align="center" class="junction_gene"><i>tsaB,&nbsp;yeaZ/tRNA&#8209;Ser</i></td>
+<td class="junction_gene">tRNA N6&#8209;adenosine(37)&#8209;N6&#8209;threonylcarbamoyltransferase complex dimerization subunit/tRNA&#8209;Ser</td>
+</tr>
+<!-- Side 2 Item Lines for New Junction -->
+<tr class="mutation_table_row_1">
+<td rowspan="1"><a href="evidence/JC_SIDE_2_49.html">?</a></td><td rowspan="1" class="junction_gene">CP016816</td>
+<td align="center" class="junction_gene">203898&nbsp;=</td>
+<td align="center" class="junction_gene">149 (1.430)</td><td align="center" class="junction_gene">intergenic&nbsp;(+282/+176)</td>
+<td align="center" class="junction_gene"><i>JCVISYN3A_0338/ppa</i></td>
+<td class="junction_gene">Uncharacterized lipoprotein/Inorganic diphosphatase</td>
+</tr>
+</table>
+</body></html>

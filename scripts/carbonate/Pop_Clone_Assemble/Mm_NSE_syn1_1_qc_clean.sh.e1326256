@@ -1,0 +1,61 @@
+samtools version 1.9 loaded.
+Python programming language version 2.7.16 unloaded.
+Python programming language version 2.7.13 loaded.
+cutadapt version 1.9.1 loaded.
+fastqc version 0.11.5 loaded.
+bwa version 0.7.12 loaded.
+Sun/Oracle Java SE Development Kit version 11.0.2 loaded.
+Sun/Oracle Java SE Development Kit version 11.0.2 loaded.
+picard version 2.14.0 loaded.
+
+real	1m42.531s
+user	1m30.407s
+sys	0m5.756s
+
+real	0m45.044s
+user	0m40.251s
+sys	0m4.777s
+
+real	0m41.726s
+user	0m37.464s
+sys	0m4.247s
+Started analysis of Sample_syn1_1_R1_trimmed.fastq
+Approx 5% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 10% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 15% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 20% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 25% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 30% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 35% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 40% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 45% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 50% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 55% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 60% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 65% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 70% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 75% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 80% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 85% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 90% complete for Sample_syn1_1_R1_trimmed.fastq
+Approx 95% complete for Sample_syn1_1_R1_trimmed.fastq
+Started analysis of Sample_syn1_1_R2_trimmed.fastq
+Approx 5% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 10% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 15% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 20% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 25% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 30% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 35% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 40% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 45% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 50% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 55% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 60% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 65% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 70% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 75% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 80% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 85% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 90% complete for Sample_syn1_1_R2_trimmed.fastq
+Approx 95% complete for Sample_syn1_1_R2_trimmed.fastq
