@@ -412,7 +412,9 @@ ggplot(MASNM, aes(x = mut, y = prop)) +
   scale_color_manual(values = c("blue", "red"))+
   scale_fill_manual(values = c("blue", "red"))
 
-# Use position = position_dodge() 
+# Use position = position_dodge()
+# This figure shows the proportion of SNM types during the MA
+
 p <- ggplot(MASNM, aes(x = mut, y = prop)) +
   geom_bar(
     aes(color = strain, fill = strain),
@@ -428,6 +430,7 @@ p <- ggplot(MASNM, aes(x = mut, y = prop)) +
   theme(legend.key=element_blank(),legend.key.size = unit(2, "lines"),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit(.3, "cm"), axis.ticks.x = element_blank())
 p
 
+# This figure shows the proportion of SNM types DURING THE NSE--- this is for comparison purposes only, it is NOT MA data!!!
 ggplot(NSESNM, aes(x = mut, y = prop)) +
   geom_bar(
     aes(color = strain, fill = strain),
@@ -460,7 +463,10 @@ ggplot(MAmutp, aes(x = mut, y = prop)) +
   scale_color_manual(values = c("blue", "red"))+
   scale_fill_manual(values = c("blue", "red"))
 
-# Use position = position_dodge() 
+
+
+
+# Proportions of different mutation types from MA. We will probably remove the "Over 100 bp" category (from the data file); just havent gotten to it yet
 p <- ggplot(MAmutp, aes(x = mut, y = prop)) +
   geom_bar(
     aes(color = strain, fill = strain),
@@ -477,7 +483,7 @@ p <- ggplot(MAmutp, aes(x = mut, y = prop)) +
 p
 
 
-#Now do two strip charts, comparing the mutation rate, view thru the per nt lens and thru the per CDS lens
+#Now do two strip charts, comparing the mutation rate, view thru the per nt lens 
 mycols<-c('blue','red')
 pernt <- ggplot(MAALL, aes(x=strain, y=per_nt_per_gen)) +
   geom_jitter(
@@ -500,7 +506,7 @@ pernt <- ggplot(MAALL, aes(x=strain, y=per_nt_per_gen)) +
 pernt
 
 
-#Now do two strip charts, comparing the mutation rate, view thru the per nt lens and thru the per CDS lens
+#Now do two strip charts, comparing the mutation rate, view thru the per CDS lens
 mycols<-c('blue','red')
 perCDS <- ggplot(MAALL, aes(x=strain, y=per_CDS_per_gen)) +
   geom_jitter(
@@ -522,6 +528,7 @@ perCDS <- ggplot(MAALL, aes(x=strain, y=per_CDS_per_gen)) +
   theme(legend.position = "none",legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line = element_line(colour = "black"), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
 perCDS
 
+#Strip chart, mutation rate per genome
 mycols<-c('blue','red')
 pergenome <- ggplot(MAALL, aes(x=strain, y=per_genome_per_gen)) +
   geom_jitter(
