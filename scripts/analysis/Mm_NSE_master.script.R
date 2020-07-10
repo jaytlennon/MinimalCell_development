@@ -91,11 +91,11 @@ print(minx)
 #################################################################
 #Compare proportions of significant genes of different categories
 x1s1<-4;x13b<-1;ns1<-16;n3b<-14
-membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 'l');membrane.transport
+membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
 membrane.transport<-binom.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
 
 x2s1<-2;x23b<-2;ns1<-16;n3b<-14
-glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 'l');glucose.metabolism
+glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
 glucose.metabolism<-binom.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
 
 

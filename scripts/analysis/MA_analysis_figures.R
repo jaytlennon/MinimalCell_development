@@ -412,23 +412,27 @@ ggplot(MASNM, aes(x = mut, y = prop)) +
   scale_color_manual(values = c("blue", "red"))+
   scale_fill_manual(values = c("blue", "red"))
 
+
 # Use position = position_dodge()
 # This figure shows the proportion of SNM types during the MA
 
-p <- ggplot(MASNM, aes(x = mut, y = prop)) +
+SNMp <- ggplot(MASNM, aes(x = mut, y = prop)) +
   geom_bar(
     aes(color = strain, fill = strain),
-    stat = "identity", position = position_dodge(0.5),
-    width = 0.35
+    stat = "identity", position = position_dodge(width=0.75),
+    width = 0.2
   ) +
+  #ylim(0, 1) +
+  #xlim(0.9,1.5) +
+  #coord_fixed(ratio=5,clip="off")+
   scale_color_manual(values = c("blue", "red"))+
   scale_fill_manual(values = c("blue", "red")) +
-  geom_text(aes(label = prop2, group = strain), position = position_dodge(0.5), vjust = -0.3, size = 5.5)+
+  geom_text(aes(label = prop2, group = strain), position = position_dodge(0.85), vjust = -0.3, size = 5.5)+
   labs(x="\nMutation type",y="Proportion\n") +
   theme(axis.text.x = element_text(angle=-45, vjust=0,hjust=0.2, size =26))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
   theme(legend.key=element_blank(),legend.key.size = unit(2, "lines"),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit(.3, "cm"), axis.ticks.x = element_blank())
-p
+SNMp
 
 # This figure shows the proportion of SNM types DURING THE NSE--- this is for comparison purposes only, it is NOT MA data!!!
 ggplot(NSESNM, aes(x = mut, y = prop)) +
@@ -438,6 +442,8 @@ ggplot(NSESNM, aes(x = mut, y = prop)) +
   ) +
   scale_color_manual(values = c("blue", "red"))+
   scale_fill_manual(values = c("blue", "red"))
+
+
 # Use position = position_dodge() 
 NSEp <- ggplot(NSESNM, aes(x = mut, y = prop)) +
   geom_bar(
@@ -467,7 +473,7 @@ ggplot(MAmutp, aes(x = mut, y = prop)) +
 
 
 # Proportions of different mutation types from MA. We will probably remove the "Over 100 bp" category (from the data file); just havent gotten to it yet
-p <- ggplot(MAmutp, aes(x = mut, y = prop)) +
+muttypep <- ggplot(MAmutp, aes(x = mut, y = prop)) +
   geom_bar(
     aes(color = strain, fill = strain),
     stat = "identity", position = position_dodge(0.5),
@@ -480,7 +486,7 @@ p <- ggplot(MAmutp, aes(x = mut, y = prop)) +
   theme(axis.text.x = element_text(angle=-45, vjust=0,hjust=0.2, size =26))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
   theme(legend.key=element_blank(),legend.key.size = unit(2, "lines"),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit(.3, "cm"), axis.ticks.x = element_blank())
-p
+muttypep
 
 
 #Now do two strip charts, comparing the mutation rate, view thru the per nt lens 
@@ -549,3 +555,9 @@ pergenome <- ggplot(MAALL, aes(x=strain, y=per_genome_per_gen)) +
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
   theme(legend.position = "none",legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line = element_line(colour = "black"), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
 pergenome
+
+myfigure<- ggarrange(pernt, muttypep, SNMp, labels = c("A","B","C"), heights = c(1,1,1), ncol = 1, nrow=3, align = "h")
+myfigure
+
+myspectrum<-ggarrange(muttypep, SNMp, labels = c("A","B"), ncol = 2, nrow=1)
+myspectrum
