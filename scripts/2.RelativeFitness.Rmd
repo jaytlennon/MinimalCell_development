@@ -1,0 +1,140 @@
+---
+title: "Evolution of the minimal cell"
+author: "Roy Moger-Reischer and Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Making Figure 2: changes in relative fitness
+
+## Clear workspace and set directory
+```{r setup}
+rm(list=ls())
+getwd()
+setwd("~/GitHub/MinimalCell")
+```
+
+## Load packages and functions
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+sem <- function(x) sqrt(var(x)/length(x))
+```
+
+# Load data
+```{r}
+# Load data
+rel.fit.raw <-read_csv("data2/Interaction_data.csv")
+rel.fit.raw <- as_tibble(rel.fit.raw)
+rel.fit <- rel.fit.raw %>% group_by(timepoint, strain) %>% summarise(mean = mean(W_1.0), sem = sem(W_1.0))
+
+# Set data as factors and rename levels
+rel.fit$strain <- as.factor(rel.fit$strain)
+levels(rel.fit$strain)[levels(rel.fit$strain)=="JCVI-syn1.0"] <- "Wildtype"
+levels(rel.fit$strain)[levels(rel.fit$strain)=="JCVI-syn3B"] <- "Minimal"
+rel.fit$strain <- factor(rel.fit$strain, levels=c("Wildtype","Minimal"))
+
+# Add x-values for plotting
+time.x <- c(1,1,3,3)
+rel.fit <- data.frame(rel.fit, time.x)
+
+# Subset relative fitness by strain
+rel.fit.wt  <- filter(rel.fit, strain == "Wildtype") %>%
+  dplyr::select(timepoint, mean, sem, time.x)
+
+rel.fit.min  <- filter(rel.fit, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, time.x)
+```
+
+## Two-way ANOVA
+```{r}
+# Convert timepoint and strain to factor
+rel.fit.raw$timepoint<- as.factor(rel.fit.raw$timepoint)
+rel.fit.raw$strain<- as.factor(rel.fit.raw$strain)
+
+# Two-way ANOVA on fitness (W)
+rel.fit.anova <- aov(W_1.0 ~ timepoint + strain + timepoint*strain, data = rel.fit.raw)
+
+#                  Df Sum Sq Mean Sq F value   Pr(>F)    
+# timepoint         1 0.3506  0.3506  26.110 0.000339 ***
+# strain            1 0.9256  0.9256  68.937 4.58e-06 ***
+# timepoint:strain  1 0.0015  0.0015   0.111 0.745458    
+# Residuals        11 0.1477  0.0134                     
+```
+
+# Initiate figure
+```{r}
+# Make figure
+png(filename="~/GitHub/MinimalCell/figures/Fig2.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+# Add wildtype points
+plot(rel.fit.wt$time.x, rel.fit.wt$mean, xlim = c(0, 4.55), 
+     ylim = c(0.0, 2.0), type = "p", pch = 21, bg = "blue", 
+     col = "blue", cex = 2, ylab = "", xlab = "", 
+     cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
+box(lwd=2)
+
+# Add minimal points
+points(rel.fit.min$time.x, rel.fit.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = rel.fit.wt$time.x, y0 = rel.fit.wt$mean, 
+       y1 = rel.fit.wt$mean + rel.fit.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = rel.fit.wt$time.x, y0 = rel.fit.wt$mean, 
+       y1 = rel.fit.wt$mean - rel.fit.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = rel.fit.min$time.x, y0 = rel.fit.min$mean, 
+       y1 = rel.fit.min$mean + rel.fit.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = rel.fit.min$time.x, y0 = rel.fit.min$mean, 
+       y1 = rel.fit.min$mean - rel.fit.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.0", "1.0", "2.0"), at = c(0, 1, 2))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 1, 2), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "Evolved"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+mtext(expression("Relative fitness ("~italic("W")~")"), side = 2, 
+      outer = TRUE, cex = 1.5, line = -4, adj = 0.55)
+
+# Add line segments
+segments(rel.fit.wt$time.x[1], rel.fit.wt$mean[1], rel.fit.wt$time.x[2], 
+         rel.fit.wt$mean[2], col = "blue", lwd = 2)
+segments(rel.fit.min$time.x[1], rel.fit.min$mean[1], rel.fit.min$time.x[2], 
+         rel.fit.min$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+mtext(expression("Timepoint:" ~italic("P")~"= 0.0003"), line = -2.5, cex = 0.80, at = 0.9)
+mtext(expression("Strain:" ~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 0.75)
+
+# Add strain identifier
+text(3.8, rel.fit.wt$mean[2], labels = "Wildtype", cex = 1.0)
+text(3.8, rel.fit.min$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig2.png")
+
+grid.raster(img)
+```
