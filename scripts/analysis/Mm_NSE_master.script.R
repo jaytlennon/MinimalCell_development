@@ -10,7 +10,9 @@ theme_set(
   theme_bw()
 )
 
-mydf<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\cases_Mm.300.csv")
+setwd("~\\..\\GitHub\\MinimalCell")
+
+mydf<-read_csv("data\\cases_Mm.300.csv")
 #mydf<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\cases_Mm.300_1.2.csv")
 mydf$Strain <- factor(mydf$Strain, levels=c("Wildtype","Minimal"))
 mycols<-c("black","black")
@@ -21,7 +23,7 @@ mycols<-c("black","black")
 #mydf$Strain<-factor(mydf$Strain, levels=c("JCVI-syn1.0","JCVI-syn3B"))
 
 
-
+#Here is a quick plot of the dNdS values for both strains.
 
 dnds <- ggplot(mydf, aes(x=Strain, y=dNdS_gdtools))
 dnds + geom_jitter(
@@ -43,6 +45,7 @@ dnds + geom_jitter(
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
   theme(legend.position = "none",legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line = element_line(colour = "black"), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
 
+#Now same plot with theme colors
 brcols<-c("blue","red")
 dnds <- ggplot(mydf, aes(x=Strain, y=dNdS_gdtools))
 dnds +  #geom_errorbar(aes(ymax=c(1,1,1,1,0.479184263,0.479184263,0.479184263,0.479184263),ymin=c(1,1,1,1,0.479184263,0.479184263,0.479184263,0.479184263)), color=c("blue","blue","blue","blue","red","red","red","red"),lwd = 2.2,linetype=117) +
@@ -67,8 +70,8 @@ dnds +  #geom_errorbar(aes(ymax=c(1,1,1,1,0.479184263,0.479184263,0.479184263,0.
   theme(legend.key=element_blank(),legend.key.size = unit(2, "lines"),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())#+
 #theme(legend.position="none")
 
-
-mydnds<- read.csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\case.Mm.dNdS_gdtools.csv",header=T)
+#Now quick statistical tests on the dnds values
+mydnds<- read.csv("data\\case.Mm.dNdS_gdtools.csv",header=T)
 shapiro.test(mydnds$Wildtype)
 shapiro.test(mydnds$Minimal)
 
@@ -89,13 +92,13 @@ minx<-wilcox.test(mydnds$Minimal,mu=1,alternative = 'g')
 print(minx)
 
 #################################################################
-#Compare proportions of significant genes of different categories
+#Compare proportions of significant genes of different categories in NSE
 x1s1<-4;x13b<-1;ns1<-16;n3b<-14
-membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 'l');membrane.transport
+membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
 membrane.transport<-binom.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
 
 x2s1<-2;x23b<-2;ns1<-16;n3b<-14
-glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 'l');glucose.metabolism
+glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
 glucose.metabolism<-binom.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
 
 
@@ -152,11 +155,11 @@ W_per_gen + geom_jitter(
 ############
 #Analyze changes in fitness during NSE
 
-idff<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\mean.SE_Mm.300.csv")
+idff<-read_csv("data\\mean.SE_Mm.300.csv")
 BANC<-idff$W_anc1.0[2] / idff$W_anc.own[2]
 
 
-myt <- read.csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\cases_Mm.300.csv",header=T)
+myt <- read.csv("data\\cases_Mm.300.csv",header=T)
 #myt <- read.csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\cases_Mm.300_1.2.csv",header=T)
 
 #
@@ -164,10 +167,6 @@ myd<-as_tibble(mydf)
 my1<-filter(myd,Strain_technical=='syn1.0')
 myB<-filter(myd,Strain_technical=='syn3B')
 #myd<-add_column(myd, mu=(1/e0))
-
-#A.aov<-aov(myd$A ~ myd$Strain_name)
-#summary(A.aov)
-#TukeyHSD(A.aov)
 
 V<-var.test(my1$W_anc1.0,myB$W_anc1.0)
 V
@@ -191,7 +190,8 @@ Wabsincrease<-t.test(my1$W_anc1.0,myB$W_anc1.0,alternative="g",paired=F,var.equa
 Wabsincrease
 1.3235616-0.8428967
 
-
+#############
+#OLD bar chart comparing fitness gains 
 mygg<-ggplot(idff, aes(x=Strain,y=W_anc1.0,fill=Strain)) +
   geom_bar(aes(x=Strain, y=W_anc1.0),position=position_dodge(.1), inherit.aes = TRUE, stat= "identity", colour="black", width = .5) +
   geom_errorbar(aes(Strain, ymin = (W_anc1.0 - 1*W_anc1.0_SE), ymax = (W_anc1.0 + 1*W_anc1.0_SE)),position = position_dodge(1), width = .15, size = 1.5) +
@@ -203,6 +203,8 @@ mygg<-ggplot(idff, aes(x=Strain,y=W_anc1.0,fill=Strain)) +
   scale_fill_manual("",values = c("syn1.0"=" dark grey","syn3B"="salmon"))
 plot(mygg)
 
+############
+#OLD strip chart comparing gitness gains
 myd
 levels(myd$Strain_technical)[levels(myd$Strain_technical)=="syn3B"] <- "JCVI-syn3B"
 levels(myd$Strain_technical)[levels(myd$Strain_technical)=="syn1.0"] <- "JCVI-syn1.0"
@@ -232,7 +234,7 @@ Wfig +  geom_errorbar(aes(ymax=c(1,1,1,1,0.479184263,0.479184263,0.479184263,0.4
   theme(legend.key=element_blank(),legend.key.size = unit(2, "lines"),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line.x.bottom = element_blank(), axis.line.y.left = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())#+
 #theme(legend.position="none")
 
-interaction_data<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\Interaction_data.csv")
+interaction_data<-read_csv("data\\Interaction_data.csv")
 idata=as_tibble(interaction_data)
 
 idata2<-idata %>% group_by(timepoint, strain) %>% summarise(y_mean = mean(W_1.0), y_se = psych::describe(W_1.0)$se)
@@ -280,7 +282,7 @@ idata2 %>%
 
 ###########
 #Analyze changes in OD during the NSE
-myOD<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\OD_600\\20200327_OD.600_summ2way.csv")
+myOD<-read_csv("data\\OD_600\\20200327_OD.600_summ2way.csv")
 NSEOD<-as_tibble(myOD)
 NSEOD$Strain <- as.factor(NSEOD$Strain);NSEOD$Time <- as.factor(NSEOD$Time)
 levels(NSEOD$Strain)[levels(NSEOD$Strain)=="3b"] <- "JCVI-syn3B"
@@ -289,7 +291,7 @@ levels(NSEOD$Time)[levels(NSEOD$Time)=="anc"] <- "Ancestor"
 levels(NSEOD$Time)[levels(NSEOD$Time)=="evolved"] <- "Evolved"
 NSEOD$Strain<-factor(NSEOD$Strain, levels=c("JCVI-syn1.0","JCVI-syn3B"))
 
-
+###############
 #t-test: Mean of evolved OD versus fixed ancestor value, for syn3B
 bNSE<- NSEOD %>% filter(Time=="Evolved") %>% filter(Strain=="JCVI-syn3B")
 t.test(x=bNSE$OD,mu=0.079333333,alternative = "g")
@@ -301,6 +303,8 @@ t.test(x=s1NSE$OD,mu=0.876333333,alternative = "g")
 
 NSEevo<- NSEOD %>% filter(Time=="Evolved")
 
+#####################
+#quick strip chart comparing ODs
 brcols<-c("blue","red")
 ODfig <- ggplot(NSEevo, aes(x=Strain, y=OD))
 ODfig +   geom_errorbar(aes(ymax=c(0.079333333,0.079333333,0.079333333,0.079333333,0.876333333,0.876333333,0.876333333,0.876333333),ymin=c(0.079333333,0.079333333,0.079333333,0.079333333,0.876333333,0.876333333,0.876333333,0.876333333)), color=c("red","red","red","red","blue","blue","blue","blue"),lwd = 2.2,linetype=117) +
@@ -323,8 +327,9 @@ ODfig +   geom_errorbar(aes(ymax=c(0.079333333,0.079333333,0.079333333,0.0793333
 #theme(legend.position="none")
 
 
-
-interaction_data_OD<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\Interaction_data_OD.csv")
+####################################
+#an interaction plot for gains in OD
+interaction_data_OD<-read_csv("data\\Interaction_data_OD.csv")
 idata_OD=as_tibble(interaction_data_OD)
 
 idata2_OD<-idata_OD %>% group_by(timepoint, strain) %>% summarise(y_mean = mean(OD), y_se = psych::describe(OD)$se)
@@ -351,7 +356,8 @@ idata2_OD %>%
 
 mycols<-c("black","black")
 
-
+#####################################
+#Alternate strip chart for the OD data
 pgcols<-c("blue","blue","red","red")
 #("red","red","red","red","red","red","red","red","red","red","blue","blue","blue","blue","blue","blue","blue","blue","blue","blue")
 ODfig_allv <- ggplot(NSEOD, aes(x=Time, y=OD))
@@ -378,7 +384,7 @@ ODfig_allv +  geom_jitter(
 ##########################################################
 ###Analysis of the outputs from imageJ/ MicrobeJ
 
-mjdf<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\microscopy\\microbeJ_results\\cases_microbeJ.csv")
+mjdf<-read_csv("data\\microscopy\\microbeJ_results\\cases_microbeJ.csv")
 #mydf<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\cases_Mm.300_1.2.csv")
 #mydf$Strain <- factor(mydf$Strain, levels=c("Wildtype","Minimal"))
 mjcols<-c("black","black","black","black","black","black","black","black","black","black")
@@ -424,7 +430,8 @@ TukeyHSD(VV)
 modelV <- lmer(mjdf$Volume ~ mjdf$Timepoint + mjdf$Genotype + (mjdf$Timepoint | mjdf$Strain))
 summary(modelV)
 
-
+######
+#Look for statistical correlation between population fitness and population average cell size
 Area3B_all<-c(0.313133103,0.144968712,0.179881286,0.150747882,0.160169625)
 Areas1_all<-c(1.054317474,          0.728156189,          0.62265075, 0.810654429,0.392750088)
 W3B_all<-c(0.971022482,0.806202409, 0.800146358,0.794215732,0.479184263)
@@ -437,11 +444,12 @@ cor.test(Area3B_all,W3B_all,alternative = "two.sided", method = "pearson")#did t
 cor.test(Areas1_all,Ws1_all,alternative = "two.sided", method = "pearson")
 
 cor(Volume3B_all,W3B_all)
-cor.test(Volume3B_all,W3B_all,alternative = "two.sided", method = "pearson")#did the correlation on cell AREA because surface area is what scales with membrane transport, &c)
+cor.test(Volume3B_all,W3B_all,alternative = "two.sided", method = "pearson")#also test for correlation with cell volume?
 cor(Volumes1_all,Ws1_all)
 cor.test(Volumes1_all,Ws1_all,alternative = "two.sided", method = "pearson")
 
-
+###############
+##Wide/ANOVA style strip chart for all of the cell size values
 
 mj <- ggplot(mjdf, aes(x=Strain, y=Area))
 mj + geom_jitter(
@@ -463,7 +471,9 @@ mj + geom_jitter(
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), panel.border = element_rect(color = "black", fill = NA, size = 3.5), axis.line = element_line(colour = "black")) +
   theme(legend.position = "none",legend.key=element_blank(),axis.text=element_text(size=34),axis.title=element_text(size=36),legend.text=element_text(size=22),legend.title = element_text(size=34), axis.line = element_line(colour = "black"), axis.line.x = element_blank(), axis.line.y = element_blank(), axis.ticks.y = element_line(color = "black", size = 3.5), axis.ticks.length = unit (.3, "cm"), axis.ticks.x = element_blank())
 
-interaction_data_ftsz<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\Interaction_data_ftsz.csv")
+###################################
+#Interaction plot for the cell size data
+interaction_data_ftsz<-read_csv("data\\Interaction_data_ftsz.csv")
 idata_ftsz=as_tibble(interaction_data_ftsz)
 
 idata_ftsz_area<-idata_ftsz %>% group_by(timepoint, strain) %>% summarise(y_mean = mean(Area), y_se = psych::describe(Area)$se)
@@ -473,7 +483,7 @@ idata_ftsz2<-idata_ftsz %>% group_by(timepoint, strain) %>% summarise(y_mean = m
 #line_1c <- expression("Various fonts:" ~ bolditalic("bolditalic") ~ bold("bold") ~ italic("italic"))
 #line_2c <- expression("this" ~~ sqrt(x, y) ~~ "or this" ~~ sum(x[i], i==1, n) ~~ "math expression")
 
-# the ~~ ads a bit more space than ~ between the expression's components
+# the ~~ adds a bit more space than ~ between the expression's components
 
 #p + coord_cartesian(clip = "off") +
 #  annotation_custom(grid::textGrob(line_1c), xmin = 3.5, xmax = 3.5, ymin = 7.3, ymax = 7.3) +
