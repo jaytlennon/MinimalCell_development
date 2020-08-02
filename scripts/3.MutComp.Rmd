@@ -79,13 +79,11 @@ par(mar = c(7, 7, 5, 7))
 
 plot(g.essent.pcoa[ ,1], g.essent.pcoa[ ,2],
      ylim = c(-1, 1), xlim = c(-0.55, 0.55),
-     xlab = paste("PCoA 1 (", explainvar1, "%)", sep = ""),
-     ylab = paste("PCoA 2 (", explainvar2, "%)", sep = ""),
-     #xlab = "", ylab = "", xaxt = "n", yaxt = "n",
+     xlab = "", ylab = "", xaxt = "n", yaxt = "n",
      pch = 22, cex = 2.0, type = "n", cex.lab = 1.5, cex.axis = 1,
      axes = FALSE)
 
-# Add Axes
+# Add axes
 axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), at = c(-1, -0.5, 0, 0.5, 1))
 axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
@@ -96,6 +94,12 @@ axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(-0.5, 0, 0.5), labels = F)
 abline(h = 0, v = 0, lty = 3)
 box(lwd = 2)
+
+# Add axis labels
+mtext(expression(paste("PCoA 1 (42.1 %)", sep = "")), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.0)
+mtext(expression(paste("PCoA 2 (16.5 %)", sep = "")), side = 2,
+      outer = TRUE, cex = 1.5, line = -3.0)
 
 # Add ellipses 
 ordiellipse(cbind(g.essent.pcoa$PC1, g.essent.pcoa$PC2), g.essent.pcoa$treatment, 
@@ -114,7 +118,7 @@ points(essent.min[ ,1], essent.min[ ,2], pch = 21,
        cex = 2, col = "red", bg = "red", lwd = 2)   
 
 # Add P-value associated with PERMANOVA
-mtext(expression(~italic("P")~"= 0.029"), line = -1.25, cex = 0.80, at = -0.45)
+mtext(expression(~italic("P")~"= 0.029"), line = -1.75, cex = 1.0, at = -0.4)
 
 
 # Close Plot Device

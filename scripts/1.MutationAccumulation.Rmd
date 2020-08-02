@@ -19,16 +19,6 @@ setwd("~/GitHub/MinimalCell")
 ```{r}
 require("png")
 require("dplyr")
-require("vegan")
-require("ade4")
-require("viridis")
-require("gplots")
-require("BiodiversityR")
-require("indicspecies")
-require("ggplot2")
-require("tidyverse")
-require("ggpubr")
-require("Hmisc")
 require("vioplot")
 require("grid")
 ```
@@ -60,7 +50,7 @@ mr.min  <- filter(ma, strain== "Minimal") %>%
 # Load mutation type data (i.e., insertions, deletions, and SMSs) for Fig. 1B)
 ```{r}
 # Load data
-ma.type.raw <- read_csv("data2/MA_grouped_bar_mut.types.csv")
+ma.type.raw <- read.csv("data2/MA_grouped_bar_mut.types.csv")
 
 # Preserve row names
 ma.type <- as_tibble(ma.type.raw)
