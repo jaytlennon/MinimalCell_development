@@ -21,6 +21,8 @@ require("png")
 require("dplyr")
 require("vioplot")
 require("grid")
+require("DescTools")
+require("RVAideMemoire")
 ```
 
 ## Mutation accumulation (MA)
@@ -65,10 +67,28 @@ ma.type$strain <- factor(ma.type$strain, levels=c("Wildtype","Minimal"))
 ma.type$mut <- factor(ma.type$mut, levels = c("Insertion","Deletion","Over 100 bp","Single-nucleotide"))
 ma.type <- ma.type %>% mutate(prop2 = sprintf("%0.2f",prop))
 
-# Reorder table for plotting
+# Reorder for plotting
 order.1 <- c(2,4,6,1,3,5) 
 ma.type <- data.frame(ma.type,order.1)
 ma.type <- ma.type[order(ma.type$order.1),] 
+
+# Make table for contingency analyses
+ma.type.mat <- matrix(ma.type$count, ncol =2, byrow=F)
+colnames(ma.type.mat) <- c("minimal","wildtype")
+rownames(ma.type.mat) <- c("insertion","deletion","snm")
+ma.type.tab <- as.table(ma.type.mat)
+ma.type.tab.margins <- addmargins(ma.type.tab)
+
+ma.type.chi <- chisq.test(ma.type.tab)
+# X-squared = 500.51, df = 2, p-value < 2.2e-16
+
+ma.type.fish <- fisher.test(ma.type.tab)
+# p-value < 2.2e-16
+
+ma.type.mult <- fisher.multcomp(ma.type.tab, p.method = "fdr")
+#           insertion  deletion
+# deletion  2.310e-46         -
+# snm       3.297e-04 3.812e-81
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
@@ -94,6 +114,28 @@ ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f",prop))
 order.2 <- c(2,4,6,8,10,12,1,3,5,7,9,11) 
 ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
+
+# Make table for contingency analyses
+ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = T)
+colnames(ma.snm.mat) <- c("wildtype","minimal")
+rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
+              "C:G to T:A", "C:G to A:T")
+ma.snm.tab <- as.table(ma.snm.mat)
+ma.snm.tab.margins <- addmargins(ma.snm.tab)
+
+ma.snm.chi <- chisq.test(ma.snm.tab)
+# X-squared = 122.4, df = 5, p-value < 2.2e-16
+
+ma.snm.fish <- fisher.test(ma.snm.tab, workspace = 2e8)
+# p-value < 2.2e-16
+
+ma.snm.mult <- fisher.multcomp(ma.snm.tab, p.method = "fdr")
+#            A:T to C:G A:T to G:C A:T to T:A C:G to G:C C:G to T:A
+# A:T to G:C  0.0061070          -          -          -          -
+# A:T to T:A  0.7965475  5.291e-04          -          -          -
+# C:G to G:C  0.0002467  0.2175     5.628e-07          -          -
+# C:G to T:A  0.7248613  3.478e-11  0.1718     1.667e-20          -
+# C:G to A:T  0.3559718  2.983e-04  0.3560     5.753e-09  3.801e-10
 ```
 
 # Make Figure 1
@@ -103,8 +145,6 @@ png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
-#par(oma=c(2,4,0,0), mar=c(2,4,4,1), mfrow=c(1,3))
-#par(oma=c(2,4,0,0), mar=c(2,4,4,1), mfrow=c(1,3))
 layout(matrix(c(1:3), byrow = T))
 par(mar = c(2.5, 4, 1, 1), oma = c(3, 4, 1, 1))
 
@@ -150,11 +190,12 @@ equal.var <- var.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen)
 # Test for differences between treatments: P = 0.54 --> no difference
 mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE)
 
+# Add panel label
+text(-0.025, 7.5e-08, labels = "A", cex = 2)
+
 # Add P-value for t-test
 mtext(expression(~italic("P")~"= 0.54"), line = -3.5, cex = 0.80, at = 0.09)
 
-# Add panel label
-text(-0.025, 7.5e-08, labels = "A", cex = 2)
 
 ### Make panel B ###
 
@@ -185,13 +226,16 @@ text(5.5, 0.16, expression("0.10"), cex= 0.85)
 text(7.5, 0.95, expression("0.89"), cex= 0.85)
 text(8.5, 0.92, expression("0.86"), cex= 0.85)
 
+# Add panel label
+text(0.9, 0.9, labels = "B", cex = 2)
+
 # Add legend
 legend(0.75, 0.8, c("Wildtype", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
-# Add panel label
-text(0.9, 0.9, labels = "B", cex = 2)
+# Add P-value for t-test
+mtext(expression(~italic("P")~"< 0.0001"), line = -6.8, cex = 0.80, at = 1.4)
 
 
 ### Make panel C ###
@@ -233,13 +277,16 @@ text(14.5, 0.71, expression("0.65"), cex= 0.85)
 text(16.5, 0.40, expression("0.36"), cex= 0.85)
 text(17.5, 0.33, expression("0.27"), cex= 0.85)
 
+# Add panel label
+text(0.9, 0.9, labels = "C", cex = 2)
+
 # Add legend
 legend(0.55, 0.8, c("Wildtype", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
-# Add panel label
-text(0.9, 0.9, labels = "C", cex = 2)
+# Add P-value for t-test
+mtext(expression(~italic("P")~"< 0.0001"), line = -6.8, cex = 0.80, at = 2.0)
 
 # Close Plot Device
 dev.off()
