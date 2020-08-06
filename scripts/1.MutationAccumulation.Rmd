@@ -190,10 +190,10 @@ equal.var <- var.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen)
 # Test for differences between treatments: P = 0.54 --> no difference
 mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE)
 
-# Add panel label
+#Add panel label
 text(-0.025, 7.5e-08, labels = "A", cex = 2)
 
-# Add P-value for t-test
+#Add P-value for t-test
 mtext(expression(~italic("P")~"= 0.54"), line = -3.5, cex = 0.80, at = 0.09)
 
 
