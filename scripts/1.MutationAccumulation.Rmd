@@ -23,6 +23,7 @@ require("vioplot")
 require("grid")
 require("DescTools")
 require("RVAideMemoire")
+require("rcompanion")
 ```
 
 ## Mutation accumulation (MA)
@@ -85,10 +86,28 @@ ma.type.chi <- chisq.test(ma.type.tab)
 ma.type.fish <- fisher.test(ma.type.tab)
 # p-value < 2.2e-16
 
+# From `RVAideMemoire` package. 
+# Seems to be comparing across mutation types
 ma.type.mult <- fisher.multcomp(ma.type.tab, p.method = "fdr")
 #           insertion  deletion
 # deletion  2.310e-46         -
 # snm       3.297e-04 3.812e-81
+
+# From `rcompanion`package. 
+# Seems to be similar to `fish.multcomp()`
+ma.type.pw = pairwiseNominalIndependence(ma.type.tab, fisher = TRUE, gtest  = FALSE, 
+                chisq = FALSE, digits = 3)
+
+# From `rcompanion`package. 
+# 
+ma.type.pw.list <- cldList(comparison = ma.type.pw$Comparison,
+        p.value    = ma.type.pw$p.adj.Fisher,
+        threshold  = 0.05)
+
+#      Group    Letter   MonoLetter
+# 1 insertion      a        a  
+# 2  deletion      b        b 
+# 3       snm      c        c
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
