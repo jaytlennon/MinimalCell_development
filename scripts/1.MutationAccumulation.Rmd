@@ -21,7 +21,6 @@ require("png")
 require("dplyr")
 require("vioplot")
 require("grid")
-require("DescTools")
 ```
 
 ## Mutation accumulation (MA)
@@ -90,18 +89,18 @@ ma.type.chi <- chisq.test(ma.type.tab)
 # Posthoc analysis
 ma.type.z <- as.data.frame(ma.type.chi$stdres)
 ma.type.x2 <- ma.type.z$Freq^2
-ma.type.p <- pchisq(ma.type.x2, df = 2, lower.tail = FALSE)
+ma.type.p <- pchisq(ma.type.x2, df = 1, lower.tail = FALSE)
 ma.type.p.adj <- p.adjust(ma.type.p, method="BH")
 ma.type.post.hoc <- data.frame(ma.type.z, ma.type.x2, ma.type.p, ma.type.p.adj)
 colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
 #       type   strain         z     chi2         p    p.adj
-# 1 insertion  minimal -1.444750 2.087301 0.3521667 0.393664
-# 2  deletion  minimal -1.365472 1.864515 0.3936640 0.393664
-# 3       snm  minimal  1.931879 3.732157 0.1547293 0.393664
-# 4 insertion wildtype  1.444750 2.087301 0.3521667 0.393664
-# 5  deletion wildtype  1.365472 1.864515 0.3936640 0.393664
-# 6       snm wildtype -1.931879 3.732157 0.1547293 0.393664
+# 1 insertion  minimal -1.444750 2.087301 0.14852825 0.1721046
+# 2  deletion  minimal -1.365472 1.864515 0.17210460 0.1721046
+# 3       snm  minimal  1.931879 3.732157 0.05337443 0.1601233
+# 4 insertion wildtype  1.444750 2.087301 0.14852825 0.1721046
+# 5  deletion wildtype  1.365472 1.864515 0.17210460 0.1721046
+# 6       snm wildtype -1.931879 3.732157 0.05337443 0.1601233
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
@@ -136,31 +135,31 @@ rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
 ma.snm.tab <- as.table(ma.snm.mat)
 ma.snm.tab.margins <- addmargins(ma.snm.tab)
 
-# X-squared = 122.4, df = 5, p-value < 2.2e-16
+# X-squared = 122.4, df = NA, p-value = 9.999e-05
 ma.snm.chi <- chisq.test(ma.snm.tab, simulate.p.value = TRUE,  B = 10000)
 
 # Posthoc analysis
 ma.snm.z <- as.data.frame(ma.snm.chi$stdres)
 ma.snm.x2 <- ma.snm.z$Freq^2
-ma.snm.p <- pchisq(ma.snm.x2, df = 5, lower.tail = FALSE)
+ma.snm.p <- pchisq(ma.snm.x2, df = 1, lower.tail = FALSE)
 ma.snm.p.adj <- p.adjust(ma.snm.p, method="BH")
 ma.snm.post.hoc <- data.frame(ma.snm.z, ma.snm.x2, ma.snm.p, ma.snm.p.adj)
 colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
-#         type   strain           z         chi2            p        p.adj
-# 1  A:T to C:G  minimal  0.44851026  0.201161457 9.991013e-01 0.999
-# 2  A:T to G:C  minimal -4.84321140 23.456696673 2.760233e-04 0.0005
-# 3  A:T to T:A  minimal  0.08639216  0.007463605 9.999997e-01 0.999
-# 4  C:G to G:C  minimal -6.90461823 47.673752850 4.140435e-09 1.242131e-08
-# 5  C:G to T:A  minimal  9.47528700 89.781063769 7.469903e-18 4.481942e-17
-# 6  C:G to A:T  minimal -3.68512950 13.580179403 1.850800e-02 0.0278
+#         type   strain           z     chi2        p          p.adj
+# 1  A:T to C:G  minimal  0.44851026  0.201161457 6.537850e-01 0.785
+# 2  A:T to G:C  minimal -4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 3  A:T to T:A  minimal  0.08639216  0.007463605 9.311547e-01 0.931
+# 4  C:G to G:C  minimal -6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 5  C:G to T:A  minimal  9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 6  C:G to A:T  minimal -3.68512950 13.580179403 2.285864e-04 0.00034
 
-# 7  A:T to C:G wildtype -0.44851026  0.201161457 9.991013e-01 0.999
-# 8  A:T to G:C wildtype  4.84321140 23.456696673 2.760233e-04 0.0005
-# 9  A:T to T:A wildtype -0.08639216  0.007463605 9.999997e-01 0.999
-# 10 C:G to G:C wildtype  6.90461823 47.673752850 4.140435e-09 1.242131e-08
-# 11 C:G to T:A wildtype -9.47528700 89.781063769 7.469903e-18 4.481942e-17
-# 12 C:G to A:T wildtype  3.68512950 13.580179403 1.850800e-02 0.0278
+# 7  A:T to C:G wildtype -0.44851026  0.201161457 6.537850e-01 0.785
+# 8  A:T to G:C wildtype  4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 9  A:T to T:A wildtype -0.08639216  0.007463605 9.311547e-01 0.931
+# 10 C:G to G:C wildtype  6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 11 C:G to T:A wildtype -9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 12 C:G to A:T wildtype  3.68512950 13.580179403 2.285864e-04 0.00034
 ```
 
 # Make Figure 1
@@ -306,6 +305,14 @@ legend(1.5, 1.0, c("Wildtype", "Minimal"), pch = 22,
 
 # Add P-value for t-test
 mtext(expression(~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 2.0)
+
+# Add symbols for posthoc significance
+text(2, 0.25, expression("ns"), cex= 1.2)
+text(5, 0.25, expression("***"), cex= 1.5)
+text(8, 0.25, expression("ns"), cex= 1.2)
+text(11, 0.25, expression("***"), cex= 1.5)
+text(14, 0.80, expression("***"), cex= 1.5)
+text(17, 0.50, expression("***"), cex= 1.5)
 
 # Close Plot Device
 dev.off()
