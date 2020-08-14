@@ -48,20 +48,56 @@ size.min  <- filter(size, strain== "Minimal") %>%
   dplyr::select(timepoint, mean, sem, time.x)
 ```
 
-## Two-way ANOVA
+## Tests significance
 ```{r}
-# Convert timepoint and strain to factor
-size.raw$timepoint<- as.factor(size.raw$timepoint)
-size.raw$strain<- as.factor(size.raw$strain)
+# Subset data
+size.reps <- size.raw %>% 
+   dplyr::select(strain, timepoint, sub.strain, volume) %>%
+   group_by(timepoint, strain, sub.strain) %>%
+   summarize(mean.vol = mean(volume)) 
 
-# Two-way ANOVA on fitness (W)
-size.anova <- aov(volume ~ timepoint + strain + timepoint*strain, data = size.raw)
 
-#                   Df Sum Sq Mean Sq F value   Pr(>F)    
-# timepoint          1   7.28   7.278   84.61  < 2e-16 ***
-# strain             1  16.37  16.366  190.25  < 2e-16 ***
-# timepoint:strain   1   2.95   2.948   34.27 9.92e-09 ***
-# Residuals        404  34.75   0.086                     
+# Difference in cell size between wt and minimal at ancestal timepoint?
+# Problem is that n = 2 for wt and n = 1 for minimal. 
+# So, I'm running a one sample t-test here, which probably has very low power
+# Results: t = 4.9552, df = 1, p-value = 0.1268
+
+anc.reps <- filter(size.reps, timepoint == "Ancestor") %>%
+   group_by(strain, sub.strain)
+
+anc.t.test <- t.test(anc.reps$mean.vol[2:3], mu = anc.reps$mean.vol[1])
+
+
+# Difference in cell size between wt and minimal at evolved timepoint?
+# Test for equal variance: P = p-value = 0.039 --> non-homogenous variance
+# Results: t = -4.7431, df = 3.3248, p-value = 0.01404
+
+evo.reps <- filter(size.reps, timepoint == "Evolved") %>%
+   group_by(strain, sub.strain)
+
+equal.var.evo <- var.test(evo.reps$mean.vol[1:4], evo.reps$mean.vol[5:8])
+
+evo.t.test <- t.test(evo.reps$mean.vol ~ evo.reps$strain, var.equal = F)
+
+
+# Difference in cell size between minimal and wt over time?
+# Answer = Yes: t = 4.2253, df = 3.3248, p-value = 0.01971
+
+wt.size  <- filter(evo.reps, strain == "Wildtype") %>%
+  dplyr::select(strain, sub.strain, mean.vol)
+wt.delt.size <- wt.size$mean.vol - mean(anc.reps$mean.vol[2:3])
+
+min.size  <- filter(evo.reps, strain == "Minimal") %>%
+  dplyr::select(strain, sub.strain, mean.vol)
+min.delt.size <- min.size$mean.vol - mean(anc.reps$mean.vol[1])
+
+delta.size <- data.frame(wt.delt.size, min.delt.size )
+colnames(delta.size) <-c("Wildtype", "Minimal")
+
+# Test for equal variance: P = 0.03905 --> non-homogeneous variance
+equal.var.delta <- var.test(delta.size$Wildtype, delta.size$Minimal)
+
+test.delta.size <- t.test(delta.size$Wildtype, delta.size$Minimal, var.equal = F)
 ```
 
 # Initiate figure
