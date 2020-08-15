@@ -19,16 +19,6 @@ setwd("~/GitHub/MinimalCell")
 ```{r}
 require("png")
 require("dplyr")
-require("vegan")
-require("ade4")
-require("viridis")
-require("gplots")
-require("BiodiversityR")
-require("indicspecies")
-require("ggplot2")
-require("tidyverse")
-require("ggpubr")
-require("Hmisc")
 require("vioplot")
 require("grid")
 ```
@@ -55,12 +45,18 @@ mr.wt  <- filter(ma, strain== "Wildtype") %>%
 
 mr.min  <- filter(ma, strain== "Minimal") %>%
   dplyr::select(per_nt_per_gen)
+
+# Test for equal variance: P = 0.42 --> homogeneous variance
+equal.var <- var.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen)
+
+# Test for differences between treatments: P = 0.54 --> no difference
+mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE)
 ```
 
 # Load mutation type data (i.e., insertions, deletions, and SMSs) for Fig. 1B)
 ```{r}
 # Load data
-ma.type.raw <- read_csv("data2/MA_grouped_bar_mut.types.csv")
+ma.type.raw <- read.csv("data2/MA_grouped_bar_mut.types.csv")
 
 # Preserve row names
 ma.type <- as_tibble(ma.type.raw)
@@ -75,10 +71,36 @@ ma.type$strain <- factor(ma.type$strain, levels=c("Wildtype","Minimal"))
 ma.type$mut <- factor(ma.type$mut, levels = c("Insertion","Deletion","Over 100 bp","Single-nucleotide"))
 ma.type <- ma.type %>% mutate(prop2 = sprintf("%0.2f",prop))
 
-# Reorder table for plotting
+# Reorder for plotting
 order.1 <- c(2,4,6,1,3,5) 
 ma.type <- data.frame(ma.type,order.1)
 ma.type <- ma.type[order(ma.type$order.1),] 
+
+# Make table for contingency analyses
+ma.type.mat <- matrix(ma.type$count, ncol = 2, byrow = T)
+colnames(ma.type.mat) <- c("minimal","wildtype")
+rownames(ma.type.mat) <- c("insertion","deletion","snm")
+ma.type.tab <- as.table(ma.type.mat)
+ma.type.tab.margins <- addmargins(ma.type.tab)
+
+# X-squared = 4.1617, df = 2, p-value = 0.1248
+ma.type.chi <- chisq.test(ma.type.tab)
+
+# Posthoc analysis
+ma.type.z <- as.data.frame(ma.type.chi$stdres)
+ma.type.x2 <- ma.type.z$Freq^2
+ma.type.p <- pchisq(ma.type.x2, df = 1, lower.tail = FALSE)
+ma.type.p.adj <- p.adjust(ma.type.p, method="BH")
+ma.type.post.hoc <- data.frame(ma.type.z, ma.type.x2, ma.type.p, ma.type.p.adj)
+colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
+
+#       type   strain         z     chi2         p    p.adj
+# 1 insertion  minimal -1.444750 2.087301 0.14852825 0.1721046
+# 2  deletion  minimal -1.365472 1.864515 0.17210460 0.1721046
+# 3       snm  minimal  1.931879 3.732157 0.05337443 0.1601233
+# 4 insertion wildtype  1.444750 2.087301 0.14852825 0.1721046
+# 5  deletion wildtype  1.365472 1.864515 0.17210460 0.1721046
+# 6       snm wildtype -1.931879 3.732157 0.05337443 0.1601233
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
@@ -104,6 +126,40 @@ ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f",prop))
 order.2 <- c(2,4,6,8,10,12,1,3,5,7,9,11) 
 ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
+
+# Make table for contingency analyses
+ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)
+colnames(ma.snm.mat) <- c("minimal","wildtype")
+rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
+              "C:G to T:A", "C:G to A:T")
+ma.snm.tab <- as.table(ma.snm.mat)
+ma.snm.tab.margins <- addmargins(ma.snm.tab)
+
+# X-squared = 122.4, df = NA, p-value = 9.999e-05
+ma.snm.chi <- chisq.test(ma.snm.tab, simulate.p.value = TRUE,  B = 10000)
+
+# Posthoc analysis
+ma.snm.z <- as.data.frame(ma.snm.chi$stdres)
+ma.snm.x2 <- ma.snm.z$Freq^2
+ma.snm.p <- pchisq(ma.snm.x2, df = 1, lower.tail = FALSE)
+ma.snm.p.adj <- p.adjust(ma.snm.p, method="BH")
+ma.snm.post.hoc <- data.frame(ma.snm.z, ma.snm.x2, ma.snm.p, ma.snm.p.adj)
+colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
+
+#         type   strain           z     chi2        p          p.adj
+# 1  A:T to C:G  minimal  0.44851026  0.201161457 6.537850e-01 0.785
+# 2  A:T to G:C  minimal -4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 3  A:T to T:A  minimal  0.08639216  0.007463605 9.311547e-01 0.931
+# 4  C:G to G:C  minimal -6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 5  C:G to T:A  minimal  9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 6  C:G to A:T  minimal -3.68512950 13.580179403 2.285864e-04 0.00034
+
+# 7  A:T to C:G wildtype -0.44851026  0.201161457 6.537850e-01 0.785
+# 8  A:T to G:C wildtype  4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 9  A:T to T:A wildtype -0.08639216  0.007463605 9.311547e-01 0.931
+# 10 C:G to G:C wildtype  6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 11 C:G to T:A wildtype -9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 12 C:G to A:T wildtype  3.68512950 13.580179403 2.285864e-04 0.00034
 ```
 
 # Make Figure 1
@@ -113,8 +169,6 @@ png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
-#par(oma=c(2,4,0,0), mar=c(2,4,4,1), mfrow=c(1,3))
-#par(oma=c(2,4,0,0), mar=c(2,4,4,1), mfrow=c(1,3))
 layout(matrix(c(1:3), byrow = T))
 par(mar = c(2.5, 4, 1, 1), oma = c(3, 4, 1, 1))
 
@@ -154,17 +208,12 @@ mtext("Mutation rate", side = 2, outer = TRUE, cex = 1.25, line = 2, adj = 0.94)
 mtext(expression(paste('(mut · nt'^-1*' · gen' ^-1*')')), 
       side = 2, outer = TRUE, cex = 0.70, line = 0.55, adj = 0.925)      
 
-# Test for equal variance: P = 0.42 --> homogeneous variance
-equal.var <- var.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen)
+#Add panel label
+text(-0.02, 7.5e-08, labels = "A", cex = 2)
 
-# Test for differences between treatments: P = 0.54 --> no difference
-mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE)
+#Add P-value for t-test
+mtext(expression(~italic("P")~"= 0.54"), line = -3.5, cex = 0.80, at = 0.12)
 
-# Add P-value for t-test
-mtext(expression(~italic("P")~"= 0.54"), line = -3.5, cex = 0.80, at = 0.09)
-
-# Add panel label
-text(-0.025, 7.5e-08, labels = "A", cex = 2)
 
 ### Make panel B ###
 
@@ -195,13 +244,16 @@ text(5.5, 0.16, expression("0.10"), cex= 0.85)
 text(7.5, 0.95, expression("0.89"), cex= 0.85)
 text(8.5, 0.92, expression("0.86"), cex= 0.85)
 
+# Add panel label
+text(0.95, 0.87, labels = "B", cex = 2)
+
 # Add legend
-legend(0.75, 0.8, c("Wildtype", "Minimal"), pch = 22, 
+legend(1.2, 1.0, c("Wildtype", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
-# Add panel label
-text(0.9, 0.9, labels = "B", cex = 2)
+# Add P-value for t-test
+mtext(expression(~italic("P")~"= 0.125"), line = -4.0, cex = 0.80, at = 1.4)
 
 
 ### Make panel C ###
@@ -243,13 +295,24 @@ text(14.5, 0.71, expression("0.65"), cex= 0.85)
 text(16.5, 0.40, expression("0.36"), cex= 0.85)
 text(17.5, 0.33, expression("0.27"), cex= 0.85)
 
+# Add panel label
+text(0.9, 0.88, labels = "C", cex = 2)
+
 # Add legend
-legend(0.55, 0.8, c("Wildtype", "Minimal"), pch = 22, 
+legend(1.5, 1.0, c("Wildtype", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
-# Add panel label
-text(0.9, 0.9, labels = "C", cex = 2)
+# Add P-value for t-test
+mtext(expression(~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 2.0)
+
+# Add symbols for posthoc significance
+text(2, 0.25, expression("ns"), cex= 1.2)
+text(5, 0.25, expression("***"), cex= 1.5)
+text(8, 0.25, expression("ns"), cex= 1.2)
+text(11, 0.25, expression("***"), cex= 1.5)
+text(14, 0.80, expression("***"), cex= 1.5)
+text(17, 0.50, expression("***"), cex= 1.5)
 
 # Close Plot Device
 dev.off()

@@ -8,10 +8,12 @@ for (package in package.list) {
   }
 }
 
-setwd("~\\..\\GitHub\\MinimalCell")
 
-myt <- read_csv("data\\GxP_Mm_essential.csv")
-myt_ALL.shared<-read_csv("data\\GxP_Mm_all.shared.csv")#This includes stuff like ftsZ that is not essential but is share
+myt <- read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\GxP_Mm_essential.csv")
+myt_ALL.shared<-read_csv("C:\\Users\\rmoge\\Box Sync\\Mycoplasma\\Experiments\\data\\GxP_Mm_all.shared.csv")
+
+myt <- read.csv("data2/GxP_Mm_essential.csv")
+myt_ALL.shared <- read.csv("data2/GxP_Mm_all.shared.csv")
 
 
 myt$sample <- as.factor(myt$sample)
@@ -19,6 +21,12 @@ myt$treatment <- as.factor(myt$treatment)
 levels(myt$treatment)[levels(myt$treatment)=="s1"] <- "Wildtype"
 levels(myt$treatment)[levels(myt$treatment)=="s3"] <- "Minimal"
 
+
+
+
+#data(doubs)
+#typeof(doubs)
+#typeof(doubs$fish)
 
 mygxp<-as_tibble(myt)
 gxpnum<-mygxp[-1]
