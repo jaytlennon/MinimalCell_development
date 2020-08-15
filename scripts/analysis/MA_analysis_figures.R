@@ -371,7 +371,7 @@ alltype_table<-matrix(c(46,175,1810,20,63,521), nrow=2,ncol=3,byrow=T)
 rownames(alltype_table)<- c("Wildtype", "Minimal")
 colnames(alltype_table)<- c("In","Del","SNM")
 alltype_table
-XX_all <- chisq.test(alltype_table, simulate.p.value = F, B = 99999)
+XX_all <- chisq.test(alltype_table, simulate.p.value = T, B = 99999)
 #XX_all <- chisq.test(alltype_table, simulate.p.value = T, B = 99999)
 XX_all
 XX_all$expected
@@ -584,3 +584,4 @@ myfigure
 
 myspectrum<-ggarrange(muttypep, SNMp, labels = c("A","B"), ncol = 2, nrow=1)
 myspectrum
+
