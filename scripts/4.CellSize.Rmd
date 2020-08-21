@@ -11,11 +11,14 @@ geometry: margin=2.54cm
 ## Making Figure 4: changes in cell size
 
 ## Clear workspace and set directory
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 rm(list=ls())
+require("knitr")
 getwd()
-setwd("~/GitHub/MinimalCell")
-#setwd("~\\..\\GitHub\\MinimalCell")
+#setwd("~/GitHub/MinimalCell")
+#opts_knit$set(root.dir = "~\\..\\GitHub\\MinimalCell")
+knitr::opts_chunk$set(root.dir = "~\\..\\GitHub\\MinimalCell")
+getwd()
 ```
 
 ## Load packages and functions
@@ -29,8 +32,8 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load and process data
 ```{r}
 # Load data
-size.raw <-read.csv("data2/cases_microbeJ.csv")
-#size.raw <-read.csv("data2\\cases_microbeJ.csv")
+#size.raw <-read.csv("data2/cases_microbeJ.csv")
+size.raw <-read.csv("data2\\cases_microbeJ.csv")
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter", "area", 
     "volume", "pixels", "mean", "min", "max")
