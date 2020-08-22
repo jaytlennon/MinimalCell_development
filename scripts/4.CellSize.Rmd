@@ -96,6 +96,23 @@ B_delta.t.test <- t.test(x = evo.reps$mean.vol[1:4], mu = size.reps$mean.vol[1],
 # Answer = No: t = 1.0106, df = 3, p-value = 0.3867
 
 ```
+```{r}
+#Look for statistical correlation between population fitness and population average cell size
+Area3B_all<-c(0.313133103,0.144968712,0.179881286,0.150747882,0.160169625)
+Areas1_all<-c(1.054317474,          0.728156189,          0.62265075, 0.810654429,0.392750088)
+W3B_all<-c(0.971022482,0.806202409, 0.800146358,0.794215732,0.479184263)
+Ws1_all<-c(1.097961341, 1.428011332,1.509297996,1.258975605,1)
+Volume3B_all<-Area3B_all^1.5
+Volumes1_all<-Areas1_all^1.5
+
+#Test for correlation of fitness with average cell volume
+cor(Volume3B_all,W3B_all)
+cor.test(Volume3B_all,W3B_all,alternative = "two.sided", method = "pearson")
+#t = 1.3, p = 0.27. Not a significant correlation.
+cor(Volumes1_all,Ws1_all)
+cor.test(Volumes1_all,Ws1_all,alternative = "two.sided", method = "pearson")
+#t = 0.06, p = 0.95. Not a significant correlation.
+```
 
 # Initiate figure
 ```{r}
