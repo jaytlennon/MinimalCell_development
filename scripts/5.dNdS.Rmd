@@ -62,7 +62,7 @@ UL.95.dnds.min <- UL.95(dnds.min$dnds)
 equal.var <- var.test(dnds.wt$dnds, dnds.min$dnds)
 
 # Test for differences between strains: P = 0.282 --> no difference
-dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE)
+dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative = 'two.sided')
 ```
 
 # Initiate figure
