@@ -13,7 +13,7 @@ geometry: margin=2.54cm
 rm(list=ls())
 require("knitr")
 getwd()
-#setwd("~/GitHub/MinimalCell") 
+setwd("~/GitHub/MinimalCell") 
 #opts_knit$set(root.dir = "~\\..\\GitHub\\MinimalCell")
 #knitr::opts_chunk$set(root.dir = "~\\..\\GitHub\\MinimalCell") 
 getwd()
@@ -112,7 +112,8 @@ colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # Load single nucleotide mutation data for Fig. 1C
 ```{r}
 # Load data
-ma.snm.raw <- read.csv("data2/MA_grouped_bar_SNM.csv")
+ma.snm.raw <- read.csv("data2\MA_grouped_bar_SNM.csv")
+ma.snm.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_SNM.csv")
 
 # Preserve row names
 ma.snm <- as_tibble(ma.snm.raw)
@@ -141,7 +142,7 @@ rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
 ma.snm.tab <- as.table(ma.snm.mat)
 ma.snm.tab.margins <- addmargins(ma.snm.tab)
 
-# X-squared = 122.4, df = NA, p-value = 9.999e-05
+# X-squared = 69.92, df = NA, p-value = 9.999e-05
 ma.snm.chi <- chisq.test(ma.snm.tab, simulate.p.value = TRUE,  B = 10000)
 
 # Posthoc analysis

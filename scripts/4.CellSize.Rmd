@@ -33,7 +33,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 ```{r}
 # Load data
 #size.raw <-read.csv("data2/cases_microbeJ.csv")
-size.raw <-read.csv("data2\\cases_microbeJ.csv")
+size.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_microbeJ.csv")
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter", "area", 
     "volume", "pixels", "mean", "min", "max")
@@ -117,7 +117,10 @@ cor.test(Volumes1_all,Ws1_all,alternative = "two.sided", method = "pearson")
 # Initiate figure
 ```{r}
 # Make figure
-png(filename="~/GitHub/MinimalCell/figures/Fig4.png",
+#png(filename="~/GitHub/MinimalCell/figures/Fig4.png",
+#    width = 1200, height = 1200, res = 96*2)
+
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -171,8 +174,8 @@ segments(size.min$time.x[1], size.min$mean[1], size.min$time.x[2],
          size.min$mean[2], col = "red", lwd = 2)
 
 # Add P-values
-mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
-mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
+#mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
+#mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
 
 # Add strain identifier
 text(3.8, size.wt$mean[2], labels = "Wildtype", cex = 1.0)
@@ -183,7 +186,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig4.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig4.png")
 
 grid.raster(img)
 ```

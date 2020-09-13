@@ -129,3 +129,14 @@ graphics.off()
 img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
 grid.raster(img)
 ```
+
+```{r}
+####Compare prevalence of putatively adaptive mutations in specific categories of genes
+x1s1<-4;x13b<-1;ns1<-16;n3b<-14
+membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
+membrane.transport<-fisher.test(x=matrix(c(x1s1,ns1-x1s1,x13b,n3b-x13b),ncol=2));membrane.transport
+
+x2s1<-2;x23b<-2;ns1<-16;n3b<-14
+glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
+glucose.metabolism<-fisher.test(x=matrix(c(x2s1,ns1-x2s1,x23b,n3b-x23b),ncol=2));glucose.metabolism
+```

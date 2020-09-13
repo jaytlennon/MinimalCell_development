@@ -95,12 +95,13 @@ print(minx)
 #Compare proportions of significant genes of different categories in NSE
 x1s1<-4;x13b<-1;ns1<-16;n3b<-14
 membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
-membrane.transport<-binom.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
+#membrane.transport<-binom.test(x=c(x1s1,ns1-x1s1),p=2/4,alternative = 't');membrane.transport
+membrane.transport<-fisher.test(x=matrix(c(x1s1,ns1-x1s1,x13b,n3b-x13b),ncol=2));membrane.transport
 
 x2s1<-2;x23b<-2;ns1<-16;n3b<-14
 glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
-glucose.metabolism<-binom.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
-
+#glucose.metabolism<-binom.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
+glucose.metabolism<-fisher.test(x=matrix(c(x2s1,ns1-x2s1,x23b,n3b-x23b),ncol=2));glucose.metabolism
 
 
 ##################################################################
