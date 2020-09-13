@@ -29,7 +29,8 @@ UL.95 <- function(x) t.test(x)$conf.int[2]
 # Load and process data
 ```{r}
 # Load data
-dnds <- read.csv("data2/cases_Mm.300.csv")
+#dnds <- read.csv("data2/cases_Mm.300.csv")
+dnds <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_Mm.300.csv")
 colnames(dnds)[12] <- "dnds"
 colnames(dnds)[2] <- "strain"
 
@@ -68,8 +69,11 @@ dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative 
 # Initiate figure
 ```{r}
 # Make figure
-png(filename="~/GitHub/MinimalCell/figures/FigS1.png",
-    width = 1200, height = 1200, res = 96*2) 
+#png(filename="~/GitHub/MinimalCell/figures/FigS1.png",
+#    width = 1200, height = 1200, res = 96*2) 
+
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS1.png",
+    width = 1200, height = 1200, res = 96*2)
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
@@ -93,9 +97,9 @@ arrows(x0 = c(1), y0 = median.dnds.wt, y1 = LL.95.dnds.wt, angle = 90,
        length = 0.1, lwd = 2, col = "blue")
 arrows(x0 = c(1), y0 = median.dnds.wt, y1 = UL.95.dnds.wt, angle = 90,
        length=0.1, lwd = 2, col = "blue")
-arrows(x0 = c(3), y0 = median.dnds.min, y1 = LL.95.dnds.wt, angle = 90,
+arrows(x0 = c(3), y0 = median.dnds.min, y1 = LL.95.dnds.min, angle = 90,
        length = 0.1, lwd = 2, col = "red")
-arrows(x0 = c(3), y0 = median.dnds.min, y1 = UL.95.dnds.wt, angle = 90,
+arrows(x0 = c(3), y0 = median.dnds.min, y1 = UL.95.dnds.min, angle = 90,
        length=0.1, lwd = 2, col = "red")
 
 # Add medians
@@ -127,7 +131,8 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/FigS1.png")
+#img <- readPNG("~/GitHub/MinimalCell/figures/FigS1.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS1.png")
 
 grid.raster(img)
 ```
