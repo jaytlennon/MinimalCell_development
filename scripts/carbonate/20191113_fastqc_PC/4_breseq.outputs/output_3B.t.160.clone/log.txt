@@ -1,0 +1,4 @@
+Wed Sep  4 14:33:40 2019
+
+breseq -j 8 -p -o Sample3B_15_t.160.clone_breseq -r /N/dc2/projects/muri2/roy/Mm_NSE/reference/JCVI-syn3A_reference_CP016816.2/Synthetic.bacterium_JCVI-Syn3A.gb Sample_3B_15_t.160.clone/Sample_3B_15_t.160.clone_R1_trimmed.fastq Sample_3B_15_t.160.clone/Sample_3B_15_t.160.clone_R2_trimmed.fastq
+
