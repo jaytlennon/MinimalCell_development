@@ -1,0 +1,9 @@
+case spreadsheet files: data formatted for import to R
+
+GxP spreadsheets: gene-by-population matrices derived from breseq outputs.
+
+interaction data spreadsheets: data formatted for showing the timepoint-by-genotype interactions (ancestor vs. evolved; wildtype vs. minimal)
+
+*.R files: deprecated data analysis scripts
+
+pvals_simulations_TOOLS: .xlsx file derived from the .csv file that was outputted from the script that simulates random placement of all the observed mutations onto random genes (generating a null distribution)
