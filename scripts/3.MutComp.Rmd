@@ -29,6 +29,7 @@ require("vegan")
 ```{r}
 # Load data
 g.essent.raw <- read.csv("data2/GxP_Mm_essential.csv")
+g.essent.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\GxP_Mm_essential.csv")
 g.essent.raw$sample <- as.factor(g.essent.raw$sample)
 g.essent.raw$treatment <- as.factor(g.essent.raw$treatment)
 levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Wildtype"
@@ -67,6 +68,12 @@ g.essent.pcoa$treatment <- g.essent.raw$treatment
 row.names(g.essent.pcoa) <- g.essent.raw$sample
 g.essent.pcoa$sample <- g.essent.raw$sample
 names(g.essent.pcoa)[1:3] <- c('PC1', 'PC2', 'PC3')
+
+gd <- vegdist(g.essent, method = 'bray', upper = TRUE, diag = TRUE)
+compare.variance <- betadisper(d=gd, group = c("minimal","minimal","minimal","minimal","WT","WT","WT","WT"))
+c.v.result <- anova(compare.variance)
+TukeyHSD(compare.variance)
+###No significant difference in the amount of variance, i.e. beta diversity, between the wildtype and minimal cell.
 ```
 
 ## PCoA Plot
