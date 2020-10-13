@@ -113,7 +113,7 @@ colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 ```{r}
 # Load data
 ma.snm.raw <- read.csv("data2\MA_grouped_bar_SNM.csv")
-ma.snm.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_SNM.csv")
+#ma.snm.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_SNM.csv")
 
 # Preserve row names
 ma.snm <- as_tibble(ma.snm.raw)
@@ -135,8 +135,9 @@ ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
 
 # Make table for contingency analyses
-ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)
-colnames(ma.snm.mat) <- c("minimal","wildtype")
+#ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)#############This code is bad. Produces an incorrect matrix
+ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = T)
+colnames(ma.snm.mat) <- c("wildtype","minimal")
 rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
               "C:G to T:A", "C:G to A:T")
 ma.snm.tab <- as.table(ma.snm.mat)
@@ -172,9 +173,10 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # Make Figure 1
 ```{r}
 ### Initiate figure
-png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
+#png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
+    #width = 1200, height = 1200, res = 96*2) 
+png(filename="~\\Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
-
 plot.new()
 layout(matrix(c(1:3), byrow = T))
 par(mar = c(2.5, 4, 1, 1), oma = c(3, 4, 1, 1))
@@ -326,8 +328,8 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
-
+#img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
+img <- readPNG("~\\Fig1.png")
 grid.raster(img)
 ```
 
