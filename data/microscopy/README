@@ -1,0 +1,8 @@
+In the 20200xxx directories lie the microscopy images that were taken of each population.
+
+In the microbeJ_results directory, I recorded the attributes of cells that were called by microbeJ, for each genotype (including both ancestors and evolved).
+	The *s1.anc.not.correct* files are deprecated.
+	The cases* files contain information compiled for all the populations.
+	The regress* file probed for a relationship between average cell size and relative fitness for each population.
+	
+The UNIT_CONVERSION.docx file contains notes regarding the absolute size of 1 pixel in the microscope that we used.

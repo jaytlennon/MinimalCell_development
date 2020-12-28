@@ -24,37 +24,41 @@ MAALL$strain <- factor(MAALL$strain, levels=c("Wildtype","Minimal"))
 
 
 
-####Part 1: test for insertion bias or deletion bias
-x1s1<-sum(MAs1$'in')
-n1s1<-sum(MAs1$'in')+sum(MAs1$del)
+####Part 1: test for insertion bias or deletion bias, not counting the large deletions >100 bp
+x1s1<-sum(MAs1$'in')+sum(MAs1$SVin)
+n1s1<-sum(MAs1$'in')+sum(MAs1$SVin)+sum(MAs1$del)
 indelprops1 <- prop.test(x = x1s1, n = n1s1, alternative = 'two.sided');indelprops1
 #sample prop = 0.215; P-val < 2.2e-16
 
-x13B <- sum(MA3B$'in')
-n13B<-sum(MA3B$'in')+sum(MA3B$del)
+x13B <- sum(MA3B$'in')+sum(MAs1$SVin)
+n13B<-sum(MA3B$'in')+sum(MAs1$SVin)+sum(MA3B$del)
 indelprop3B<-prop.test(x=x13B,n=n13B,p=0.5,alternative="two.sided"); indelprop3B
 #sample prop = 0.241; P-val = 4.0e-06
 
 #Significant deletion bias, in terms of number-of-dels > number-of-ins, by chisq test for both strains
 
+
+
 twoprop_indel<-prop.test(x=c(x1s1, x13B),n=c(n1s1,n13B),alternative = "two.sided"); twoprop_indel
 #p-val > 0.05
+#infer that there is not a significant difference in the magnitude of the deletion bias between the two strains
 
-#Now test in terms of the total amount of sequence inserted/deleted
-x2s1<-sum(MAs1$in_len_tot);n2s1<-x2s1+sum(MAs1$del_len_tot)
+#Now test in terms of the total amount of sequence inserted/deleted including ALL deletions
+x2s1<-sum(MAs1$ALLin_len_tot);n2s1<-x2s1+sum(MAs1$ALLdel_len_tot)
 indellentotprops1<-prop.test(x=x2s1,n=n2s1,p=0.5,alternative = 'two.sided');indellentotprops1
-#sample prop = 0.118, p-val < 2.2e-16
+#sample prop = 0.008, p-val < 2.2e-16
 #of the total sequence inserted or deleted, there is a greater proportion deleted than expected by chance, in s1
 
 
-x23B<-sum(MA3B$in_len_tot);n23B<-x23B+sum(MA3B$del_len_tot)
+x23B<-sum(MA3B$ALLin_len_tot);n23B<-x23B+sum(MA3B$ALLdel_len_tot)
 indellentotprop3B<-prop.test(x=x23B,n=n23B,p=0.5,alternative = 'two.sided');indellentotprop3B
-#sample prop = 0.212, p-val <2.2e-16
-#As before, conclude that more total seqeunce was deleted, in 3B this time
+#sample prop = 0.278, p-val =1.5e-07
+#As before, conclude that more total sequence was deleted, in 3B this time
 
 
 twoprop_indellentot <- prop.test(x=c(x2s1,x23B),n=c(n2s1,n23B),alternative = 'two.sided');twoprop_indellentot
 #p-val < 0.05. Conclude that, in terms of total number of nts inserted or deleted, strain s1 has a greater deletion bias than strain 3B
+
 
 #Now compare the average sizes of ins among the lines and average sizes of dels within the lines
 #test for normality
@@ -62,22 +66,22 @@ shapiro.test(na.omit(MAs1$in_len_avg));shapiro.test(na.omit(MAs1$del_len_avg))
 ggdensity(na.omit(MAs1$in_len_avg));ggdensity(na.omit(MAs1$del_len_avg))
 wilcox.test(x=na.omit(MAs1$in_len_avg),y=na.omit(MAs1$del_len_avg),mu=0,alternative = 'two.sided',paired=F)
 
-#Can I use t-test anyway, since the sample size is large? n>=90. I want to use a t-test because I want to test a hypothesis about a difference in means, not a difference in medians.
+#I here use t-test anyway, since the sample size is large. n>=90. I want to use a t-test because I want to test a hypothesis about a difference in means, not a difference in medians.
 #test for equal variances
 var.test(x=na.omit(MAs1$in_len_avg),y=na.omit(MAs1$del_len_avg),ratio=1,alternative = 'two.sided')
-#F=0.026, p-val < 2.2e-16
+#F=0.016, p-val < 2.2e-16
 indellenavgs1<-t.test(x=na.omit(MAs1$in_len_avg),y=na.omit(MAs1$del_len_avg),mu=0,alternative = 'two.sided',var.equal = F);indellenavgs1
 #p-val = 0.0724. For strain s1, marginal deletion bias in terms of avg length of an insertion/deletion.
 
+#Repeat this analysis now for 3B
 #test for normality
 shapiro.test(na.omit(MA3B$in_len_avg));shapiro.test(na.omit(MA3B$del_len_avg))
 ggdensity(na.omit(MA3B$in_len_avg));ggdensity(na.omit(MA3B$del_len_avg))
 wilcox.test(x=na.omit(MA3B$in_len_avg),y=na.omit(MA3B$del_len_avg),mu=0,alternative = 'two.sided',paired=F)
 
-
 #test for equal variances
 var.test(x=na.omit(MA3B$in_len_avg),y=na.omit(MA3B$del_len_avg),ratio=1,alternative = 'two.sided')
-#F=0.026, p-val < 2.2e-16
+#F=6.3, p-val < 4.2e-06
 indellenavg3B<-t.test(x=na.omit(MA3B$in_len_avg),y=na.omit(MA3B$del_len_avg),mu=0,alternative = 'two.sided',var.equal = F);indellenavg3B
 #p-val = 0.333. For strain 3B, no difference in the average size of an in versus a del.
 
@@ -139,7 +143,7 @@ ALLindellenavgs1<-t.test(x=na.omit(MAs1$ALLin_len_avg),y=na.omit(MAs1$ALLdel_len
 
 
 
-#Is the avg length of a deletion longer in the wildtype than in the minimal?
+#Is the avg length of a deletion longer in the wildtype than in the minimal? Here again including the deletions >100 bp
 shapiro.test(na.omit(MAs1$ALLdel_len_avg));shapiro.test(na.omit(MA3B$ALLdel_len_avg))
 ggdensity(na.omit(MAs1$ALLdel_len_avg));ggdensity(na.omit(MA3B$ALLdel_len_avg))
 wilcox.test(x=na.omit(MAs1$ALLdel_len_avg),y=na.omit(MA3B$ALLdel_len_avg),mu=0,alternative = 'two.sided',paired=F)
@@ -179,9 +183,9 @@ x33B<-sum(MA3B$to_AT_tot);n33B<-x33B+sum(MA3B$to_CG_tot)
 toATprop3B<-prop.test(x=x33B,n=n33B,p=(1-0.76),alternative = 'two.sided');toATprop3B
 #sample prop = 0.970, p-val <2.2e-16
 
-#the two strains have almost identical expectation proportions. I will go ahead and compare them.
+#the two strains have identical expectation proportions to 2 significant figures. I will go ahead and compare them.
 twoprop_ATbias<-prop.test(x=c(x3s1, x33B),n=c(n3s1,n33B),alternative = "two.sided"); twoprop_ATbias
-#p-val = 3.1e-06 signif difference suggesting that AT bias is stronger in syn3B. But also syn3B had a higher expectation proportion which I wasnt able to account for----not sure what to do. We do know that they are signifly different because the confidence interval does not include the actual expected difference--- CI = [-0.089, -0.045], when the expected difference is -0.003
+#p-val = 3.1e-06 signif difference suggesting that AT bias is stronger in syn3B. Note that syn3B had a very slightly higher expectation proportion. We do know that they are signifly different because the confidence interval does not include the actual expected difference--- CI = [-0.089, -0.045], when the expected difference is -0.003
 #Expected difference is -0.002858346 (i.e., higher for 3B).
 #95 percent confidence interval:
 # -0.08939673 -0.04458173
@@ -195,7 +199,7 @@ toATprops1_NSE<-prop.test(x=x3s1_NSE,n=n3s1_NSE,p=(1-0.76),alternative = 'two.si
 x33B_NSE<-34;n33B_NSE<-34+1
 #toATprop3B<-prop.test(x=x33B,n=n33B,p=(1-0.757152926),alternative = 'two.sided');toATprop3B
 toATprop3B_NSE<-prop.test(x=x33B_NSE,n=n33B_NSE,p=(1-0.76),alternative = 'two.sided');toATprop3B_NSE
-#stronger AT bias in the NSE's significant genes
+#stronger AT bias in the NSE's significant genes. So this aspect of hte mutation spectrum did influence adaptation.
 
 twoprop_ATbias_NSE<-prop.test(x=c(x3s1_NSE, x33B_NSE),n=c(n3s1_NSE,n33B_NSE),alternative = "two.sided"); twoprop_ATbias_NSE
 
@@ -207,7 +211,7 @@ twoprop_ATbias_MA_ung<-prop.test(x=c(x3s1_MA_ung, x33B_MA_ung),n=c(n3s1_MA_ung,n
 x3s1_NSE_ung<-18;n3s1_NSE_ung<-41
 x33B_NSE_ung<-21;n33B_NSE_ung<-43
 twoprop_ATbias_NSE_ung<-prop.test(x=c(x3s1_NSE_ung, x33B_NSE_ung),n=c(n3s1_NSE_ung,n33B_NSE_ung),alternative = "two.sided"); twoprop_ATbias_NSE_ung
-#no difference in the relative proportions of C-->T mutations between the strains
+#no difference in the relative proportions of C-->T mutations between the strains. Suggests that this aspect of the mutation spectrum did not influence adaptation.
 
 #PART 3: transition/transversion ratios
 x4s1<-sum(MAs1$ts);n4s1<-x4s1+sum(MAs1$tv)
@@ -228,10 +232,10 @@ twoprop_tstv <- prop.test(x=c(x4s1,x43B),n=c(n4s1,n43B),alternative = 'two.sided
 
 #PART 4: Do a greater proportion of lines possess a large (> 100 bp) mutation in one strain versus the other?
 max(MAs1$SV);max(MA3B$SV)
-#since the max is 1, I can just take a sum to get the number of lines with a large mut
-x5s1=sum(MAs1$SV);n5s1=90;x53B=sum(MA3B$SV);n53B=67
-twoprop_large <- prop.test(x=c(x5s1,x53B),n=c(n5s1,n43B),alternative = 'two.sided');twoprop_large
-#prop 1: 0.188888888888; prop 2: 0; p-val < e-09
+#since the max number of SV mutations in any line is 1, I can just take a sum to get the number of lines with a large mut
+x5s1=sum(MAs1$SV);n5s1=85;x53B=sum(MA3B$SV);n53B=57#where 85 and 57 are the number of lines
+twoprop_large <- prop.test(x=c(x5s1,x53B),n=c(n5s1,n53B),alternative = 'two.sided');twoprop_large
+#prop 1: 0.188888888888; prop 2: 0; p-val 0.068. COnclude there is marginal evidence that s1 has more large-scale mutation than does 3B.
 
 
 
@@ -251,17 +255,18 @@ wilcox.test(x=log(MAs1$per_nt_per_gen),y=log(MA3B$per_nt_per_gen),mu=0,alternati
 #W=same--- log transform doesnt affect the median
 
 
-#Can I use t-test anyway, since the sample size is large? n>=90. I want to use a t-test because I want to test a hypothesis about a difference in means, not a difference in medians.
+#I can use t-test anyway, since the sample size is large. I want to use a t-test because I want to test a hypothesis about a difference in means, not a difference in medians.
 #test for equal variances
 var.test(x=MAs1$per_nt_per_gen,y=MA3B$per_nt_per_gen,ratio=1,alternative = 'two.sided')
 #p >0.05
 pernt_twostrains<-t.test(x=MAs1$per_nt_per_gen,y=MA3B$per_nt_per_gen,mu=0,alternative = 'two.sided',var.equal = T);pernt_twostrains
 #p > 0.05, = 0.541
+#Conclude that mutation rate does not differ between the strains
 
 var.test(x=log(MAs1$per_nt_per_gen),y=log(MA3B$per_nt_per_gen),ratio=1,alternative = 'two.sided')
 #F=0.717, p-val = 0.144
 pernt_twostrains_log<-t.test(x=log(MAs1$per_nt_per_gen),y=log(MA3B$per_nt_per_gen),mu=0,alternative = 'two.sided',var.equal = T);pernt_twostrains_log
-#p-val = .65
+#p-val = .667
 #Conclude that mutation rate is not significantly higher in the 3B strain. So this suggests there was no great effect of removing those extra DNA replication/repair genes. 
 
 #######
@@ -279,10 +284,10 @@ bpsub_pernt_twostrains_log<-t.test(x=log(MAs1$bpsub_per_nt),y=log(MA3B$bpsub_per
 ###Conclude that there is no different in the bps rate
 var.test(x=(MAs1$bpsub_per_nt),y=(MA3B$bpsub_per_nt),ratio=1,alternative = 'two.sided')
 bpsub_pernt_twostrains<-t.test(x=(MAs1$bpsub_per_nt),y=(MA3B$bpsub_per_nt),mu=0,alternative = 'two.sided',var.equal = T);bpsub_pernt_twostrains
-#t=0.051, p-val = 0.959. Same conclusion. No difference in the bps rate.
+#t=0.051, p-val = 0.959. Same conclusion as well without the log transform. No difference in the bps rate.
 
 
-#What COULD have affecte the NSE, is that syn3B prolly had a lower per genome mutation rate---that's the actual input of mutations that could drive evolution.
+#What COULD have affected the NSE, is that syn3B likely had a lower per genome mutation rate, the actual input of mutations to a cell.
 
 
 #second, per total CDS. This is Mike Lynch's evolutionary question---a test of the DBH---and DBH is not testable here, because the minimal cell syn3B has not had any evolution.
@@ -291,50 +296,38 @@ bpsub_pernt_twostrains<-t.test(x=(MAs1$bpsub_per_nt),y=(MA3B$bpsub_per_nt),mu=0,
 shapiro.test(MAs1$per_CDS_per_gen);shapiro.test(MA3B$per_CDS_per_gen)
 ggdensity(MAs1$per_CDS_per_gen);ggdensity(MA3B$per_CDS_per_gen)
 wilcox.test(x=MAs1$per_CDS_per_gen,y=MA3B$per_CDS_per_gen,mu=0,alternative = 'two.sided',paired=F)
-#W=6450, p-val = 6.484e-09
-
-shapiro.test(log(MAs1$per_CDS_per_gen));shapiro.test(log(MA3B$per_CDS_per_gen))
-ggdensity(log(MAs1$per_CDS_per_gen));ggdensity(log(MA3B$per_CDS_per_gen))
-wilcox.test(x=log(MAs1$per_CDS_per_gen),y=log(MA3B$per_CDS_per_gen),mu=0,alternative = 'two.sided',paired=F)
-#W=6450, p-val = 6.484e-09
+#W=4385, p-val = 3.2e-16
 
 #test for equal variances
 var.test(x=MAs1$per_CDS_per_gen,y=MA3B$per_CDS_per_gen,ratio=1,alternative = 'two.sided')
-#F=1.560, p-val = 0.0337
+#F=1.560, p-val = 1.6e-05
 perCDS_twostrains<-t.test(x=MAs1$per_CDS_per_gen,y=MA3B$per_CDS_per_gen,mu=0,alternative = 'two.sided',var.equal = F);perCDS_twostrains
-#p-val = 8.699e-09
+#p-val < 2.2e-16
 
 var.test(x=log(MAs1$per_CDS_per_gen),y=log(MA3B$per_CDS_per_gen),ratio=1,alternative = 'two.sided')
-#F=0.816, p-val = 0.334
+#F=0.816, p-val = 0.44
 perCDS_twostrains_log<-t.test(x=log(MAs1$per_CDS_per_gen),y=log(MA3B$per_CDS_per_gen),mu=0,alternative = 'two.sided',var.equal = T);perCDS_twostrains_log
-#p-val < 0.05
+#p-val < 2.2e-16
+#Conclude, which we really kind of already know, that the per CDS mutation rate is higher for syn1.
 
 
 
-
-#ok so part 2b is per GENOMEper gen. This is more impt than per CDS for the NSE I think (even tho per CDS is more important for Mike Lynch's comparative question!)
+#Next step is comparing mutation rate per GENOME per gen. This is more impt than per CDS for the NSE I think (even tho per CDS is more important for Mike Lynch's comparative question!)
 shapiro.test(MAs1$per_genome_per_gen);shapiro.test(MA3B$per_genome_per_gen)
 ggdensity(MAs1$per_genome_per_gen);ggdensity(MA3B$per_genome_per_gen)
 wilcox.test(x=MAs1$per_genome_per_gen,y=MA3B$per_genome_per_gen,mu=0,alternative = 'two.sided',paired=F)
-#W=6450, p-val = 6.484e-09
-
-shapiro.test(log(MAs1$per_genome_per_gen));shapiro.test(log(MA3B$per_genome_per_gen))
-ggdensity(log(MAs1$per_genome_per_gen));ggdensity(log(MA3B$per_genome_per_gen))
-wilcox.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_genome_per_gen),mu=0,alternative = 'two.sided',paired=F)
-#W=6450, p-val = 6.484e-09
+#W=4422, p-val < 2.2e-16
 
 #test for equal variances
 var.test(x=MAs1$per_genome_per_gen,y=MA3B$per_genome_per_gen,ratio=1,alternative = 'two.sided')
-#F=1.649, p-val = 0.0170
+#F=3.3, p-val < 0.01
 pergenome_twostrains<-t.test(x=MAs1$per_genome_per_gen,y=MA3B$per_genome_per_gen,mu=0,alternative = 'two.sided',var.equal = F);pergenome_twostrains
-#p-val = 4.924e-10
-
-var.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_genome_per_gen),ratio=1,alternative = 'two.sided')
-#F=0.816, p-val = 0.334
-pergenome_twostrains_log<-t.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_genome_per_gen),mu=0,alternative = 'two.sided',var.equal = T);pergenome_twostrains_log
 #p-val < 2.2e-16
 
-
+var.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_genome_per_gen),ratio=1,alternative = 'two.sided')
+#F=0.816, p-val = 0.44
+pergenome_twostrains_log<-t.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_genome_per_gen),mu=0,alternative = 'two.sided',var.equal = T);pergenome_twostrains_log
+#p-val < 2.2e-16
 #conclude that the minimal cell has a significantly lower per-genome-per-gen mutation rate. Is a difference of 0.0338 versus 0.0177 mutations per genome per generation biologically signif? In the context of the NSE, this would result in a difference of 
 0.033790614*2000*30000000
 0.017655872*2000*30000000
@@ -358,12 +351,14 @@ t.test(x=MA3B$dN_dS,y=NULL,mu=1,alternative="two.sided")
 x6s1<-sum(MAs1$in_CDS)
 n6s1<-sum(MAs1$in_CDS)+sum(MAs1$not_in_CDS)
 CDSprops1 <- prop.test(x = x6s1, n = n6s1, p = (926310/1078809), alternative = 'two.sided');CDSprops1
+#sample prop: 0.860
 #P = 0.876. There is not significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86% compared to expected 86%
 
 x63B<-sum(MA3B$in_CDS)
 n63B<-sum(MA3B$in_CDS)+sum(MA3B$not_in_CDS)
 CDSprops1 <- prop.test(x = x63B, n = n63B, p = (479721/543379), alternative = 'two.sided');CDSprops1
-#P 0.069. There is not significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86%, compared to expected 88%
+#sample prop = 0.856
+#P 0.069. There is a marginally significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86%, compared to expected 88%
 
 ###############################################################
 #Part 7: Compare the overall spectra/distributions of mutation. Are the two spectra significantly different via chi-square contingency analysis?
@@ -371,7 +366,7 @@ alltype_table<-matrix(c(46,175,1810,20,63,521), nrow=2,ncol=3,byrow=T)
 rownames(alltype_table)<- c("Wildtype", "Minimal")
 colnames(alltype_table)<- c("In","Del","SNM")
 alltype_table
-XX_all <- chisq.test(alltype_table, simulate.p.value = F, B = 99999)
+XX_all <- chisq.test(alltype_table, simulate.p.value = T, B = 99999)
 #XX_all <- chisq.test(alltype_table, simulate.p.value = T, B = 99999)
 XX_all
 XX_all$expected
@@ -584,3 +579,4 @@ myfigure
 
 myspectrum<-ggarrange(muttypep, SNMp, labels = c("A","B"), ncol = 2, nrow=1)
 myspectrum
+
