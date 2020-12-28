@@ -8,21 +8,22 @@ output: pdf_document
 geometry: margin=2.54cm
 ---
 
-## Making Figure 3: ordination of mutated genes
+# Making Figure 3: ordination of mutated genes
 
-## Clear workspace and set directory
+# Clear workspace and set directory
 ```{r setup}
 rm(list=ls())
 getwd()
 setwd("~/GitHub/MinimalCell")
 ```
 
-## Load packages and functions
+# Load packages and functions
 ```{r}
 require("png")
 require("dplyr")
 require("grid")
 require("vegan")
+require("indicspecies")
 ```
 
 # Load data
@@ -76,7 +77,7 @@ TukeyHSD(compare.variance)
 ###No significant difference in the amount of variance, i.e. beta diversity, between the wildtype and minimal cell.
 ```
 
-## PCoA Plot
+# PCoA Plot
 ```{r, results = "hide"}
 png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
     width = 1200, height = 1200, res = 96*2) 
@@ -137,13 +138,27 @@ img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
 grid.raster(img)
 ```
 
-```{r}
-####Compare prevalence of putatively adaptive mutations in specific categories of genes
-x1s1<-4;x13b<-1;ns1<-16;n3b<-14
-membrane.transport<-prop.test(x=c(x1s1,x13b),n=c(ns1,n3b),alternative = 't');membrane.transport
-membrane.transport<-fisher.test(x=matrix(c(x1s1,ns1-x1s1,x13b,n3b-x13b),ncol=2));membrane.transport
 
-x2s1<-2;x23b<-2;ns1<-16;n3b<-14
-glucose.metabolism<-prop.test(x=c(x2s1,x23b),n=c(ns1,n3b),alternative = 't');glucose.metabolism
-glucose.metabolism<-fisher.test(x=matrix(c(x2s1,ns1-x2s1,x23b,n3b-x23b),ncol=2));glucose.metabolism
+# Indicator analysis
+
+```{r}
+# Run indicator analysis for gene association with strains
+# https://cran.r-project.org/web/packages/indicspecies/vignettes/indicspeciesTutorial.pdf
+ind <- multipatt(g.essent, cluster = g.essent.raw$treatment, func = "r.g", 
+                     control = how(nperm = 999))
+
+# Select genes with significant correlations (P < 0.05)
+
+ind.sig <- ind$sign[ which(ind$sign[5] <= 0.05), ]
+
+# Indicator genes associated with Wildtype cell line
+#     s.Wildtype s.Minimal index      stat p.value
+#X149          1         0     1 0.8425008   0.031
+#X228          1         0     1 0.9516476   0.031
+
+# Indicator genes associated with Minimal cell line
+#     s.Wildtype s.Minimal index      stat p.value
+#X129          0         1     2 1.0000000   0.031
+#X168          0         1     2 0.7308438   0.031
+#X820          0         1     2 0.7942200   0.031
 ```
