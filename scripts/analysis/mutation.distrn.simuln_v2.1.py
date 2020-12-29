@@ -386,7 +386,8 @@ end = time.time()
 print(end - start)
 #2405 seconds for 100 000 reps with the GC code
 #%%
-#Now do the analyses on the imported simulation resulsts
+#Now do the analyses on the imported simulation results
+#Below: SYNONYMOUS ONLY
 my3bpraw=dict()
 #my3bpraw['amiF']=np.count_nonzero([i>=0.633 for i in smo[GD['amiF']['locus_tag'][0]]])#P = 0.01794  padj = 0.01463
 #my3bpraw['lpdA']=np.count_nonzero([i>=0.363 for i in smo[GD['lpdA']['locus_tag'][0]]])##############padj = 0.02915
@@ -394,10 +395,72 @@ my3bpraw=dict()
 
 #%%
 mys1praw=dict()
+#Below: SYNONYMOUS ONLY
 mys1praw['secA']=np.count_nonzero([i>=0.509 for i in smo1[GD1['secA']['locus_tag'][0]]]) #P=0.03738
 #mys1praw['MMSYN1_0086']=np.count_nonzero([i>=0.303 for i in smo1['MMSYN1_0086']])#P=.02202
 mys1praw['MMSYN1_0676']=np.count_nonzero([i>=0.379 for i in smo1['MMSYN1_0676']])#P=.01345
 
+#%%
+#Now for the nonsynonymous
+#Now do the analyses on the imported simulation resulsts
+my3bpraw_nonsyn=dict()
+my3bpraw['ftsZ']=np.count_nonzero([i>=4 for i in smo[GD['ftsZ']['locus_tag'][0]].values()])######P = 0.00001 padj < 0.00011
+my3bpraw['dnaN']=np.count_nonzero([i>=4 for i in smo[GD['dnaN']['locus_tag'][0]].values()])######P < 0.00001 padj = 0.00011
+my3bpraw['pyrG']=np.count_nonzero([i>=4 for i in smo[GD['pyrG']['locus_tag'][0]].values()])#P < 0.00001      padj = 0.00044
+my3bpraw['rpoC']=np.count_nonzero([i>=4.056 for i in smo[GD['rpoC']['locus_tag'][0]].values()])##P = 0.00031 padj = 0.00242
+my3bpraw['fakA']=np.count_nonzero([i>=3 for i in smo[GD['fakA']['locus_tag'][0]].values()])######P = 0.00084 padj = 0.00737
+my3bpraw['ptsG']=np.count_nonzero([i>=1.969 for i in smo[GD['ptsG']['locus_tag'][0]].values()]) #P = 0.02367 padj = 0.25532 <-- So the Bonferroni corrected is no longer significant.
+my3bpraw['atpD']=np.count_nonzero([i>=3.052 for i in smo[GD['atpD']['locus_tag'][0]].values()]) #P < 0.00001 padj < 0.00011
+my3bpraw['tetM']=np.count_nonzero([i>=2.877 for i in smo[GD['tetM']['locus_tag'][0]].values()])##P = 0.00141 padj = 0.01408
+my3bpraw['amiF']=np.count_nonzero([i>=2.596 for i in smo[GD['amiF']['locus_tag'][0]].values()])#P = 0.00121  padj = 0.01463
+my3bpraw['JCVISYN3A_0430']=np.count_nonzero([i>=2 for i in smo['JCVISYN3A_0430'].values()])##############padj = 0.00768
+my3bpraw['gyrB']=np.count_nonzero([i>=0.325 for i in smo[GD['gyrB']['locus_tag'][0]].values()])#P = 0.23633
+my3bpraw['clsA']=np.count_nonzero([i>=2 for i in smo[GD['clsA']['locus_tag'][0]].values()])
+my3bpraw['pgpA']=np.count_nonzero([i>=0.295 for i in smo[GD['pgpA']['locus_tag'][0]].values()])
+my3bpraw['JCVISYN3A_0373']=np.count_nonzero([i>=2 for i in smo['JCVISYN3A_0373'].values()])
+my3bpraw['polC']=np.count_nonzero([i>=1.378 for i in smo[GD['polC']['locus_tag'][0]].values()])
+my3bpraw['relA']=np.count_nonzero([i>=1.306 for i in smo[GD['relA']['locus_tag'][0]].values()])
+my3bpraw['clpB']=np.count_nonzero([i>=1.143 for i in smo[GD['clpB']['locus_tag'][0]].values()])
+my3bpraw['lgt']=np.count_nonzero([i>=2.082 for i in smo[GD['lgt']['locus_tag'][0]].values()])
+my3bpraw['nadK']=np.count_nonzero([i>=0.136 for i in smo[GD['nadK']['locus_tag'][0]].values()])
+my3bpraw['rpsC']=np.count_nonzero([i>=1.054 for i in smo[GD['rpsC']['locus_tag'][0]].values()])
+my3bpraw['dnaB']=np.count_nonzero([i>=0.214 for i in smo[GD['dnaB']['locus_tag'][0]].values()])
+my3bpraw['JCVISYN3A_0691']=np.count_nonzero([i>=1.906 for i in smo['JCVISYN3A_0691'].values()])
+#%%
+mys1praw_nonsyn=dict()
+mys1praw['dnaA_1']=np.count_nonzero([i>=2.575 for i in smo1[GD1['dnaA_1']['locus_tag'][0]].values()])
+mys1praw['tnpA_1']=np.count_nonzero([i>=2 for i in smo1[GD1['tnpA_1']['locus_tag'][0]].values()])
+mys1praw['tnpB_1']=np.count_nonzero([i>=2 for i in smo1[GD1['tnpB_1']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0030']=np.count_nonzero([i>=1.085 for i in smo1['MMSYN1_0030'].values()])
+mys1praw['MMSYN1_0032']=np.count_nonzero([i>=0.993 for i in smo1['MMSYN1_0032'].values()])
+mys1praw['rpsG']=np.count_nonzero([i>=0.172 for i in smo1[GD1['rpsG']['locus_tag'][0]].values()])
+
+mys1praw['MMSYN1_0187']=np.count_nonzero([i>=1.050 for i in smo1['MMSYN1_0187'].values()])
+mys1praw['lpdA']=np.count_nonzero([i>=5.183 for i in smo1[GD1['lpdA']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0253']=np.count_nonzero([i>=0.576 for i in smo1['MMSYN1_0253'].values()])
+mys1praw['MMSYN1_0414']=np.count_nonzero([i>=0.244 for i in smo1['MMSYN1_0414'].values()])
+mys1praw['MMSYN1_0469']=np.count_nonzero([i>=0.932 for i in smo1['MMSYN1_0469'].values()])
+mys1praw['MMSYN1_0490']=np.count_nonzero([i>=0.461 for i in smo1['MMSYN1_0490'].values()])
+mys1praw['ftsZ']=np.count_nonzero([i>=3.079 for i in smo1[GD1['ftsZ']['locus_tag'][0]].values()])
+mys1praw['parC']=np.count_nonzero([i>=0.907 for i in smo1[GD1['parC']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0641']=np.count_nonzero([i>=3.606 for i in smo1['MMSYN1_0641'].values()])
+mys1praw['rpoA']=np.count_nonzero([i>=1.528 for i in smo1[GD1['rpoA']['locus_tag'][0]].values()])
+mys1praw['rpoB']=np.count_nonzero([i>=1.046 for i in smo1[GD1['rpoB']['locus_tag'][0]].values()])
+mys1praw['prs']=np.count_nonzero([i>=0.907 for i in smo1[GD1['prs']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0892']=np.count_nonzero([i>=1.123 for i in smo1['MMSYN1_0892'].values()])
+mys1praw['MMSYN1_0898']=np.count_nonzero([i>=1.184 for i in smo1['MMSYN1_0898'].values()])
+mys1praw['tetM']=np.count_nonzero([i>=1.546 for i in smo1[GD1['tetM']['locus_tag'][0]].values()])
+mys1praw['pyk']=np.count_nonzero([i>=1.284 for i in smo1[GD1['pyk']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0339']=np.count_nonzero([i>=1.302 for i in smo1['MMSYN1_0339'].values()])
+mys1praw['rpoD']=np.count_nonzero([i>=1.000 for i in smo1[GD1['rpoD']['locus_tag'][0]].values()])
+mys1praw['MMSYN1_0412']=np.count_nonzero([i>=1.077 for i in smo1['MMSYN1_0412'].values()])
+mys1praw['MMSYN1_0460']=np.count_nonzero([i>=1.335 for i in smo1['MMSYN1_0460'].values()])
+mys1praw['MMSYN1_0751']=np.count_nonzero([i>=2 for i in smo1['MMSYN1_0751'].values()])
+mys1praw['MMSYN1_0257']=np.count_nonzero([i>=0.868 for i in smo1['MMSYN1_0257'].values()])
+mys1praw['MMSYN1_0312']=np.count_nonzero([i>=0.130 for i in smo1['MMSYN1_0312'].values()])
+mys1praw['MMSYN1_0471']=np.count_nonzero([i>=1.467 for i in smo1['MMSYN1_0471'].values()])
+mys1praw['MMSYN1_0567']=np.count_nonzero([i>=0.641 for i in smo1['MMSYN1_0567'].values()])
+mys1praw['MMSYN1_0691']=np.count_nonzero([i>=0.903 for i in smo1['MMSYN1_0339'].values()])
 
 #%%
 p_3b_100000 = pd.DataFrame.from_dict(my3bpraw,orient='index')
@@ -408,6 +471,8 @@ p_s1_100000 = pd.DataFrame.from_dict(mys1praw,orient='index')
 p_3b_100000.to_csv(index=True,path_or_buf=r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\pvals_simulations_syn3B_GC_only.synonymous_100000.csv")
 p_s1_100000.to_csv(index=True,path_or_buf=r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\pvals_simulations_syn1.0_GC_only.synonymous_100000.csv")
 
+
+#use similar code to output the nonsynonymous tables
 #%%
 def compare_recs(gb_record1,gb_record2):
     answer = dict()
