@@ -142,7 +142,7 @@ def freq_list(infile=""):
             
 #syn3B_freqs = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_syn3B.csv")######THIS FILE INCLUDES SYNONYMOUS MUTATIONS, which means that your P-values may be overly conservative
 #syn3B_freqs_nosyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_no.syn_syn3B.csv")###in this file all the synonymous mutations have been deleted
-syn3B_freqs_onlysyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_only.synonymous_syn3B.csv")###in this file all the synonymous mutations have been deleted
+syn3B_freqs_onlysyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_only.synonymous_syn3B.csv")###in this file all the NONsynonymous mutations have been deleted
 #syn3B_freqs.set_index('freq',inplace=True)
 syn3B_freqs_raw = tuple(syn3B_freqs_onlysyn.loc[:, 'freq'].values)
 #%%
@@ -256,7 +256,7 @@ GD1 = gene_to_tag(syn1rec, "locus_tag", "gene")
 DD1 = index_genbank_features(syn1rec, "gene", "locus_tag", 'gene', AT_rel_rate=219/0.76,GC_rel_rate=1591/0.24)
 
 #syn1_freqs_nosyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_no.syn_syn1.0.csv")###in this file all the synonymous mutations have been deleted
-syn1_freqs_onlysyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_only.synonymous_syn1.0.csv")###in this file all the nonsynonymous mutations have been deleted
+syn1_freqs_onlysyn = freq_list(r"C:\Users\rmoge\OneDrive - Indiana University\Mycoplasma_OneDrive\Strains\mutation.frequencies_only.synonymous_syn1.0.csv")###in this file all the NONsynonymous mutations have been deleted
 #syn3B_freqs.set_index('freq',inplace=True)
 #syn1_freqs_raw = tuple(syn1_freqs_nosyn.loc[:, 'freq'].values)
 syn1_freqs_raw = tuple(syn1_freqs_onlysyn.loc[:, 'freq'].values)
