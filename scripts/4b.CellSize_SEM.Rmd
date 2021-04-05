@@ -218,6 +218,7 @@ grid.raster(img)
 
 
 size.wt.ftsZ <- size.wt
+
 size.wt.ftsZ$timepoint <- as.character(size.wt.ftsZ$timepoint)
 size.wt.ftsZ$timepoint[2] <- "ftsZ E315*"
 size.wt.ftsZ$timepoint <- factor(size.wt.ftsZ$timepoint)
