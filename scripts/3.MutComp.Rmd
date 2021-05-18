@@ -162,3 +162,23 @@ ind.sig <- ind$sign[ which(ind$sign[5] <= 0.05), ]
 #X168          0         1     2 0.7308438   0.031
 #X820          0         1     2 0.7942200   0.031
 ```
+
+
+# Seconday functional classifications
+
+```{r}
+#First make matrix for membrane transport genes
+membrane<-matrix(c(3,13,1,13),nrow=2,ncol=2)
+fisher.test(x=membrane,y=NULL,alternative="less")
+#P=0.9336. Wildtype does NOT have smaller proportion of signif genes involved in membrane transport.
+
+carbon<-matrix(c(2,14,2,12),nrow=2,ncol=2)
+fisher.test(x=carbon,y=NULL,alternative="less")
+#P=0.6475. Wildtype does NOT have smaller proportion of signif genes involved in central carbon metabolism.
+
+biosynthesis<-matrix(c(0,16,3,11),nrow=2,ncol=2)
+fisher.test(x=biosynthesis,y=NULL,alternative="two.sided")
+#P=0.08966. The proportion of signif genes involved in biosynthesis is marginally different between the strains.
+
+
+```
