@@ -154,6 +154,7 @@ ma.snm.p.adj <- p.adjust(ma.snm.p, method="BH")
 ma.snm.post.hoc <- data.frame(ma.snm.z, ma.snm.x2, ma.snm.p, ma.snm.p.adj)
 colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
+#         type   strain           z     chi2        p          p.adj
 # 1  A:T to C:G  minimal  0.44851026  0.201161457 6.537850e-01 0.785
 # 2  A:T to G:C  minimal -4.84321140 23.456696673 1.277572e-06 2.555145e-06
 # 3  A:T to T:A  minimal  0.08639216  0.007463605 9.311547e-01 0.931
@@ -336,9 +337,9 @@ grid.raster(img)
 ######Various statistical tests to evaluate mutation spectrum
 setwd("~\\..\\GitHub\\MinimalCell")
 
-myALL<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_summary_for_R.csv")
-my3B<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_3B_summary_for_R.csv")
-mys1<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_s1_summary_for_R.csv")
+myALL<-read_csv("data\\MA\\MA_summary_for_R.csv")
+my3B<-read_csv("data\\MA\\MA_3B_summary_for_R.csv")
+mys1<-read_csv("data\\MA\\MA_s1_summary_for_R.csv")
 MAALL<-as_tibble(myALL)
 MA3B<-as_tibble(my3B)
 MAs1<-as_tibble(mys1)

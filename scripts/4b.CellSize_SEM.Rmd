@@ -48,7 +48,7 @@ time.x <- c(1,3,1,3)
 size <- data.frame(size, time.x)
 
 # Subset relative fitness by strain
-# Note, this code generates the mean and SEM for evolved lines incorrectly. It pools the mean and the SEM across all measured individual cells, rather than taking the mean of the 4 evolutionary replicates and the SEM of the 4 evolutionary replicates. In the code to generate the figure, I altered the size.wt and size.min dataframes to have the correct means and SEMs for plotting.
+# Note, this code generates the SEM for evolved lines incorrectly. It pools the SEM across all measured individual cells, rather than taking the SEM of the 4 evolutionary replicates. In the code to generate the figure, I altered the size.wt and size.min dataframes to have the correct SEMs for plotting.
 size.wt  <- filter(size, strain == "Wildtype") %>%
   dplyr::select(timepoint, mean, sem, time.x)
 
@@ -74,14 +74,14 @@ anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter, alternative 
 
 # Difference in cell size between wt and minimal at ancestor timepoint?
 # Test for equal variance: p-value = 0.2658 --> homogeneous variance
-# Results: t = 7.1993, df = 135, p-value = 3.813EE-11
+# Results: t = 7.2946, df = 61, p-value = 2.322EE-11
 #Wildtype mean diameter: 439 nm. Minimal mean diameter: 305 nm
 
 s1_ftsZ.reps <- filter(size.raw, sub.strain == "s1_ftsZ")
 B_ftsZ.reps <- filter(size.raw, sub.strain == "B_ftsZ")
 
 equal.var.s1.ftsZ <- var.test(s1_anc.reps$diameter, s1_ftsZ.reps$diameter)
-s1.ftsZ.t.test <- t.test(x = s1_anc.reps$diameter, s1_ftsZ.reps$diameter, alternative = "less", var.equal = TRUE, mu = 0)
+s1.ftsZ.t.test <- t.test(x = s1_anc.reps$diameter, s1_ftsZ.reps$diameter, alternative = "two.sided", var.equal = TRUE, mu = 0)
 
 # Difference in cell size between wt and wt ftsZ mutant?
 # Test for equal variance: P = p-value = 0.2274 --> homogeneous variance
@@ -109,7 +109,6 @@ evo.t.test <- t.test(evo.reps$mean.diam ~ evo.reps$strain, var.equal = T)
 
 
 # Difference in cell size between wildtype ancestor and wildtype evolved lines?
-equal.var.s1_delta<- var.test(x = evo.reps$mean.diam[5:8], mu = size.reps$mean.diam[2], alternative = 'two.sided')
 s1_delta.t.test <- t.test(x = evo.reps$mean.diam[5:8], mu = size.reps$mean.diam[2], alternative = 'two.sided')
 
 # Answer = Yes, marginally: t = 2.7619, df = 3, p-value = 0.07004
@@ -233,7 +232,7 @@ size.min.ftsZ$timepoint <- factor(size.min.ftsZ$timepoint)
 size.min.ftsZ$mean[2] <- mean(B_ftsZ.reps$diameter)
 size.min.ftsZ$sem[2] <- sem(B_ftsZ.reps$diameter)
 
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM_axis.70.png",
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -241,7 +240,7 @@ par(mar = c(7, 7, 5, 7))
 
 # Add wildtype points
 plot(size.wt.ftsZ$time.x, size.wt.ftsZ$mean, xlim = c(0, 4.55), 
-     ylim = c(0.0, .7), type = "p", pch = 21, bg = "blue", 
+     ylim = c(0.0, 1.1), type = "p", pch = 21, bg = "blue", 
      col = "blue", cex = 2, ylab = "", xlab = "", 
      cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
@@ -266,9 +265,9 @@ arrows(x0 = size.min.ftsZ$time.x, y0 = size.min.ftsZ$mean,
 
 # Add axes and labels
 axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     labels = c("0.00", "0.20", "0.40", "0.60"), at = c(0, 0.20, 0.4, 0.60))
+     labels = c("0.00", "0.25", "0.50", "0.75", "1.00"), at = c(0, 0.25, 0.5, 0.75, 1.00))
 axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     at=c(0, 0.20, 0.4, 0.60), labels = F)
+     at=c(0, 0.25, 0.5, 0.75, 1.00), labels = F)
 axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(1, 3), labels = F)
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
@@ -299,7 +298,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM_axis.70.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM.png")
 
 grid.raster(img)
 ```
