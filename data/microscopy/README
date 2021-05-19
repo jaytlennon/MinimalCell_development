@@ -1,3 +1,4 @@
+Phase contrast:
 In the 20200xxx directories lie the microscopy images that were taken of each population.
 
 In the microbeJ_results directory, I recorded the attributes of cells that were called by microbeJ, for each genotype (including both ancestors and evolved).
@@ -6,3 +7,9 @@ In the microbeJ_results directory, I recorded the attributes of cells that were 
 	The regress* file probed for a relationship between average cell size and relative fitness for each population.
 	
 The UNIT_CONVERSION.docx file contains notes regarding the absolute size of 1 pixel in the microscope that we used.
+
+
+SEM:
+The data measured via imageJ are in the data/SEM_Stein_data directory.
+
+In the data/microscopy/SEM directory are the raw SEM images.
