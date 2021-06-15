@@ -33,36 +33,44 @@ sem <- function(x) sqrt(var(x)/length(x))
 ```{r}
 # Load data
 size.raw <-read.csv("data/SEM_Stein_data/SEM_Stein_cases.csv")
+
 #size.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data\\SEM_Stein_data\\SEM_Stein_cases.csv")
-#size.raw_no.mutant <-read.csv("~\\..\\GitHub\\MinimalCell\\data\\SEM_Stein_data\\SEM_Stein_cases_no.mutant.csv")
+
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")
-colnames(size.raw_no.mutant) <- c("strain", "timepoint", "sub.strain", "diameter")
-#size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter))
-size <- size.raw_no.mutant %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter))
+#colnames(size.raw_no.mutant) <- c("strain", "timepoint", "sub.strain", "diameter")
+size.raw<-mutate(size.raw, volume = 4/3*pi*(diameter/2)^3)
+size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter), mean.v=mean(volume),sem.v=sem(volume))
 size$strain <- as.factor(size$strain)
 size$timepoint <- as.factor(size$timepoint)
 
+fsize<-size %>% filter(timepoint!="Evolved")
+esize<-size %>% filter(timepoint!="Mutant")
+
 # Add x-values for plotting
 time.x <- c(1,3,1,3)
-size <- data.frame(size, time.x)
-
+fsize <- data.frame(fsize, time.x)
+esize <- data.frame(esize, time.x)
 # Subset relative fitness by strain
 # Note, this code generates the SEM for evolved lines incorrectly. It pools the SEM across all measured individual cells, rather than taking the SEM of the 4 evolutionary replicates. In the code to generate the figure, I altered the size.wt and size.min dataframes to have the correct SEMs for plotting.
-size.wt  <- filter(size, strain == "Wildtype") %>%
-  dplyr::select(timepoint, mean, sem, time.x)
+esize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v, time.x)
+fsize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
 
-size.min  <- filter(size, strain== "Minimal") %>%
-  dplyr::select(timepoint, mean, sem, time.x)
+esize.min  <- filter(esize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+fsize.min  <- filter(fsize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
 ```
 
 ## Tests significance
 ```{r}
 # Subset data
 size.reps <- size.raw %>% 
-   dplyr::select(strain, timepoint, sub.strain, diameter) %>%
+   dplyr::select(strain, timepoint, sub.strain, diameter, volume) %>%
    group_by(timepoint, strain, sub.strain) %>%
-   summarize(mean.diam = mean(diameter)) 
+   summarize(mean.diam = mean(diameter),mean.vol=mean(volume)) 
 
 s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
 B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
@@ -75,7 +83,7 @@ anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter, alternative 
 # Difference in cell size between wt and minimal at ancestor timepoint?
 # Test for equal variance: p-value = 0.2658 --> homogeneous variance
 # Results: t = 7.2946, df = 61, p-value = 2.322EE-11
-#Wildtype mean diameter: 439 nm. Minimal mean diameter: 305 nm
+#Non-minimal mean diameter: 439 nm. Minimal mean diameter: 305 nm
 
 s1_ftsZ.reps <- filter(size.raw, sub.strain == "s1_ftsZ")
 B_ftsZ.reps <- filter(size.raw, sub.strain == "B_ftsZ")
@@ -86,7 +94,7 @@ s1.ftsZ.t.test <- t.test(x = s1_anc.reps$diameter, s1_ftsZ.reps$diameter, altern
 # Difference in cell size between wt and wt ftsZ mutant?
 # Test for equal variance: P = p-value = 0.2274 --> homogeneous variance
 # Results: t = -5.5553, df = 118, p-value = 1.741EE-07
-#Wildtype mean diameter: 439 nm. Wildtype ftsZ mutant mean diameter: 550 nm
+#Non-minimal mean diameter: 439 nm. Non-minimal ftsZ mutant mean diameter: 550 nm
 
 equal.var.B.ftsZ <- var.test(B_anc.reps$diameter, B_ftsZ.reps$diameter)
 B.ftsZ.t.test <- t.test(x = B_anc.reps$diameter, B_ftsZ.reps$diameter, alternative = "two.sided", var.equal = FALSE, mu = 0)
@@ -108,11 +116,11 @@ evo.t.test <- t.test(evo.reps$mean.diam ~ evo.reps$strain, var.equal = T)
 # mean of minimal: 375 nm. Mean of wt: 792 nm
 
 
-# Difference in cell size between wildtype ancestor and wildtype evolved lines?
+# Difference in cell size between Non-minimal ancestor and Non-minimal evolved lines?
 s1_delta.t.test <- t.test(x = evo.reps$mean.diam[5:8], mu = size.reps$mean.diam[2], alternative = 'two.sided')
 
 # Answer = Yes, marginally: t = 2.7619, df = 3, p-value = 0.07004
-# Wildtype ancestor is 439 nm, wildtype evolved are 792 nm on average
+# Non-minimal ancestor is 439 nm, Non-minimal evolved are 792 nm on average
 
 
 # Difference in cell size between minimal ancestor and minimal evolved lines?
@@ -121,12 +129,10 @@ B_delta.t.test <- t.test(x = evo.reps$mean.diam[1:4], mu = size.reps$mean.diam[1
 # Answer = No: t = 2.0305, df = 3, p-value = 0.1353
 # Minimal ancestor is 305 nm, minimal evolved is 375 nm on average)
 
-```
 
-```{r}
-#Look for statistical correlation between population fitness and population average cell size
 
 ```
+
 
 # Initiate figure
 ```{r}
@@ -134,41 +140,45 @@ B_delta.t.test <- t.test(x = evo.reps$mean.diam[1:4], mu = size.reps$mean.diam[1
 #png(filename="~/GitHub/MinimalCell/figures/Fig4_SEM.png",
 #    width = 1200, height = 1200, res = 96*2)
 
-size.wt$mean[2] <- mean(evo.reps$mean.diam[5:8])
-size.wt$sem[2] <- sem(evo.reps$mean.diam[5:8])
-size.min$mean[2] <- mean(evo.reps$mean.diam[1:4])
-size.min$sem[2] <- sem(evo.reps$mean.diam[1:4])
+esize.wt$mean[2] <- mean(evo.reps$mean.diam[5:8])
+esize.wt$sem[2] <- sem(evo.reps$mean.diam[5:8])
+esize.wt$mean.v[2]<-mean(evo.reps$mean.vol[5:8])
+esize.wt$sem.v[2]<-sem(evo.reps$mean.vol[5:8])
 
+esize.min$mean[2] <- mean(evo.reps$mean.diam[1:4])
+esize.min$sem[2] <- sem(evo.reps$mean.diam[1:4])
+esize.min$mean.v[2]<-mean(evo.reps$mean.vol[1:4])
+esize.min$sem.v[2]<-sem(evo.reps$mean.vol[1:4])
 
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4_SEM.png",
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS3.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
 
-# Add wildtype points
-plot(size.wt$time.x, size.wt$mean, xlim = c(0, 4.55), 
+# Add Non-minimal points
+plot(esize.wt$time.x, esize.wt$mean, xlim = c(0, 4.55), 
      ylim = c(0.0, 1.1), type = "p", pch = 21, bg = "blue", 
      col = "blue", cex = 2, ylab = "", xlab = "", 
      cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
 
 # Add minimal points
-points(size.min$time.x, size.min$mean, pch = 21, 
+points(esize.min$time.x, esize.min$mean, pch = 21, 
       bg = "red", col = "red", lwd = 2, cex = 2)
 
 # Add error bars
-arrows(x0 = size.wt$time.x, y0 = size.wt$mean, 
-       y1 = size.wt$mean + 2*size.wt$sem, 
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean + esize.wt$sem, 
        angle = 90, length = 0.1, lwd = 2, col = "blue")
-arrows(x0 = size.wt$time.x, y0 = size.wt$mean, 
-       y1 = size.wt$mean - 2*size.wt$sem, 
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean - esize.wt$sem, 
        angle = 90, length=0.1, lwd = 2, col = "blue")
-arrows(x0 = size.min$time.x, y0 = size.min$mean, 
-       y1 = size.min$mean + 2*size.min$sem, 
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean + esize.min$sem, 
        angle = 90, length = 0.1, lwd = 2, col = "red")
-arrows(x0 = size.min$time.x, y0 = size.min$mean, 
-       y1 = size.min$mean - 2*size.min$sem, 
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean - esize.min$sem, 
        angle = 90, length=0.1, lwd = 2, col = "red")
 
 # Add axes and labels
@@ -188,25 +198,25 @@ mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2,
       outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
 
 # Add line segments
-segments(size.wt$time.x[1], size.wt$mean[1], size.wt$time.x[2], 
-         size.wt$mean[2], col = "blue", lwd = 2)
-segments(size.min$time.x[1], size.min$mean[1], size.min$time.x[2], 
-         size.min$mean[2], col = "red", lwd = 2)
+segments(esize.wt$time.x[1], esize.wt$mean[1], esize.wt$time.x[2], 
+         esize.wt$mean[2], col = "blue", lwd = 2)
+segments(esize.min$time.x[1], esize.min$mean[1], esize.min$time.x[2], 
+         esize.min$mean[2], col = "red", lwd = 2)
 
 # Add P-values
 #mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
 #mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
 
 # Add strain identifier
-text(3.8, size.wt$mean[2], labels = "Wildtype", cex = 1.0)
-text(3.8, size.min$mean[2], labels = "Minimal", cex = 1.0)
+text(3.9, esize.wt$mean[2], labels = "Non-minimal", cex = 1.0)
+text(3.8, esize.min$mean[2], labels = "Minimal", cex = 1.0)
 
 # Close Plot Device
 dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig4_SEM.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS3.png")
 
 grid.raster(img)
 ```
@@ -217,30 +227,35 @@ grid.raster(img)
 #    width = 1200, height = 1200, res = 96*2)
 
 
-size.wt.ftsZ <- size.wt
-
+size.wt.ftsZ <- esize.wt
 size.wt.ftsZ$timepoint <- as.character(size.wt.ftsZ$timepoint)
 size.wt.ftsZ$timepoint[2] <- "ftsZ E315*"
 size.wt.ftsZ$timepoint <- factor(size.wt.ftsZ$timepoint)
 size.wt.ftsZ$mean[2] <- mean(s1_ftsZ.reps$diameter)
 size.wt.ftsZ$sem[2] <- sem(s1_ftsZ.reps$diameter)
+size.wt.ftsZ$mean.v[2] <- mean(s1_ftsZ.reps$volume)
+size.wt.ftsZ$sem.v[2] <- sem(s1_ftsZ.reps$volume)
 
-size.min.ftsZ <- size.min
+
+size.min.ftsZ <- esize.min
 size.min.ftsZ$timepoint <- as.character(size.min.ftsZ$timepoint)
 size.min.ftsZ$timepoint[2] <- "ftsZ E315*"
 size.min.ftsZ$timepoint <- factor(size.min.ftsZ$timepoint)
 size.min.ftsZ$mean[2] <- mean(B_ftsZ.reps$diameter)
 size.min.ftsZ$sem[2] <- sem(B_ftsZ.reps$diameter)
+size.min.ftsZ$mean.v[2] <- mean(B_ftsZ.reps$volume)
+size.min.ftsZ$sem.v[2] <- sem(B_ftsZ.reps$volume)
 
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM.png",
+
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS4.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
 
-# Add wildtype points
+# Add Non-minimal points
 plot(size.wt.ftsZ$time.x, size.wt.ftsZ$mean, xlim = c(0, 4.55), 
-     ylim = c(0.0, 1.1), type = "p", pch = 21, bg = "blue", 
+     ylim = c(0.0, .7), type = "p", pch = 21, bg = "blue", 
      col = "blue", cex = 2, ylab = "", xlab = "", 
      cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
@@ -251,23 +266,23 @@ points(size.min.ftsZ$time.x, size.min.ftsZ$mean, pch = 21,
 
 # Add error bars
 arrows(x0 = size.wt.ftsZ$time.x, y0 = size.wt.ftsZ$mean, 
-       y1 = size.wt.ftsZ$mean + 2*size.wt.ftsZ$sem, 
+       y1 = size.wt.ftsZ$mean + size.wt.ftsZ$sem, 
        angle = 90, length = 0.1, lwd = 2, col = "blue")
 arrows(x0 = size.wt.ftsZ$time.x, y0 = size.wt.ftsZ$mean, 
-       y1 = size.wt.ftsZ$mean - 2*size.wt.ftsZ$sem, 
+       y1 = size.wt.ftsZ$mean - size.wt.ftsZ$sem, 
        angle = 90, length=0.1, lwd = 2, col = "blue")
 arrows(x0 = size.min.ftsZ$time.x, y0 = size.min.ftsZ$mean, 
-       y1 = size.min.ftsZ$mean + 2*size.min.ftsZ$sem, 
+       y1 = size.min.ftsZ$mean + size.min.ftsZ$sem, 
        angle = 90, length = 0.1, lwd = 2, col = "red")
 arrows(x0 = size.min.ftsZ$time.x, y0 = size.min.ftsZ$mean, 
-       y1 = size.min.ftsZ$mean - 2*size.min.ftsZ$sem, 
+       y1 = size.min.ftsZ$mean - size.min.ftsZ$sem, 
        angle = 90, length=0.1, lwd = 2, col = "red")
 
 # Add axes and labels
 axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     labels = c("0.00", "0.25", "0.50", "0.75", "1.00"), at = c(0, 0.25, 0.5, 0.75, 1.00))
+     labels = c("0.00", "0.20", "0.40", "0.60"), at = c(0, 0.2, 0.4, 0.6))
 axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     at=c(0, 0.25, 0.5, 0.75, 1.00), labels = F)
+     at=c(0, 0.2, 0.4, 0.6), labels = F)
 axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(1, 3), labels = F)
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
@@ -290,7 +305,7 @@ segments(size.min.ftsZ$time.x[1], size.min.ftsZ$mean[1], size.min.ftsZ$time.x[2]
 #mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
 
 # Add strain identifier
-text(3.8, size.wt.ftsZ$mean[2], labels = "Wildtype", cex = 1.0)
+text(3.9, size.wt.ftsZ$mean[2], labels = "Non-minimal", cex = 1.0)
 text(3.8, size.min.ftsZ$mean[2], labels = "Minimal", cex = 1.0)
 
 # Close Plot Device
@@ -298,7 +313,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig4_ftsZ_SEM.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS4.png")
 
 grid.raster(img)
 ```

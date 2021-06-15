@@ -30,10 +30,10 @@ require("indicspecies")
 ```{r}
 # Load data
 g.essent.raw <- read.csv("data2/GxP_Mm_essential.csv")
-g.essent.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\GxP_Mm_essential.csv")
+#g.essent.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\GxP_Mm_essential.csv")
 g.essent.raw$sample <- as.factor(g.essent.raw$sample)
 g.essent.raw$treatment <- as.factor(g.essent.raw$treatment)
-levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Wildtype"
+levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Non-minimal"
 levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s3"] <- "Minimal"
 g.essent <- as_tibble(g.essent.raw)
 g.essent <- as.matrix(g.essent[,3:ncol(g.essent)])
@@ -74,12 +74,15 @@ gd <- vegdist(g.essent, method = 'bray', upper = TRUE, diag = TRUE)
 compare.variance <- betadisper(d=gd, group = c("minimal","minimal","minimal","minimal","WT","WT","WT","WT"))
 c.v.result <- anova(compare.variance)
 TukeyHSD(compare.variance)
-###No significant difference in the amount of variance, i.e. beta diversity, between the wildtype and minimal cell.
+###No significant difference in the amount of variance, i.e. beta diversity, between the Non-minimal and minimal cell.
 ```
 
 # PCoA Plot
 ```{r, results = "hide"}
-png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
+#png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
+ #   width = 1200, height = 1200, res = 96*2) 
+
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -115,7 +118,7 @@ ordiellipse(cbind(g.essent.pcoa$PC1, g.essent.pcoa$PC2), g.essent.pcoa$treatment
             col = c("blue","red"), label = FALSE)
 
 # Subset PCoA scores by strain
-essent.wt <- g.essent.pcoa[which(g.essent.pcoa$treatment == "Wildtype"), ]
+essent.wt <- g.essent.pcoa[which(g.essent.pcoa$treatment == "Non-minimal"), ]
 essent.min <- g.essent.pcoa[which(g.essent.pcoa$treatment == "Minimal"), ]
 
 # Plot points by strain
@@ -134,7 +137,8 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
+#img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png")
 grid.raster(img)
 ```
 
@@ -151,13 +155,13 @@ ind <- multipatt(g.essent, cluster = g.essent.raw$treatment, func = "r.g",
 
 ind.sig <- ind$sign[ which(ind$sign[5] <= 0.05), ]
 
-# Indicator genes associated with Wildtype cell line
-#     s.Wildtype s.Minimal index      stat p.value
+# Indicator genes associated with Non-minimal cell line
+#     s.Non-minimal s.Minimal index      stat p.value
 #X149          1         0     1 0.8425008   0.031
 #X228          1         0     1 0.9516476   0.031
 
 # Indicator genes associated with Minimal cell line
-#     s.Wildtype s.Minimal index      stat p.value
+#     s.Non-minimal s.Minimal index      stat p.value
 #X129          0         1     2 1.0000000   0.031
 #X168          0         1     2 0.7308438   0.031
 #X820          0         1     2 0.7942200   0.031
