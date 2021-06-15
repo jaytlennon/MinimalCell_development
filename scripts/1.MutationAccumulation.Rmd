@@ -14,8 +14,8 @@ rm(list=ls())
 require("knitr")
 getwd()
 setwd("~/GitHub/MinimalCell") 
-#opts_knit$set(root.dir = "~\\..\\GitHub\\MinimalCell")
-#knitr::opts_chunk$set(root.dir = "~\\..\\GitHub\\MinimalCell") 
+#setwd("~\\..\\GitHub\\MinimalCell")
+
 getwd()
 ```
 
@@ -25,6 +25,7 @@ require("png")
 require("dplyr")
 require("vioplot")
 require("grid")
+require("dplyr")
 ```
 
 ## Mutation accumulation (MA)
@@ -32,20 +33,20 @@ require("grid")
 # Load mutation rate data for Fig. 1A
 ```{r}
 # Load mutation rate data
-#ma.raw <- read.csv("data2/MA_summary_for_R.csv", header = TRUE, sep =",")
-ma.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_summary_for_R.csv", header = TRUE, sep =",")
+ma.raw <- read.csv("data2/MA_summary_for_R.csv", header = TRUE, sep =",")
+#ma.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_summary_for_R.csv", header = TRUE, sep =",")
 
 # Preserve row names
 ma <- as_tibble(ma.raw)
 
 # Set data as factors and rename levels
 ma$strain <- as.factor(ma$strain)
-levels(ma$strain)[levels(ma$strain)=="MA_s1"] <- "Wildtype"
+levels(ma$strain)[levels(ma$strain)=="MA_s1"] <- "Non-minimal"
 levels(ma$strain)[levels(ma$strain)=="MA_3B"] <- "Minimal"
-ma$strain <- factor(ma$strain, levels=c("Wildtype","Minimal"))
+ma$strain <- factor(ma$strain, levels=c("Non-minimal","Minimal"))
 
 # Subset mutation rate data by strain
-mr.wt  <- filter(ma, strain== "Wildtype") %>%
+mr.wt  <- filter(ma, strain== "Non-minimal") %>%
   dplyr::select(per_nt_per_gen)
 
 mr.min  <- filter(ma, strain== "Minimal") %>%
@@ -62,7 +63,7 @@ mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE
 ```{r}
 # Load data
 ma.type.raw <- read.csv("data2/MA_grouped_bar_mut.types.csv")
-ma.type.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_mut.types.csv")
+#ma.type.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_mut.types.csv")
 
 # Preserve row names
 ma.type <- as_tibble(ma.type.raw)
@@ -70,10 +71,10 @@ ma.type <- as_tibble(ma.type.raw)
 # Set data as factors and rename levels
 ma.type$strain <- as.factor(ma.type$strain)
 ma.type$mut <- as.factor(ma.type$mut)
-levels(ma.type$strain)[levels(ma.type$strain)=="s1"] <- "Wildtype"
+levels(ma.type$strain)[levels(ma.type$strain)=="s1"] <- "Non-minimal"
 levels(ma.type$strain)[levels(ma.type$strain)=="3B"] <- "Minimal"
 levels(ma.type$mut)[levels(ma.type$mut)=="SNM"] <- "Single-nucleotide"
-ma.type$strain <- factor(ma.type$strain, levels=c("Wildtype","Minimal"))
+ma.type$strain <- factor(ma.type$strain, levels=c("Non-minimal","Minimal"))
 ma.type$mut <- factor(ma.type$mut, levels = c("Insertion","Deletion","Over 100 bp","Single-nucleotide"))
 ma.type <- ma.type %>% mutate(prop2 = sprintf("%0.2f",prop))
 
@@ -84,7 +85,7 @@ ma.type <- ma.type[order(ma.type$order.1),]
 
 # Make table for contingency analyses
 ma.type.mat <- matrix(ma.type$count, ncol = 2, byrow = T)
-colnames(ma.type.mat) <- c("minimal","wildtype")
+colnames(ma.type.mat) <- c("minimal","non-minimal")
 rownames(ma.type.mat) <- c("insertion","deletion","snm")
 ma.type.tab <- as.table(ma.type.mat)
 ma.type.tab.margins <- addmargins(ma.type.tab)
@@ -104,9 +105,9 @@ colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # 1 insertion  minimal -1.444750 2.087301 0.14852825 0.1721046
 # 2  deletion  minimal -1.365472 1.864515 0.17210460 0.1721046
 # 3       snm  minimal  1.931879 3.732157 0.05337443 0.1601233
-# 4 insertion wildtype  1.444750 2.087301 0.14852825 0.1721046
-# 5  deletion wildtype  1.365472 1.864515 0.17210460 0.1721046
-# 6       snm wildtype -1.931879 3.732157 0.05337443 0.1601233
+# 4 insertion non-minimal  1.444750 2.087301 0.14852825 0.1721046
+# 5  deletion non-minimal  1.365472 1.864515 0.17210460 0.1721046
+# 6       snm non-minimal -1.931879 3.732157 0.05337443 0.1601233
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
@@ -121,9 +122,9 @@ ma.snm <- as_tibble(ma.snm.raw)
 # Set data as factors and rename levels
 ma.snm$strain <- as.factor(ma.snm$strain)
 ma.snm$mut <- as.factor(ma.snm$mut)
-levels(ma.snm$strain)[levels(ma.snm$strain)=="s1"] <- "Wildtype"
+levels(ma.snm$strain)[levels(ma.snm$strain)=="s1"] <- "Non-minimal"
 levels(ma.snm$strain)[levels(ma.snm$strain)=="3B"] <- "Minimal"
-ma.snm$strain <- factor(ma.snm$strain, levels=c("Wildtype","Minimal"))
+ma.snm$strain <- factor(ma.snm$strain, levels=c("Non-minimal","Minimal"))
 ma.snm$mut <- factor(ma.snm$mut, levels = 
     c("A:T to C:G","A:T to G:C","A:T to T:A",
     "C:G to G:C", "C:G to T:A", "C:G to A:T"))
@@ -137,7 +138,7 @@ ma.snm <- ma.snm[order(ma.snm$order.2),]
 # Make table for contingency analyses
 #ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)#############This code is bad. Produces an incorrect matrix
 ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = T)
-colnames(ma.snm.mat) <- c("wildtype","minimal")
+colnames(ma.snm.mat) <- c("non-minimal","minimal")
 rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
               "C:G to T:A", "C:G to A:T")
 ma.snm.tab <- as.table(ma.snm.mat)
@@ -162,20 +163,23 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # 5  C:G to T:A  minimal  9.47528700 89.781063769 2.660284e-21 1.596170e-20
 # 6  C:G to A:T  minimal -3.68512950 13.580179403 2.285864e-04 0.00034
 
-# 7  A:T to C:G wildtype -0.44851026  0.201161457 6.537850e-01 0.785
-# 8  A:T to G:C wildtype  4.84321140 23.456696673 1.277572e-06 2.555145e-06
-# 9  A:T to T:A wildtype -0.08639216  0.007463605 9.311547e-01 0.931
-# 10 C:G to G:C wildtype  6.90461823 47.673752850 5.033862e-12 1.510159e-11
-# 11 C:G to T:A wildtype -9.47528700 89.781063769 2.660284e-21 1.596170e-20
-# 12 C:G to A:T wildtype  3.68512950 13.580179403 2.285864e-04 0.00034
+# 7  A:T to C:G non-minimal -0.44851026  0.201161457 6.537850e-01 0.785
+# 8  A:T to G:C non-minimal  4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 9  A:T to T:A non-minimal -0.08639216  0.007463605 9.311547e-01 0.931
+# 10 C:G to G:C non-minimal  6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 11 C:G to T:A non-minimal -9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 12 C:G to A:T non-minimal  3.68512950 13.580179403 2.285864e-04 0.00034
 ```
 
 # Make Figure 1
 ```{r}
 ### Initiate figure
+require("extrafont")
+font_import()
+fonts()
 #png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
     #width = 1200, height = 1200, res = 96*2) 
-png(filename="~\\Fig1.png",
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
 plot.new()
 layout(matrix(c(1:3), byrow = T))
@@ -210,7 +214,7 @@ axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
 axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(0.75, 2.25), labels = F)
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     labels = c("Wildtype", "Minimal"), at = c(0.75, 2.25))
+     labels = c("Non-minimal", "Minimal"), at = c(0.75, 2.25))
 
 # Add y-axis label
 mtext("Mutation rate", side = 2, outer = TRUE, cex = 1.25, line = 2, adj = 0.94)
@@ -257,7 +261,7 @@ text(8.5, 0.92, expression("0.86"), cex= 0.85)
 text(0.95, 0.87, labels = "B", cex = 2)
 
 # Add legend
-legend(1.2, 1.0, c("Wildtype", "Minimal"), pch = 22, 
+legend(1.2, 1.0, c("Non-minimal", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
@@ -280,12 +284,12 @@ axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at=c(0, 0.5,1.0), labels = F)
 
 # Add x-axis labels
-text(2, -0.075, expression("A:T → C:G"), cex= 1, srt = 0, xpd = NA)
-text(5, -0.075, expression("A:T → G:C"), cex= 1, srt = 0, xpd = NA)
-text(8, -0.075, expression("A:T → T:A"), cex= 1, srt = 0, xpd = NA)
-text(11, -0.075, expression("C:G → G:C"), cex= 1, srt = 0, xpd = NA)
-text(14, -0.075, expression("C:G → T:A"), cex= 1, srt = 0, xpd = NA)
-text(17, -0.075, expression("C:G → A:T"), cex= 1, srt = 0, xpd = NA)
+text(2, -0.075, "A:T \u2192 C:G", cex= 1, srt = 0, xpd = NA)
+text(5, -0.075, "A:T \u2192 G:C", cex= 1, srt = 0, xpd = NA)
+text(8, -0.075, "A:T \u2192 T:A", cex= 1, srt = 0, xpd = NA)
+text(11, -0.075, "C:G \u2192 G:C", cex= 1, srt = 0, xpd = NA)
+text(14, -0.075, "C:G \u2192 T:A", cex= 1, srt = 0, xpd = NA)
+text(17, -0.075, "C:G \u2192 A:T", cex= 1, srt = 0, xpd = NA)
 
 # Add y-axis label
 mtext("Proportion", side = 2, outer = TRUE, cex = 1.25, line = 2, adj = 0.125)
@@ -308,7 +312,7 @@ text(17.5, 0.33, expression("0.27"), cex= 0.85)
 text(0.9, 0.88, labels = "C", cex = 2)
 
 # Add legend
-legend(1.5, 1.0, c("Wildtype", "Minimal"), pch = 22, 
+legend(1.5, 1.0, c("Non-minimal", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
@@ -316,9 +320,9 @@ legend(1.5, 1.0, c("Wildtype", "Minimal"), pch = 22,
 mtext(expression(~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 2.0)
 
 # Add symbols for posthoc significance
-text(2, 0.25, expression("ns"), cex= 1.2)
+text(2, 0.25, expression("."), cex= 1.2)
 text(5, 0.25, expression("***"), cex= 1.5)
-text(8, 0.25, expression("ns"), cex= 1.2)
+text(8, 0.25, expression("."), cex= 1.2)
 text(11, 0.25, expression("***"), cex= 1.5)
 text(14, 0.80, expression("***"), cex= 1.5)
 text(17, 0.50, expression("***"), cex= 1.5)
@@ -329,25 +333,24 @@ graphics.off()
 
 # Show Plot
 #img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
-img <- readPNG("~\\Fig1.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig1.png")
 grid.raster(img)
 ```
 
 ```{r}
 ######Various statistical tests to evaluate mutation spectrum
-setwd("~\\..\\GitHub\\MinimalCell")
 
-myALL<-read_csv("data\\MA\\MA_summary_for_R.csv")
-my3B<-read_csv("data\\MA\\MA_3B_summary_for_R.csv")
-mys1<-read_csv("data\\MA\\MA_s1_summary_for_R.csv")
+myALL<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_summary_for_R.csv")
+my3B<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_3B_summary_for_R.csv")
+mys1<-read.csv("~\\..\\GitHub\\MinimalCell\\data\\MA\\MA_s1_summary_for_R.csv")
 MAALL<-as_tibble(myALL)
 MA3B<-as_tibble(my3B)
 MAs1<-as_tibble(mys1)
 
 MAALL$strain <- as.factor(MAALL$strain)
-levels(MAALL$strain)[levels(MAALL$strain)=="MA_s1"] <- "Wildtype"
+levels(MAALL$strain)[levels(MAALL$strain)=="MA_s1"] <- "Non-minimal"
 levels(MAALL$strain)[levels(MAALL$strain)=="MA_3B"] <- "Minimal"
-MAALL$strain <- factor(MAALL$strain, levels=c("Wildtype","Minimal"))
+MAALL$strain <- factor(MAALL$strain, levels=c("Non-minimal","Minimal"))
 
 
 ##############################################################
@@ -412,7 +415,7 @@ ALLindellenavgs1<-t.test(x=na.omit(MAs1$ALLin_len_avg),y=na.omit(MAs1$ALLdel_len
 
 
 ##############################################################
-#Is the avg length of a deletion longer in the wildtype than in the minimal? Here again including the deletions >100 bp
+#Is the avg length of a deletion longer in the Non-minimal than in the minimal? Here again including the deletions >100 bp
 shapiro.test(na.omit(MAs1$ALLdel_len_avg));shapiro.test(na.omit(MA3B$ALLdel_len_avg))
 ggdensity(na.omit(MAs1$ALLdel_len_avg));ggdensity(na.omit(MA3B$ALLdel_len_avg))
 wilcox.test(x=na.omit(MAs1$ALLdel_len_avg),y=na.omit(MA3B$ALLdel_len_avg),mu=0,alternative = 'two.sided',paired=F)
@@ -585,7 +588,7 @@ pergenome_twostrains_log<-t.test(x=log(MAs1$per_genome_per_gen),y=log(MA3B$per_g
 #conclude that the minimal cell has a significantly lower per-genome-per-gen mutation rate. Is a difference of 0.0338 versus 0.0177 mutations per genome per generation biologically signif? In the context of the NSE, this would result in a difference of 
 0.033790614*2000*30000000
 0.017655872*2000*30000000
-#2.0e09 vs 1.1e09 mutations tested during the course of the evolution, assuming an avg cell dens of 1e07 cells/mL. So either way, a mutation at every position has been tested 2.0e09/1e06 = 2000 (wildtype) versus 1.1e09/5e05=2200 (minimal) times during the NSE.
+#2.0e09 vs 1.1e09 mutations tested during the course of the evolution, assuming an avg cell dens of 1e07 cells/mL. So either way, a mutation at every position has been tested 2.0e09/1e06 = 2000 (Non-minimal) versus 1.1e09/5e05=2200 (minimal) times during the NSE.
 
 #########################################################################################################################
 #########################################################################################################################

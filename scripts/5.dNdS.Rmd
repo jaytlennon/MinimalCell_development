@@ -24,13 +24,14 @@ require("dplyr")
 require("grid")
 LL.95 <- function(x) t.test(x)$conf.int[1]
 UL.95 <- function(x) t.test(x)$conf.int[2]
+sem <- function(x) sqrt(var(x)/length(x))
 ```
 
 # Load and process data
 ```{r}
 # Load data
-#dnds <- read.csv("data2/cases_Mm.300.csv")
-dnds <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_Mm.300.csv")
+dnds <- read.csv("data2/cases_Mm.300.csv")
+#dnds <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_Mm.300.csv")
 colnames(dnds)[12] <- "dnds"
 colnames(dnds)[2] <- "strain"
 
@@ -42,7 +43,7 @@ x <- c(1,1,1,1,3,3,3,3)
 dnds <- data.frame(dnds, x)
 
 # Subset dN/dS by strain and summary statistics
-dnds.wt  <- filter(dnds, strain == "Wildtype") %>%
+dnds.wt  <- filter(dnds, strain == "Non-minimal") %>%
   dplyr::select(strain, dnds, x)
 
 dnds.min  <- filter(dnds, strain == "Minimal") %>%
@@ -51,10 +52,14 @@ dnds.min  <- filter(dnds, strain == "Minimal") %>%
 median.dnds.wt <-median(dnds.wt$dnds)
 LL.95.dnds.wt <- LL.95(dnds.wt$dnds)
 UL.95.dnds.wt <- UL.95(dnds.wt$dnds)
+mean.dnds.wt<-mean(dnds.wt$dnds)
+sem.dnds.wt<-sem(dnds.wt$dnds)
 
 median.dnds.min <-median(dnds.min$dnds)
 LL.95.dnds.min <- LL.95(dnds.min$dnds)
 UL.95.dnds.min <- UL.95(dnds.min$dnds)
+mean.dnds.min<-mean(dnds.min$dnds)
+sem.dnds.min<-sem(dnds.min$dnds)
 ```
 
 ## t-test
@@ -78,7 +83,7 @@ png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS1.png",
 plot.new()
 par(mar = c(7, 7, 5, 7))
 
-# Add wildtype points
+# Add Non-minimal points
 plot(jitter(rep(1, length(dnds.wt$dnds)), amount = 0.2), dnds.wt$dnds, 
      xlim = c(0, 4), ylim = c(0.0, 3.5), type = "p", pch = 21, bg = "blue", 
      col = "blue", cex = 1.0, ylab = "", xlab = "", 
@@ -93,19 +98,19 @@ points(jitter(rep(3, length(dnds.min$dnds)), amount = 0.2), dnds.min$dnds,
        pch = 21, bg = "red", col = "red", lwd = 2, cex = 1.0)
 
 # Add confidence intervals
-arrows(x0 = c(1), y0 = median.dnds.wt, y1 = LL.95.dnds.wt, angle = 90,
+arrows(x0 = c(1), y0 = mean.dnds.wt, y1 = mean.dnds.wt + sem.dnds.wt, angle = 90,
        length = 0.1, lwd = 2, col = "blue")
-arrows(x0 = c(1), y0 = median.dnds.wt, y1 = UL.95.dnds.wt, angle = 90,
+arrows(x0 = c(1), y0 = mean.dnds.wt, y1 = mean.dnds.wt - sem.dnds.wt, angle = 90,
        length=0.1, lwd = 2, col = "blue")
-arrows(x0 = c(3), y0 = median.dnds.min, y1 = LL.95.dnds.min, angle = 90,
+arrows(x0 = c(3), y0 = mean.dnds.min, y1 = mean.dnds.min + sem.dnds.min, angle = 90,
        length = 0.1, lwd = 2, col = "red")
-arrows(x0 = c(3), y0 = median.dnds.min, y1 = UL.95.dnds.min, angle = 90,
+arrows(x0 = c(3), y0 = mean.dnds.min, y1 = mean.dnds.min - sem.dnds.min, angle = 90,
        length=0.1, lwd = 2, col = "red")
 
-# Add medians
-points(1, median.dnds.wt, pch = 22, col = "blue", 
+# Add means
+points(1, mean.dnds.wt, pch = 22, col = "blue", 
        bg = "white", lwd = 2, cex = 2.75) 
-points(3, median.dnds.min, pch = 22, col = "red", 
+points(3, mean.dnds.min, pch = 22, col = "red", 
        bg = "white", lwd = 2, cex = 2.75) 
 
 # Add axes and labels
@@ -116,7 +121,7 @@ axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
 axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(1, 3), labels = F)
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     labels = c("Wildtype", "Minimal"), 
+     labels = c("Non-minimal", "Minimal"), 
      col.axis = "darkgray", at = c(1, 3))
 mtext(expression('Strain'), side = 1,
       outer = TRUE, cex = 1.5, line = -3.5, adj = 0.5)
