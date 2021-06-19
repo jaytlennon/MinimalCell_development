@@ -150,9 +150,9 @@ size.min$sem.v[2] <- sem(evo.reps$mean.vol[1:4])
 ## Create main plot (minus photos)
 
 ```{r}
-png(filename="~/GitHub/MinimalCell/figures/Fig4.no.photos2.png",
+png(filename="~/GitHub/MinimalCell/figures/Fig4.no.photos.png",
     width = 1200, height = 1200, res = 96*2)
-
+ 
 #png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4.png",
 #    width = 1200, height = 1200, res = 96*2) 
 
@@ -215,7 +215,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos2.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos.png")
 
 grid.raster(img)
 ```
@@ -226,7 +226,7 @@ grid.raster(img)
 png(filename="~/GitHub/MinimalCell/figures/Fig4.png",
                width = 1200, height = 1200, res = 96*2)
 
-img.plot <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos2.png")
+img.plot <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos.png")
 img.non.min <- readPNG("figures/size.images/nonmin_04_014_scale2.png")
 img.min <- readPNG("figures/size.images/min_11_010.png")
 
