@@ -33,7 +33,6 @@ sem <- function(x) sqrt(var(x)/length(x))
 ```{r}
 # Load data
 size.raw <-read.csv("data2/cases_microbeJ.csv")
-#size.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_microbeJ.csv")
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter", "area", 
     "volume", "pixels", "mean", "min", "max")
@@ -152,9 +151,6 @@ size.min$sem.v[2] <- sem(evo.reps$mean.vol[1:4])
 ```{r}
 png(filename="~/GitHub/MinimalCell/figures/Fig4.no.photos.png",
     width = 1200, height = 1200, res = 96*2)
- 
-#png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig4.png",
-#    width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
@@ -227,7 +223,7 @@ png(filename="~/GitHub/MinimalCell/figures/Fig4.png",
                width = 1200, height = 1200, res = 96*2)
 
 img.plot <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos.png")
-img.non.min <- readPNG("figures/size.images/nonmin_04_014_scale2.png")
+img.non.min <- readPNG("figures/size.images/nonmin_04_014.png")
 img.min <- readPNG("figures/size.images/min_11_010.png")
 
 grid.newpage()
@@ -275,11 +271,27 @@ grid.text("B", x = 0.73, y = 0.76,
 grid.text("C", x = 0.73, y = 0.49, 
             gp = gpar(fontsize = 14, col = "white"))
 
-grid.polyline(x=c(0.865, 0.935),
-             y=c(0.76, 0.76),
+#grid.polyline(x=c(0.865, 0.935),
+#             y=c(0.76, 0.76),
+#             gp=gpar(col= "white", lwd = 1.5))
+
+#grid.text(expression("1" ~ mu~"m"), x = 0.9, y = 0.74, 
+#          gp = gpar(fontsize = 12, col = "white"))
+
+# Panel B scale bar
+grid.polyline(x=c(0.875, 0.945),
+             y=c(0.58, 0.58),
              gp=gpar(col= "white", lwd = 1.5))
 
-grid.text(expression("1" ~ mu~"m"), x = 0.9, y = 0.74, 
+grid.text(expression("1" ~ mu~"m"), x = 0.905, y = 0.56, 
+          gp = gpar(fontsize = 12, col = "white"))
+
+# Panel C scale bar
+grid.polyline(x=c(0.875, 0.945),
+             y=c(0.31, 0.31),
+             gp=gpar(col= "white", lwd = 1.5))
+
+grid.text(expression("1" ~ mu~"m"), x = 0.905, y = 0.29, 
           gp = gpar(fontsize = 12, col = "white"))
 
 # Close Plot Device
