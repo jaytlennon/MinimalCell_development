@@ -29,8 +29,7 @@ require("indicspecies")
 # Load data
 ```{r}
 # Load data
-g.essent.raw <- read.csv("data2/GxP_Mm_essential.csv")
-#g.essent.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\GxP_Mm_essential.csv")
+g.essent.raw <- read.csv("~/GitHub/MinimalCell/data2/GxP_Mm_essential.csv")
 g.essent.raw$sample <- as.factor(g.essent.raw$sample)
 g.essent.raw$treatment <- as.factor(g.essent.raw$treatment)
 levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Non-minimal"
@@ -79,10 +78,7 @@ TukeyHSD(compare.variance)
 
 # PCoA Plot
 ```{r, results = "hide"}
-#png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
- #   width = 1200, height = 1200, res = 96*2) 
-
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png",
+png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -137,8 +133,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-#img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
 grid.raster(img)
 ```
 

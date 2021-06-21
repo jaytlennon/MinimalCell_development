@@ -32,9 +32,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load and process data
 ```{r}
 # Load data
-size.raw <-read.csv("data/SEM_Stein_data/SEM_Stein_cases.csv")
-
-#size.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data\\SEM_Stein_data\\SEM_Stein_cases.csv")
+size.raw <-read.csv("~/GitHub/MinimalCell/data/SEM_Stein_data/SEM_Stein_cases.csv")
 
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")
@@ -51,17 +49,6 @@ esize<-size %>% filter(timepoint!="Mutant")
 time.x <- c(1,3,1,3)
 fsize <- data.frame(fsize, time.x)
 esize <- data.frame(esize, time.x)
-# Subset relative fitness by strain
-# Note, this code generates the SEM for evolved lines incorrectly. It pools the SEM across all measured individual cells, rather than taking the SEM of the 4 evolutionary replicates. In the code to generate the figure, I altered the size.wt and size.min dataframes to have the correct SEMs for plotting.
-esize.wt  <- filter(esize, strain == "Non-minimal") %>%
-  dplyr::select(timepoint, mean, sem, mean.v,sem.v, time.x)
-fsize.wt  <- filter(esize, strain == "Non-minimal") %>%
-  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
-
-esize.min  <- filter(esize, strain== "Minimal") %>%
-  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
-fsize.min  <- filter(fsize, strain== "Minimal") %>%
-  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
 ```
 
 ## Tests significance
@@ -75,9 +62,9 @@ size.reps <- size.raw %>%
 s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
 B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
 
+##Statistical tests using cell diameter
+
 equal.var.anc <- var.test(s1_anc.reps$diameter, B_anc.reps$diameter)
-
-
 anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter, alternative = "two.sided", var.equal = TRUE, mu = 0)
 
 # Difference in cell size between wt and minimal at ancestor timepoint?
@@ -131,15 +118,64 @@ B_delta.t.test <- t.test(x = evo.reps$mean.diam[1:4], mu = size.reps$mean.diam[1
 
 
 
+##Statistical tests using cell volume
+
+equal.var.anc.v <- var.test(s1_anc.reps$volume, B_anc.reps$volume)
+anc.t.test.v <- t.test(x = s1_anc.reps$volume, B_anc.reps$volume, alternative = "two.sided", var.equal = F, mu = 0)
+
+# Difference in cell vol between wt and minimal at ancestor timepoint?
+# Test for equal variance: p-value = 0.2.974EE-05 --> heterogeneous variance
+# Results: t = 5.8935, df = 95.517, p-value = 5.667EE-08
+
+equal.var.s1.ftsZ.v <- var.test(s1_anc.reps$volume, s1_ftsZ.reps$volume)
+s1.ftsZ.t.test.v <- t.test(x = s1_anc.reps$volume, s1_ftsZ.reps$volume, alternative = "two.sided", var.equal = F, mu = 0)
+
+# Difference in cell vol between wt and wt ftsZ mutant?
+# Test for equal variance: p-value = 7.137EE-06 --> heterogeneous variance
+# Results: t = -5.0275, df = 87.188, p-value = 2.628EE-06
+
+equal.var.B.ftsZ.v <- var.test(B_anc.reps$volume, B_ftsZ.reps$volume)
+B.ftsZ.t.test.v <- t.test(x = B_anc.reps$volume, B_ftsZ.reps$volume, alternative = "two.sided", var.equal = FALSE, mu = 0)
+
+# Difference in cell vol between minimal and minimal ftsZ mutant?
+# Test for equal variance: p-value = 4.175EE-07 --> non-homogeneous variance
+# Results: t = 3.7794, df = 114.16, p-value = 0.0002516
+
+equal.var.evo.v <- var.test(evo.reps$mean.vol[1:4], evo.reps$mean.vol[5:8])
+evo.t.test.v <- t.test(evo.reps$mean.vol ~ evo.reps$strain, var.equal = F)
+# Difference in cell vol between wt and minimal at evolved timepoint?
+# Test for equal variance: p-value = 0.000302 --> heterogeneous variance
+# Results: t = -1.6959, df = 3.012, p-value = 0.1881
+
+
+# Difference in cell vol between Non-minimal ancestor and Non-minimal evolved lines?
+s1_delta.t.test.v <- t.test(x = evo.reps$mean.vol[5:8], mu = size.reps$mean.vol[2], alternative = 'two.sided')
+
+# Answer = Yes, marginally: t = 1.6478, df = 3, p-value = 0.1979
+
+# Difference in cell size between minimal ancestor and minimal evolved lines?
+B_delta.t.test.v <- t.test(x = evo.reps$mean.vol[1:4], mu = size.reps$mean.vol[1], alternative = 't')
+
+# Answer = No: t = 1.4667, df = 3, p-value = 0.2387
+
 ```
 
+## Summarize data for plotting
 
-# Initiate figure
 ```{r}
-# Make figure
-#png(filename="~/GitHub/MinimalCell/figures/Fig4_SEM.png",
-#    width = 1200, height = 1200, res = 96*2)
+#Generate matrices with rows/cols for ancestor and evolved
+esize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v, time.x)
+fsize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
 
+esize.min  <- filter(esize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+fsize.min  <- filter(fsize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+
+
+#Supply correct values to matrices for ancestor and evolved
 esize.wt$mean[2] <- mean(evo.reps$mean.diam[5:8])
 esize.wt$sem[2] <- sem(evo.reps$mean.diam[5:8])
 esize.wt$mean.v[2]<-mean(evo.reps$mean.vol[5:8])
@@ -150,7 +186,33 @@ esize.min$sem[2] <- sem(evo.reps$mean.diam[1:4])
 esize.min$mean.v[2]<-mean(evo.reps$mean.vol[1:4])
 esize.min$sem.v[2]<-sem(evo.reps$mean.vol[1:4])
 
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS3.png",
+#Generate matrices with rows/cols for ancestor and ftsZ mutant
+size.wt.ftsZ <- esize.wt
+size.wt.ftsZ$timepoint <- as.character(size.wt.ftsZ$timepoint)
+size.wt.ftsZ$timepoint[2] <- "ftsZ E315*"
+size.wt.ftsZ$timepoint <- factor(size.wt.ftsZ$timepoint)
+
+size.min.ftsZ <- esize.min
+size.min.ftsZ$timepoint <- as.character(size.min.ftsZ$timepoint)
+size.min.ftsZ$timepoint[2] <- "ftsZ E315*"
+size.min.ftsZ$timepoint <- factor(size.min.ftsZ$timepoint)
+
+#Supply correct values to matrices for ancestor and ftsZ mutant
+size.wt.ftsZ$mean[2] <- mean(s1_ftsZ.reps$diameter)
+size.wt.ftsZ$sem[2] <- sem(s1_ftsZ.reps$diameter)
+size.wt.ftsZ$mean.v[2] <- mean(s1_ftsZ.reps$volume)
+size.wt.ftsZ$sem.v[2] <- sem(s1_ftsZ.reps$volume)
+
+size.min.ftsZ$mean[2] <- mean(B_ftsZ.reps$diameter)
+size.min.ftsZ$sem[2] <- sem(B_ftsZ.reps$diameter)
+size.min.ftsZ$mean.v[2] <- mean(B_ftsZ.reps$volume)
+size.min.ftsZ$sem.v[2] <- sem(B_ftsZ.reps$volume)
+```
+
+# Initiate figure
+```{r}
+# Make figure for ancestor and evolved
+png(filename="~/GitHub/MinimalCell/figures/FigS3.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -216,38 +278,15 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS3.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS3.png")
 
 grid.raster(img)
 ```
 
 ```{r}
 # Make figure for ftsZ E315*
-#png(filename="~/GitHub/MinimalCell/figures/Fig4_ftsZ_SEM.png",
-#    width = 1200, height = 1200, res = 96*2)
 
-
-size.wt.ftsZ <- esize.wt
-size.wt.ftsZ$timepoint <- as.character(size.wt.ftsZ$timepoint)
-size.wt.ftsZ$timepoint[2] <- "ftsZ E315*"
-size.wt.ftsZ$timepoint <- factor(size.wt.ftsZ$timepoint)
-size.wt.ftsZ$mean[2] <- mean(s1_ftsZ.reps$diameter)
-size.wt.ftsZ$sem[2] <- sem(s1_ftsZ.reps$diameter)
-size.wt.ftsZ$mean.v[2] <- mean(s1_ftsZ.reps$volume)
-size.wt.ftsZ$sem.v[2] <- sem(s1_ftsZ.reps$volume)
-
-
-size.min.ftsZ <- esize.min
-size.min.ftsZ$timepoint <- as.character(size.min.ftsZ$timepoint)
-size.min.ftsZ$timepoint[2] <- "ftsZ E315*"
-size.min.ftsZ$timepoint <- factor(size.min.ftsZ$timepoint)
-size.min.ftsZ$mean[2] <- mean(B_ftsZ.reps$diameter)
-size.min.ftsZ$sem[2] <- sem(B_ftsZ.reps$diameter)
-size.min.ftsZ$mean.v[2] <- mean(B_ftsZ.reps$volume)
-size.min.ftsZ$sem.v[2] <- sem(B_ftsZ.reps$volume)
-
-
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS4.png",
+png(filename="~/GitHub/MinimalCell/figures/FigS4.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -313,7 +352,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS4.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS4.png")
 
 grid.raster(img)
 ```
