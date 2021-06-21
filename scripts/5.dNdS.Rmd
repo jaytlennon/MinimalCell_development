@@ -30,8 +30,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load and process data
 ```{r}
 # Load data
-dnds <- read.csv("data2/cases_Mm.300.csv")
-#dnds <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\cases_Mm.300.csv")
+dnds <- read.csv("~/GitHub/MinimalCell/data2/cases_Mm.300.csv")
 colnames(dnds)[12] <- "dnds"
 colnames(dnds)[2] <- "strain"
 
@@ -74,10 +73,7 @@ dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative 
 # Initiate figure
 ```{r}
 # Make figure
-#png(filename="~/GitHub/MinimalCell/figures/FigS1.png",
-#    width = 1200, height = 1200, res = 96*2) 
-
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS1.png",
+png(filename="~/GitHub/MinimalCell/figures/FigS1.png",
     width = 1200, height = 1200, res = 96*2)
 
 plot.new()
@@ -136,8 +132,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-#img <- readPNG("~/GitHub/MinimalCell/figures/FigS1.png")
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS1.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS1.png")
 
 grid.raster(img)
 ```
