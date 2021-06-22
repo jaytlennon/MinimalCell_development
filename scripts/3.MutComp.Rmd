@@ -127,6 +127,9 @@ points(essent.min[ ,1], essent.min[ ,2], pch = 21,
 # Add P-value associated with PERMANOVA
 mtext(expression(~italic("P")~"= 0.029"), line = -1.75, cex = 1.0, at = -0.4)
 
+# Add treatment labels
+mtext("Minimal", line = -19, cex = 1.2, at = -0.3)
+mtext("Non-minimal", line = -19, cex = 1.2, at = 0.3)
 
 # Close Plot Device
 dev.off()
