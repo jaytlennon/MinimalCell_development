@@ -11,8 +11,12 @@ geometry: margin=2.54cm
 ## Clear workspace and set directory
 ```{r setup, include=FALSE, echo=FALSE}
 rm(list=ls())
+require("knitr")
 getwd()
 setwd("~/GitHub/MinimalCell") 
+#setwd("~\\..\\GitHub\\MinimalCell")
+
+getwd()
 ```
 
 ## Load packages and functions
@@ -22,17 +26,15 @@ require("dplyr")
 require("vioplot")
 require("grid")
 require("dplyr")
-require("knitr")
-require("extrafont")
 ```
 
 ## Mutation accumulation (MA)
 
 # Load mutation rate data for Fig. 1A
-
 ```{r}
 # Load mutation rate data
 ma.raw <- read.csv("data2/MA_summary_for_R.csv", header = TRUE, sep =",")
+#ma.raw <- read.csv("~/../GitHub/MinimalCell/data2/MA_summary_for_R.csv", header = TRUE, sep =",")
 
 # Preserve row names
 ma <- as_tibble(ma.raw)
@@ -45,10 +47,10 @@ ma$strain <- factor(ma$strain, levels=c("Non-minimal","Minimal"))
 
 # Subset mutation rate data by strain
 mr.wt  <- filter(ma, strain== "Non-minimal") %>%
-          dplyr::select(per_nt_per_gen)
+  dplyr::select(per_nt_per_gen)
 
 mr.min  <- filter(ma, strain== "Minimal") %>%
-          dplyr::select(per_nt_per_gen)
+  dplyr::select(per_nt_per_gen)
 
 # Test for equal variance: P = 0.42 --> homogeneous variance
 equal.var <- var.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen)
@@ -58,10 +60,10 @@ mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE
 ```
 
 # Load mutation type data (i.e., insertions, deletions, and SMSs) for Fig. 1B)
-
 ```{r}
 # Load data
 ma.type.raw <- read.csv("data2/MA_grouped_bar_mut.types.csv")
+#ma.type.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_mut.types.csv")
 
 # Preserve row names
 ma.type <- as_tibble(ma.type.raw)
@@ -73,19 +75,18 @@ levels(ma.type$strain)[levels(ma.type$strain)=="s1"] <- "Non-minimal"
 levels(ma.type$strain)[levels(ma.type$strain)=="3B"] <- "Minimal"
 levels(ma.type$mut)[levels(ma.type$mut)=="SNM"] <- "Single-nucleotide"
 ma.type$strain <- factor(ma.type$strain, levels=c("Non-minimal","Minimal"))
-ma.type$mut <- factor(ma.type$mut, levels = c("Insertion", "Deletion", 
-                    "Over 100 bp","Single-nucleotide"))
-ma.type <- ma.type %>% mutate(prop2 = sprintf("%0.2f", prop))
+ma.type$mut <- factor(ma.type$mut, levels = c("Insertion","Deletion","Over 100 bp","Single-nucleotide"))
+ma.type <- ma.type %>% mutate(prop2 = sprintf("%0.2f",prop))
 
 # Reorder for plotting
-order.1 <- c(2, 4, 6, 1, 3, 5) 
-ma.type <- data.frame(ma.type, order.1)
+order.1 <- c(2,4,6,1,3,5) 
+ma.type <- data.frame(ma.type,order.1)
 ma.type <- ma.type[order(ma.type$order.1),] 
 
 # Make table for contingency analyses
 ma.type.mat <- matrix(ma.type$count, ncol = 2, byrow = T)
-colnames(ma.type.mat) <- c("minimal", "non-minimal")
-rownames(ma.type.mat) <- c("insertion", "deletion", "snm")
+colnames(ma.type.mat) <- c("minimal","non-minimal")
+rownames(ma.type.mat) <- c("insertion","deletion","snm")
 ma.type.tab <- as.table(ma.type.mat)
 ma.type.tab.margins <- addmargins(ma.type.tab)
 
@@ -110,10 +111,10 @@ colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 ```
 
 # Load single nucleotide mutation data for Fig. 1C
-
 ```{r}
 # Load data
-ma.snm.raw <- read.csv("data2/MA_grouped_bar_SNM.csv")
+ma.snm.raw <- read.csv("data2\MA_grouped_bar_SNM.csv")
+#ma.snm.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\MA_grouped_bar_SNM.csv")
 
 # Preserve row names
 ma.snm <- as_tibble(ma.snm.raw)
@@ -123,20 +124,16 @@ ma.snm$strain <- as.factor(ma.snm$strain)
 ma.snm$mut <- as.factor(ma.snm$mut)
 levels(ma.snm$strain)[levels(ma.snm$strain)=="s1"] <- "Non-minimal"
 levels(ma.snm$strain)[levels(ma.snm$strain)=="3B"] <- "Minimal"
-ma.snm$strain <- factor(ma.snm$strain, levels=c("Non-minimal", "Minimal"))
+ma.snm$strain <- factor(ma.snm$strain, levels=c("Non-minimal","Minimal"))
 ma.snm$mut <- factor(ma.snm$mut, levels = 
-          c("A:T to C:G","A:T to G:C","A:T to T:A",
-          "C:G to G:C", "C:G to T:A", "C:G to A:T"))
-ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f", prop))
+    c("A:T to C:G","A:T to G:C","A:T to T:A",
+    "C:G to G:C", "C:G to T:A", "C:G to A:T"))
+ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f",prop))
 
 # Reorder table for plotting
-order.2 <- c(2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11) 
+order.2 <- c(2,4,6,8,10,12,1,3,5,7,9,11) 
 ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
-
-
-########ROY: delete below if code is "bad"
-
 
 # Make table for contingency analyses
 #ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)#############This code is bad. Produces an incorrect matrix
@@ -148,7 +145,7 @@ ma.snm.tab <- as.table(ma.snm.mat)
 ma.snm.tab.margins <- addmargins(ma.snm.tab)
 
 # X-squared = 69.92, df = NA, p-value = 9.999e-05
-ma.snm.chi <- chisq.test(ma.snm.tab, simulate.p.value = TRUE, B = 10000)
+ma.snm.chi <- chisq.test(ma.snm.tab, simulate.p.value = TRUE,  B = 10000)
 
 # Posthoc analysis
 ma.snm.z <- as.data.frame(ma.snm.chi$stdres)
@@ -175,15 +172,15 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 ```
 
 # Make Figure 1
-
 ```{r}
 ### Initiate figure
-#font_import()
-#fonts()
-
-png(filename="~/GitHub/MinimalCell/figures/Fig1b.png",
+require("extrafont")
+font_import()
+fonts()
+#png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
+    #width = 1200, height = 1200, res = 96*2) 
+png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
-
 plot.new()
 layout(matrix(c(1:3), byrow = T))
 par(mar = c(2.5, 4, 1, 1), oma = c(3, 4, 1, 1))
@@ -195,13 +192,11 @@ plot(jitter(rep(0.75, nrow(mr.wt)), amount = 0.1), mr.wt$per_nt_per_gen,
      ylim = c(1e-09, 8e-08), xlim = c(0, 3), pch = 21, col = "white", 
      bg = "white", lwd = 2, cex = 1.7, yaxt = "n", xaxt = "n", cex.lab = 2, 
      cex.axis= 1.25, las = 1, ylab = "", xlab = "")
-box(lwd = 2) 
+box(lwd=2) 
 
 # Add violins
-vioplot(mr.wt, col="lightblue", horizontal = F, at = 0.75, add = T, 
-                lty = 1, drawRect = F)
-vioplot(mr.min, col="pink", horizontal = F, at = 2.25, add = T, 
-                lty = 1, drawRect = F)
+vioplot(mr.wt, col="lightblue", horizontal = F, at = 0.75, add = T, lty = 1, drawRect = F)
+vioplot(mr.min, col="pink", horizontal = F, at = 2.25, add = T, lty = 1, drawRect = F)
 
 # Add points on top of violins
 points(jitter(rep(0.75, nrow(mr.wt)), amount = 0.1), mr.wt$per_nt_per_gen,
@@ -227,18 +222,17 @@ mtext(expression(paste('(mut · nt'^-1*' · gen' ^-1*')')),
       side = 2, outer = TRUE, cex = 0.70, line = 0.55, adj = 0.925)      
 
 #Add panel label
-text(0, 7.5e-08, labels = "A", cex = 2)
+text(-0.02, 7.5e-08, labels = "A", cex = 2)
 
 #Add P-value for t-test
-mtext(expression(~italic("P")~"= 0.54"), line = -1.8, cex = 0.80, at = 2.87)
+mtext(expression(~italic("P")~"= 0.54"), line = -3.5, cex = 0.80, at = 0.12)
 
 
 ### Make panel B ###
 
 barplot(ma.type$prop, col = c("blue", "red", "blue", "red", "blue", "red"), 
-        ylim = c(0, 1.2), space = c(1, 0, 1, 0, 1, 0), las = 1, 
-        yaxt = "n", xaxt = "n")
-box(lwd = 2) 
+        ylim = c(0,1), space = c(1,0,1,0,1,0), las =1, yaxt = "n", xaxt = "n")
+box(lwd=2) 
 
 # Add axes
 axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
@@ -253,109 +247,85 @@ text(5.0, -0.1, expression("Deletions"), cex= 1.25, srt = 0, xpd = NA)
 text(8.0, -0.1, expression("SNM"), cex= 1.25, srt = 0, xpd = NA)
 
 # Add y-axis label
-mtext("Proportion", side = 2, outer = TRUE, cex = 1.25, line = 1.9, adj = 0.52)
+mtext("Proportion", side = 2, outer = TRUE, cex = 1.25, line = 2, adj = 0.52)
 
 # Add bar value
-#text(1.5, 0.10, expression("0.02"), cex= 0.85)
-#text(2.5, 0.09, expression("0.03"), cex= 0.85)
-#text(4.5, 0.15, expression("0.09"), cex= 0.85)
-#text(5.5, 0.16, expression("0.10"), cex= 0.85)
-#text(7.5, 0.95, expression("0.89"), cex= 0.85)
-#text(8.5, 0.92, expression("0.86"), cex= 0.85)
+text(1.5, 0.10, expression("0.02"), cex= 0.85)
+text(2.5, 0.09, expression("0.03"), cex= 0.85)
+text(4.5, 0.15, expression("0.09"), cex= 0.85)
+text(5.5, 0.16, expression("0.10"), cex= 0.85)
+text(7.5, 0.95, expression("0.89"), cex= 0.85)
+text(8.5, 0.92, expression("0.86"), cex= 0.85)
 
 # Add panel label
-text(1, 1.05, labels = "B", cex = 2)
-
-# Add vertical dashed lines
-abline(v = c(3.5, 6.5), col=c("grey"), lty = 3, lwd = 2)
+text(0.95, 0.87, labels = "B", cex = 2)
 
 # Add legend
-legend(1.2, 1.18, c("Non-minimal", "Minimal"), pch = 22, 
+legend(1.2, 1.0, c("Non-minimal", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
 # Add P-value for t-test
-mtext(expression(~italic("P")~"= 0.125"), line = -1.7, cex = 0.80, at = 8.6)
+mtext(expression(~italic("P")~"= 0.125"), line = -4.0, cex = 0.80, at = 1.4)
+
 
 ### Make panel C ###
 
 barplot(ma.snm$prop, col = c("blue", "red", "blue", "red", "blue", "red", 
-        "blue", "red", "blue", "red", "blue", "red"), ylim = c(0, 1.2), 
-        space = c(1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0), 
-        las =1, yaxt = "n", xaxt = "n")
-box(lwd = 2) 
+        "blue", "red", "blue", "red", "blue", "red"), ylim = c(0,1), 
+        space = c(1,0,1,0,1,0,1,0,1,0,1,0), las =1, yaxt = "n", xaxt = "n")
+box(lwd=2) 
 
 # Add axes
 axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      labels = c("0.00", "0.50", "1.00"), 
       at = c(0, 0.5, 1.0))
 axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     at=c(0, 0.5, 1.0), labels = F)
+     at=c(0, 0.5,1.0), labels = F)
 
 # Add x-axis labels
-text(2, -0.075, "A:T \u2192 C:G", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-text(5, -0.075, "A:T \u2192 G:C", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-text(8, -0.075, "A:T \u2192 T:A", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-text(11, -0.075, "C:G \u2192 G:C", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-text(14, -0.075, "C:G \u2192 T:A", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-text(17, -0.075, "C:G \u2192 A:T", cex= 1, srt = 0, xpd = NA, col = "darkgrey")
-
-# Add mutation types on x-axis
-#mtext(expression("("~italic("transversion")~")"), line = -13.5, cex = 0.65, at = 2, col = "grey")
-#mtext(expression("("~italic("transition")~")"), line = -13.5, cex = 0.65, at = 5, col = "grey")
-#mtext(expression("("~italic("transversion")~")"), line = -13.5, cex = 0.65, at = 8, col = "grey")
-#mtext(expression("("~italic("transversion")~")"), line = -13.5, cex = 0.65, at = 11, col = "grey")
-#mtext(expression("("~italic("transition")~")"), line = -13.5, cex = 0.65, at = 14, col = "grey")
-#mtext(expression("("~italic("transition")~")"), line = -13.5, cex = 0.65, at = 17, col = "grey")
-
-# Add x-axis labels
-#text(2.0, -0.1, expression("Insertions"), cex= 1.25, srt = 0, xpd = NA)
-#text(5.0, -0.1, expression("Deletions"), cex= 1.25, srt = 0, xpd = NA)
-#text(8.0, -0.1, expression("SNM"), cex= 1.25, srt = 0, xpd = NA)
+text(2, -0.075, "A:T \u2192 C:G", cex= 1, srt = 0, xpd = NA)
+text(5, -0.075, "A:T \u2192 G:C", cex= 1, srt = 0, xpd = NA)
+text(8, -0.075, "A:T \u2192 T:A", cex= 1, srt = 0, xpd = NA)
+text(11, -0.075, "C:G \u2192 G:C", cex= 1, srt = 0, xpd = NA)
+text(14, -0.075, "C:G \u2192 T:A", cex= 1, srt = 0, xpd = NA)
+text(17, -0.075, "C:G \u2192 A:T", cex= 1, srt = 0, xpd = NA)
 
 # Add y-axis label
 mtext("Proportion", side = 2, outer = TRUE, cex = 1.25, line = 2, adj = 0.125)
 
 # Add bar value
-#text(1.5, 0.06, expression("0.01"), cex= 0.85)
-#text(2.5, 0.06, expression("0.01"), cex= 0.85)
-#text(4.5, 0.13, expression("0.07"), cex= 0.85)
-#text(5.5, 0.08, expression("0.02"), cex= 0.85)
-#text(7.5, 0.10, expression("0.04"), cex= 0.85)
-#text(8.5, 0.10, expression("0.04"), cex= 0.85)
-#text(10.5, 0.16, expression("0.10"), cex= 0.85)
-#text(11.5, 0.07, expression("0.01"), cex= 0.85)
-#text(13.5, 0.48, expression("0.42"), cex= 0.85)
-#text(14.5, 0.71, expression("0.65"), cex= 0.85)
-#text(16.5, 0.40, expression("0.36"), cex= 0.85)
-#text(17.5, 0.33, expression("0.27"), cex= 0.85)
+text(1.5, 0.06, expression("0.01"), cex= 0.85)
+text(2.5, 0.06, expression("0.01"), cex= 0.85)
+text(4.5, 0.13, expression("0.07"), cex= 0.85)
+text(5.5, 0.08, expression("0.02"), cex= 0.85)
+text(7.5, 0.10, expression("0.04"), cex= 0.85)
+text(8.5, 0.10, expression("0.04"), cex= 0.85)
+text(10.5, 0.16, expression("0.10"), cex= 0.85)
+text(11.5, 0.07, expression("0.01"), cex= 0.85)
+text(13.5, 0.48, expression("0.42"), cex= 0.85)
+text(14.5, 0.71, expression("0.65"), cex= 0.85)
+text(16.5, 0.40, expression("0.36"), cex= 0.85)
+text(17.5, 0.33, expression("0.27"), cex= 0.85)
 
 # Add panel label
-text(1, 1.05, labels = "C", cex = 2)
+text(0.9, 0.88, labels = "C", cex = 2)
 
 # Add legend
-legend(1.4, 1.2, c("Non-minimal", "Minimal"), pch = 22, 
+legend(1.5, 1.0, c("Non-minimal", "Minimal"), pch = 22, 
        pt.bg = c("blue", "red"), pt.cex = 2, pt.lwd = 1.5, 
        bty = 'n', y.intersp = 1)
 
 # Add P-value for t-test
-mtext(expression(~italic("P")~"< 0.0001"), line = -1.7, cex = 0.80, at = 17)
-
-# Add vertical dashed lines
-abline(v = c(6.5, 12.5), col=c("grey"), lty = 3, lwd = 2)
+mtext(expression(~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 2.0)
 
 # Add symbols for posthoc significance
-text(2, 0.10, expression("ns"), cex= 1.2)
-text(5, 0.165, expression("***"), cex= 1.5)
-text(8, 0.15, expression("ns"), cex= 1.2)
-text(11, 0.16, expression("***"), cex= 1.5)
-text(14, 0.75, expression("***"), cex= 1.5)
-text(17, 0.45, expression("***"), cex= 1.5)
-
-# Add mutation type labels
-text(3.5, -0.25, expression("G:C bias"), cex= 1.25, srt = 0, xpd = NA)
-text(9.5, -0.25, expression("Neutral"), cex= 1.25, srt = 0, xpd = NA)
-text(15.5, -0.25, expression("A:T bias"), cex= 1.25, srt = 0, xpd = NA)
+text(2, 0.25, expression("."), cex= 1.2)
+text(5, 0.25, expression("***"), cex= 1.5)
+text(8, 0.25, expression("."), cex= 1.2)
+text(11, 0.25, expression("***"), cex= 1.5)
+text(14, 0.80, expression("***"), cex= 1.5)
+text(17, 0.50, expression("***"), cex= 1.5)
 
 # Close Plot Device
 dev.off()
@@ -363,12 +333,9 @@ graphics.off()
 
 # Show Plot
 #img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig1b.png")
+img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig1.png")
 grid.raster(img)
 ```
-
-
-
 
 ```{r}
 ######Various statistical tests to evaluate mutation spectrum

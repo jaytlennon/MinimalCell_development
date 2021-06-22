@@ -28,8 +28,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load data
 ```{r}
 # Load data
-rel.fit.raw <-read.csv("data2/Interaction_data.csv")
-#rel.fit.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data2\\Interaction_data.csv")
+rel.fit.raw <-read.csv("~/GitHub/MinimalCell/data2/Interaction_data.csv")
 rel.fit.raw <- as_tibble(rel.fit.raw)
 
 # Subset data
@@ -105,7 +104,7 @@ test.delta <- t.test(delta.w$"Non-minimal", delta.w$Minimal, var.equal = T)
 # Make figure
 #png(filename="~/GitHub/MinimalCell/figures/Fig2.png",
 #    width = 1200, height = 1200, res = 96*2) 
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig2.png",
+png(filename="~/GitHub/MinimalCell/figures/Fig2.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -170,7 +169,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig2.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig2.png")
 
 grid.raster(img)
 ```

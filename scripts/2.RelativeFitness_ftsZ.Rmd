@@ -28,8 +28,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load data
 ```{r}
 # Load data
-rel.fit.raw <-read.csv("data/competition/20201225_20210331/ftsZ_W_cases.csv")
-#rel.fit.raw <-read.csv("~\\..\\GitHub\\MinimalCell\\data\\competition\\2021\\20201225_20210331\\ftsZ_W_cases.csv")
+rel.fit.raw <-read.csv("~/GitHub/MinimalCell/data/competition/2021/20201225_20210331/ftsZ_W_cases.csv")
 rel.fit.raw <- as_tibble(rel.fit.raw)
 
 # Subset data
@@ -98,10 +97,7 @@ t.test(c(filter(rel.fit.raw, strain == "JCVI-syn3B", Mutation=="ftsZ")$W_1.0),c(
 # Initiate figure
 ```{r}
 # Make figure
-#png(filename="~/GitHub/MinimalCell/figures/Fig2_ftsZ.png",
-#    width = 1200, height = 1200, res = 96*2) 
-
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\FigS2.png",
+png(filename="~/GitHub/MinimalCell/figures/FigS2.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -166,7 +162,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\FigS2.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS2.png")
 
 grid.raster(img)
 ```
