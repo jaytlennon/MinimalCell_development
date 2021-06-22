@@ -30,7 +30,6 @@ require("indicspecies")
 ```{r}
 # Load data
 g.essent.raw <- read.csv("data2/GxP_Mm_essential.csv")
-#g.essent.raw <- read.csv("~\\..\\GitHub\\MinimalCell\\data2\\GxP_Mm_essential.csv")
 g.essent.raw$sample <- as.factor(g.essent.raw$sample)
 g.essent.raw$treatment <- as.factor(g.essent.raw$treatment)
 levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Non-minimal"
@@ -79,10 +78,7 @@ TukeyHSD(compare.variance)
 
 # PCoA Plot
 ```{r, results = "hide"}
-#png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
- #   width = 1200, height = 1200, res = 96*2) 
-
-png(filename="~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png",
+png(filename="~/GitHub/MinimalCell/figures/Fig3.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -131,14 +127,17 @@ points(essent.min[ ,1], essent.min[ ,2], pch = 21,
 # Add P-value associated with PERMANOVA
 mtext(expression(~italic("P")~"= 0.029"), line = -1.75, cex = 1.0, at = -0.4)
 
+# Add treatment labels
+mtext("Minimal", line = -19, cex = 1.2, at = -0.3)
+mtext("Non-minimal", line = -19, cex = 1.2, at = 0.3)
 
 # Close Plot Device
 dev.off()
 graphics.off()
 
 # Show Plot
-#img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
-img <- readPNG("~\\..\\GitHub\\MinimalCell\\figures\\Fig3.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
+
 grid.raster(img)
 ```
 
