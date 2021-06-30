@@ -23,6 +23,7 @@ require("png")
 require("dplyr")
 require("grid")
 require("vegan")
+require("indicspecies")
 ```
 
 # Load data
@@ -137,4 +138,29 @@ graphics.off()
 # Show Plot
 img <- readPNG("~/GitHub/MinimalCell/figures/Fig3.png")
 grid.raster(img)
+```
+
+
+# Indicator analysis
+
+```{r}
+# Run indicator analysis for gene association with strains
+# https://cran.r-project.org/web/packages/indicspecies/vignettes/indicspeciesTutorial.pdf
+ind <- multipatt(g.essent, cluster = g.essent.raw$treatment, func = "r.g", 
+                     control = how(nperm = 999))
+
+# Select genes with significant correlations (P < 0.05)
+
+ind.sig <- ind$sign[ which(ind$sign[5] <= 0.05), ]
+
+# Indicator genes associated with Non-minimal cell line
+#     s.Non-minimal s.Minimal index      stat p.value
+#X149          1         0     1 0.8425008   0.031
+#X228          1         0     1 0.9516476   0.031
+
+# Indicator genes associated with Minimal cell line
+#     s.Non-minimal s.Minimal index      stat p.value
+#X129          0         1     2 1.0000000   0.031
+#X168          0         1     2 0.7308438   0.031
+#X820          0         1     2 0.7942200   0.031
 ```
