@@ -16,8 +16,6 @@ rm(list=ls())
 require("knitr")
 getwd()
 setwd("~/GitHub/MinimalCell")
-#opts_knit$set(root.dir = "~\\..\\GitHub\\MinimalCell")
-#knitr::opts_chunk$set(root.dir = "~\\..\\GitHub\\MinimalCell")
 getwd()
 ```
 
