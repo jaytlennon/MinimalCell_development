@@ -30,7 +30,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load and process data
 ```{r}
 # Load data
-size.raw <-read.csv("~/GitHub/MinimalCell/data/SEM_Stein_data/SEM_Stein_cases.csv")
+size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/SEM_Stein_cases.csv")
 
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")

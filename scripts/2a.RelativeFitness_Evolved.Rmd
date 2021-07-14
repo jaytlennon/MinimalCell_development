@@ -28,7 +28,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load data
 ```{r}
 # Load data
-rel.fit.raw <-read.csv("~/GitHub/MinimalCell/data2/Interaction_data.csv")
+rel.fit.raw <-read.csv("~/GitHub/MinimalCell/datafiles/Interaction_data_fitness.csv")
 rel.fit.raw <- as_tibble(rel.fit.raw)
 
 # Subset data

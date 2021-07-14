@@ -28,7 +28,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load data
 ```{r}
 # Load data
-rel.fit.raw <-read.csv("~/GitHub/MinimalCell/data/competition/2021/20201225_20210331/ftsZ_W_cases.csv")
+rel.fit.raw <-read.csv("~/GitHub/MinimalCell/datafiles/ftsZ_W_cases.csv")
 rel.fit.raw <- as_tibble(rel.fit.raw)
 
 # Subset data

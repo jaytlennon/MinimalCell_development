@@ -28,7 +28,7 @@ require("vegan")
 # Load data
 ```{r}
 # Load data
-g.essent.raw <- read.csv("~/GitHub/MinimalCell/data2/GxP_Mm_essential.csv")
+g.essent.raw <- read.csv("~/GitHub/MinimalCell/datafiles/GxP_Mm_essential.csv")
 g.essent.raw$sample <- as.factor(g.essent.raw$sample)
 g.essent.raw$treatment <- as.factor(g.essent.raw$treatment)
 levels(g.essent.raw$treatment)[levels(g.essent.raw$treatment)=="s1"] <- "Non-minimal"
