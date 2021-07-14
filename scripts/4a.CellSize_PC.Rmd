@@ -32,7 +32,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 
 ```{r}
 # Load data
-size.raw <-read.csv("~/GitHub/MinimalCell/data2/cases_microbeJ.csv")
+size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/cases_microbeJ.csv")
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter", "area", 
     "volume", "pixels", "mean", "min", "max")

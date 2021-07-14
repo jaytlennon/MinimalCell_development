@@ -1,7 +1,0 @@
-The *summary.tools.xlsx files contain the full compiled data of all of the mutations that occurred across all of the lines, one spreadsheet for each genotype.
-
-Each of the other files are subsets of these data. (In the case of MA_summary_for_R.csv, it is a pooled set of both datasheets.) The subsetting has a specific goal indicated in the filename. For example for the MA_grouped_bar_SNM.xlsx file, the data were reformatted to facilitate generated a grouped bar plot of the 6 different types of SNMs.
-
-Files with *DEPRECATED* in the filename indicates that the data are outdated.
-
-REMOVED* file is a notetaking file where I assessed which of the original lines contained unreliable data.

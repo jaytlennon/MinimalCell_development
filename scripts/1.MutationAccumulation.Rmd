@@ -32,7 +32,7 @@ require("extrafont")
 
 ```{r}
 # Load mutation rate data
-ma.raw <- read.csv("~/GitHub/MinimalCell/data2/MA_summary_for_R.csv", header = TRUE, sep =",")
+ma.raw <- read.csv("~/GitHub/MinimalCell/datafiles/MA_summary_for_R.csv", header = TRUE, sep =",")
 
 # Preserve row names
 ma <- as_tibble(ma.raw)
@@ -61,7 +61,7 @@ mr.ttest <- t.test(mr.wt$per_nt_per_gen, mr.min$per_nt_per_gen, var.equal = TRUE
 
 ```{r}
 # Load data
-ma.type.raw <- read.csv("~/GitHub/MinimalCell/data2/MA_grouped_bar_mut.types.csv")
+ma.type.raw <- read.csv("~/GitHub/MinimalCell/datafiles/MA_grouped_bar_mut.types.csv")
 
 # Preserve row names
 ma.type <- as_tibble(ma.type.raw)
@@ -113,7 +113,7 @@ colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
 ```{r}
 # Load data
-ma.snm.raw <- read.csv("~/GitHub/MinimalCell/data2/MA_grouped_bar_SNM.csv")
+ma.snm.raw <- read.csv("~/GitHub/MinimalCell/datafiles/MA_grouped_bar_SNM.csv")
 
 # Preserve row names
 ma.snm <- as_tibble(ma.snm.raw)
@@ -373,9 +373,9 @@ grid.raster(img)
 ```{r}
 ######Statistical tests to evaluate mutation spectrum
 
-myALL<-read.csv("~/GitHub/MinimalCell/data/MA/MA_summary_for_R.csv")
-my3B<-read.csv("~/GitHub/MinimalCell/data/MA/MA_3B_summary_for_R.csv")
-mys1<-read.csv("~/GitHub/MinimalCell/data/MA/MA_s1_summary_for_R.csv")
+myALL<-read.csv("~/GitHub/MinimalCell/datafiles/MA_summary_for_R.csv")
+my3B<-read.csv("~/GitHub/MinimalCell/datafiles/MA_3B_summary_for_R.csv")
+mys1<-read.csv("~/GitHub/MinimalCell/datafiles/MA_s1_summary_for_R.csv")
 MAALL<-as_tibble(myALL)
 MA3B<-as_tibble(my3B)
 MAs1<-as_tibble(mys1)

@@ -30,7 +30,7 @@ sem <- function(x) sqrt(var(x)/length(x))
 # Load and process data
 ```{r}
 # Load data
-dnds <- read.csv("~/GitHub/MinimalCell/data2/cases_Mm.300.csv")
+dnds <- read.csv("~/GitHub/MinimalCell/datafiles/cases_Mm.300.csv")
 colnames(dnds)[12] <- "dnds"
 colnames(dnds)[2] <- "strain"
 

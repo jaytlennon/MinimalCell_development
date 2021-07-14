@@ -1,0 +1,168 @@
+---
+title: "Evolution of the minimal cell"
+author: "Roy Moger-Reischer and Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Making Figure 2: changes in relative fitness
+
+## Clear workspace and set directory
+```{r setup}
+rm(list=ls())
+getwd()
+setwd("~/GitHub/MinimalCell")
+```
+
+## Load packages and functions
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+sem <- function(x) sqrt(var(x)/length(x))
+```
+
+# Load data
+```{r}
+# Load data
+rel.fit.raw <-read.csv("~/GitHub/MinimalCell/datafiles/ftsZ_W_cases.csv")
+rel.fit.raw <- as_tibble(rel.fit.raw)
+
+# Subset data
+rel.fit <- rel.fit.raw %>% group_by(strain, Mutation) %>% summarise(mean = mean(W_1.0), sem = sem(W_1.0))
+
+# Set data as factors and rename levels
+rel.fit$strain <- as.factor(rel.fit$strain)
+levels(rel.fit$strain)[levels(rel.fit$strain)=="JCVI-syn1.0"] <- "Non-minimal"
+levels(rel.fit$strain)[levels(rel.fit$strain)=="JCVI-syn3B"] <- "Minimal"
+rel.fit$strain <- factor(rel.fit$strain, levels=c("Non-minimal","Minimal"))
+
+# Add x-values for plotting
+time.x <- c(3,1,3,1)
+rel.fit <- data.frame(rel.fit, time.x)
+
+# Subset relative fitness by strain
+rel.fit.wt  <- filter(rel.fit, strain == "Non-minimal") %>%
+  dplyr::select(Mutation, mean, sem, time.x)
+
+rel.fit.min  <- filter(rel.fit, strain== "Minimal") %>%
+  dplyr::select(Mutation, mean, sem, time.x)
+```
+
+## Tests significance
+
+```{r}
+# Differences in relative fitness between ancestors (wt vs. min)?
+# Answer = Yes: t = 18.302, df = 15, p-value = 1.137EE-11
+# Minimization led to 65% reduction in fitness
+
+rel.fit.anc  <- filter(rel.fit.raw, timepoint == "Ancestor") %>%
+  dplyr::select(strain, W_1.0)
+
+# Test for equal variance: P = p-value = 0.04398 --> non-homogenous variance
+var.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="None")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="None")$W_1.0))
+#P = .9201. Homoscedastic.
+t.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="None")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="None")$W_1.0),paired=F,alternative = "two.sided",mu=0,var.equal=T)
+#p = 1.137EE-11 < 0.0001
+
+# Differences in relative fitness between ftsZ mutants (wt vs. min)?
+# Answer = Yes: t = 4.7586, df = 6, p-value = 0.003131
+# 
+
+var.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="ftsZ")$W_1.0))
+#P = .0002632. Heteroscedastic.
+t.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="ftsZ")$W_1.0),paired=F,alternative = "two.sided",mu=0,var.equal=F)
+#p = 1.654EE-05 < 0.0001
+
+
+#Does ftsZ mutation significantly increase the fitness of the Non-minimal? Yes.
+var.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn1.0",Mutation=="None")$W_1.0))
+#P = .05582. Homoscedastic.
+t.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn1.0",Mutation=="None")$W_1.0),paired=F,alternative = "greater",mu=0,var.equal=T)
+#p = 0.01140 < 0.05
+
+
+
+#Does ftsZ mutation significantly increase the fitness of the minimal? Yes.
+var.test(c(filter(rel.fit.raw, strain == "JCVI-syn3B", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="None")$W_1.0))
+#P = .3996. Homoscedastic.
+t.test(c(filter(rel.fit.raw, strain == "JCVI-syn3B", Mutation=="ftsZ")$W_1.0),c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="None")$W_1.0),paired=F,alternative = "greater",mu=0,var.equal=T)
+#p = 0.02597 < 0.05
+
+```
+
+# Initiate figure
+```{r}
+# Make figure
+png(filename="~/GitHub/MinimalCell/figures/FigS2.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+# Add Non-minimal points
+plot(rel.fit.wt$time.x, rel.fit.wt$mean, xlim = c(0, 4.55), 
+     ylim = c(0.25, 1.55), type = "p", pch = 21, bg = "blue", 
+     col = "blue", cex = 2, ylab = "", xlab = "", 
+     cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
+box(lwd=2)
+
+# Add minimal points
+points(rel.fit.min$time.x, rel.fit.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = rel.fit.wt$time.x, y0 = rel.fit.wt$mean, 
+       y1 = rel.fit.wt$mean + rel.fit.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = rel.fit.wt$time.x, y0 = rel.fit.wt$mean, 
+       y1 = rel.fit.wt$mean - rel.fit.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = rel.fit.min$time.x, y0 = rel.fit.min$mean, 
+       y1 = rel.fit.min$mean + rel.fit.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = rel.fit.min$time.x, y0 = rel.fit.min$mean, 
+       y1 = rel.fit.min$mean - rel.fit.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.5", "1.0", "1.5"), at = c(0.5, 1, 1.5))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0.5, 1, 1.5), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "ftsZ E315*"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Time'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+mtext(expression("Relative fitness ("~italic("W")~")"), side = 2, 
+      outer = TRUE, cex = 1.5, line = -4, adj = 0.55)
+
+# Add line segments
+segments(rel.fit.wt$time.x[1], rel.fit.wt$mean[1], rel.fit.wt$time.x[2], 
+         rel.fit.wt$mean[2], col = "blue", lwd = 2)
+segments(rel.fit.min$time.x[1], rel.fit.min$mean[1], rel.fit.min$time.x[2], 
+         rel.fit.min$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+#mtext(expression("Timepoint:" ~italic("P")~"= 0.0003"), line = -2.5, cex = 0.80, at = 0.9)
+#mtext(expression("Strain:" ~italic("P")~"< 0.0001"), line = -4.0, cex = 0.80, at = 0.75)
+
+# Add strain identifier
+text(3.9, rel.fit.wt$mean[1], labels = "Non-minimal", cex = 1.0)
+text(3.8, rel.fit.min$mean[1], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS2.png")
+
+grid.raster(img)
+```
