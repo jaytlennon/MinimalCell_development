@@ -1,0 +1,327 @@
+---
+title: "Evolution of the minimal cell"
+author: "Roy Moger-Reischer and Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Evolution of cell size 
+
+## Clear workspace and set directory
+
+```{r setup, include=FALSE, echo=FALSE}
+rm(list=ls())
+getwd()
+setwd("~/GitHub/MinimalCell")
+```
+
+## Load packages and functions
+
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+require("knitr")
+sem <- function(x) sqrt(var(x)/length(x))
+```
+
+## Load and process data
+
+```{r}
+# Load data
+size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/cases_microbeJ.csv")
+size.raw <- as_tibble(size.raw)
+colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter", "area", 
+    "volume", "pixels", "mean", "min", "max")
+size <- size.raw %>% group_by(strain, timepoint) %>% 
+   summarise(mean = mean(diameter), sem = sem(diameter),
+             mean.v=mean(volume),sem.v=sem(volume))
+size$strain <- as.factor(size$strain)
+size$timepoint <- as.factor(size$timepoint)
+
+# Add x-values for plotting
+time.x <- c(1, 3, 1, 3)
+size <- data.frame(size, time.x)
+```
+
+## Tests significance
+
+```{r}
+# Subset data
+size.reps <- size.raw %>% 
+   dplyr::select(strain, timepoint, sub.strain, diameter,volume) %>%
+   group_by(timepoint, strain, sub.strain) %>%
+   summarize(mean.diam = mean(diameter),mean.vol=mean(volume)) 
+
+s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
+B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
+
+## Analysis of diameter measurements
+equal.var.anc <- var.test(s1_anc.reps$diameter, B_anc.reps$diameter)
+
+anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter, 
+               alternative = "two.sided", var.equal = T, mu = 0)
+
+# Difference in cell size between wt and minimal at ancestor timepoint?
+# Test for equal variance: P = p-value = 0.8492 --> homogeneous variance
+# Results: t = 4.1628, df = 77, p-value = 8.119EE-05
+
+evo.reps <- filter(size.reps, timepoint == "Evolved") %>%
+   group_by(strain, sub.strain)
+
+equal.var.evo <- var.test(evo.reps$mean.diam[1:4], evo.reps$mean.diam[5:8])
+
+evo.t.test <- t.test(evo.reps$mean.diam ~ evo.reps$strain, var.equal = T)
+
+# Difference in cell size between wt and minimal at evolved timepoint?
+# Test for equal variance: p-value = 0.8685 --> homogeneous variance
+# Results: t = -7.3870, df = 6, p-value = 0.0003158
+
+# Difference in size between Non-minimal ancestor and Non-minimal evolved?
+s1_delta.t.test <- t.test(x = evo.reps$mean.diam[5:8], 
+            mu = size.reps$mean.diam[2], alternative = 't')
+
+# Answer = Yes: t = 7.8404, df = 3, p-value = 0.004321
+
+# Difference in cell size between minimal ancestor and minimal evolved?
+B_delta.t.test <- t.test(x = evo.reps$mean.diam[1:4], 
+            mu = size.reps$mean.diam[1], alternative = 't')
+
+# Answer = No: t = 0.8473, df = 3, p-value = 0.4591
+
+
+
+## Analysis of volume measurements
+equal.var.anc.v <- var.test(s1_anc.reps$volume, B_anc.reps$volume)
+
+anc.t.test.v <- t.test(x = s1_anc.reps$volume, B_anc.reps$volume, 
+               alternative = "two.sided", var.equal = F, mu = 0)
+
+# Difference in cell volume between wt and minimal at ancestor timepoint?
+# Test for equal variance: p-value = 0.002988 --> heterogeneous variance
+# Results: t = 2.8637, df = 44.869, p-value = 0.006346
+
+equal.var.evo.v <- var.test(evo.reps$mean.vol[1:4], evo.reps$mean.vol[5:8])
+
+evo.t.test.v <- t.test(evo.reps$mean.vol ~ evo.reps$strain, var.equal = F)
+
+# Difference in cell volume between wt and minimal at evolved timepoint?
+# Test for equal variance: p-value = 0.03905 --> heterogeneous variance
+# Results: t = -4.7431, df = 3.3248, p-value = 0.01404
+
+# Difference in volume between Non-minimal ancestor and Non-minimal evolved?
+s1_delta.t.test.v <- t.test(x = evo.reps$mean.vol[5:8], 
+            mu = size.reps$mean.vol[2], alternative = 't')
+
+# Answer = Yes: t = 4.4667, df = 3, p-value = 0.0209
+
+# Difference in cell volume between minimal ancestor and minimal evolved?
+B_delta.t.test.v <- t.test(x = evo.reps$mean.vol[1:4], 
+            mu = size.reps$mean.vol[1], alternative = 't')
+
+# Answer = No: t = 1.0106, df = 3, p-value = 0.3867
+
+```
+
+## Summarize data for plotting
+
+```{r}
+#Generate matrices with rows/cols
+size.wt  <- filter(size, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+size.min  <- filter(size, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+
+#Supply correct values to matrices
+size.wt$mean[2] <- mean(evo.reps$mean.diam[5:8])
+size.wt$sem[2] <- sem(evo.reps$mean.diam[5:8])
+size.wt$mean.v[2] <- mean(evo.reps$mean.vol[5:8])
+size.wt$sem.v[2] <- sem(evo.reps$mean.vol[5:8])
+ 
+size.min$mean[2] <- mean(evo.reps$mean.diam[1:4])
+size.min$sem[2] <- sem(evo.reps$mean.diam[1:4])
+size.min$mean.v[2] <- mean(evo.reps$mean.vol[1:4])
+size.min$sem.v[2] <- sem(evo.reps$mean.vol[1:4])
+```
+
+
+## Create main plot (minus photos)
+
+```{r}
+png(filename="~/GitHub/MinimalCell/figures/Fig4.no.photos_withRaw.png",
+    width = 1200, height = 1200, res = 96*2)
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+################################################################################
+# initiate plot with points for syn3B ancestor (minimal)
+plot(jitter(rep(1, length(sample(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)[1:4])), amount = 0.5), 
+     sample(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)[1:4], ylim = c(0, 1.15), xlim = c(0, 4.55), 
+     pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 1.3, yaxt = "n", 
+      xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
+
+# add points for for syn 1.0 ancestor (non-minimal)
+points(jitter(rep(1, length(sample(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)[1:4])), amount = 0.35), 
+       sample(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)[1:4], pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = 1.3)
+
+# add points for for syn 3B evolved (minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Minimal")$mean.diam, pch = 21, bg = "pink", col = "pink", 
+       lwd = 2, cex = 1.3)
+
+# add points for for syn 3B evolved (non-minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Non-minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Non-minimal")$mean.diam, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = 1.3)
+
+
+# Add non-minimal means
+points(size.wt$time.x, size.wt$mean, pch = 21, 
+      bg = "blue", col = "blue", lwd = 2, cex = 2)
+################################################################################
+# Add minimal means
+points(size.min$time.x, size.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = size.wt$time.x, y0 = size.wt$mean, 
+       y1 = size.wt$mean + size.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = size.wt$time.x, y0 = size.wt$mean, 
+       y1 = size.wt$mean - size.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = size.min$time.x, y0 = size.min$mean, 
+       y1 = size.min$mean + size.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = size.min$time.x, y0 = size.min$mean, 
+       y1 = size.min$mean - size.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.25", "0.50", "0.75", "1.00"), at = c(0.25, 0.5, 0.75, 1.00))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0.25, 0.5, 0.75, 1.00), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "Evolved"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.5)
+
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(size.wt$time.x[1], size.wt$mean[1], size.wt$time.x[2], 
+         size.wt$mean[2], col = "blue", lwd = 2)
+segments(size.min$time.x[1], size.min$mean[1], size.min$time.x[2], 
+         size.min$mean[2], col = "red", lwd = 2)
+
+# Add strain identifier
+#text(3.9, size.wt$mean[2], labels = "Non-minimal", cex = 1.0)
+#text(3.8, size.min$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos_withRaw.png")
+
+grid.raster(img)
+```
+
+## Create figure (plus photos)
+
+```{r}
+png(filename="~/GitHub/MinimalCell/figures/Fig4_withRaw.png",
+               width = 1200, height = 1200, res = 96*2)
+
+img.plot <- readPNG("~/GitHub/MinimalCell/figures/Fig4.no.photos_withRaw.png")
+img.non.min <- readPNG("~/GitHub/MinimalCell/figures/size.images/nonmin_04_014.png")
+img.min <- readPNG("~/GitHub/MinimalCell/figures/size.images/min_11_010.png")
+
+grid.newpage()
+grid.raster(img.plot, x = 0.4, y = 0.5, width = 0.83)
+grid.raster(img.non.min, x = 0.83, y = 0.66, width = 0.25)
+grid.raster(img.min, x = 0.83, y = 0.395, width = 0.25)
+
+# white box for non-minimal text
+grid.rect(unit(0.625, "npc"), unit(0.71, "npc"),
+          width = unit(0.15, "npc"), height = unit(0.05, "npc"), default.units = "npc",
+          gp=gpar(col = "white"))
+
+# white box for minimal text
+grid.rect(unit(0.625, "npc"), unit(0.42, "npc"),
+          width = unit(0.15, "npc"), height = unit(0.05, "npc"), default.units = "npc",
+          gp=gpar(col = "white"))
+
+# white box for "B"
+#grid.rect(unit(0.73, "npc"), unit(0.755, "npc"),
+#          width = unit(0.05, "npc"), height = unit(0.05, "npc"), default.units = "npc",
+#          gp=gpar(col = "white"))
+
+# white box for "C"
+#grid.rect(unit(0.73, "npc"), unit(0.49, "npc"),
+#          width = unit(0.05, "npc"), height = unit(0.05, "npc"), default.units = "npc",
+#          gp=gpar(col = "white"))
+
+# text for non-minimal
+grid.text("Non-minimal", x = 0.625, y = 0.71, 
+            gp = gpar(fontsize = 12, col = "black"))
+
+# text for minimal
+grid.text("Minimal", x = 0.63, y = 0.42, 
+            gp = gpar(fontsize = 12, col = "black"))
+
+# text for panel A
+grid.text("A", x = 0.2, y = 0.76, 
+            gp = gpar(fontsize = 14, col = "black"))
+
+# text for panel B
+grid.text("B", x = 0.73, y = 0.76, 
+            gp = gpar(fontsize = 14, col = "white"))
+
+# text for panel C
+grid.text("C", x = 0.73, y = 0.49, 
+            gp = gpar(fontsize = 14, col = "white"))
+
+#grid.polyline(x=c(0.865, 0.935),
+#             y=c(0.76, 0.76),
+#             gp=gpar(col= "white", lwd = 1.5))
+
+#grid.text(expression("1" ~ mu~"m"), x = 0.9, y = 0.74, 
+#          gp = gpar(fontsize = 12, col = "white"))
+
+# Panel B scale bar
+grid.polyline(x=c(0.875, 0.945),
+             y=c(0.58, 0.58),
+             gp=gpar(col= "white", lwd = 1.5))
+
+grid.text(expression("1" ~ mu~"m"), x = 0.905, y = 0.56, 
+          gp = gpar(fontsize = 12, col = "white"))
+
+# Panel C scale bar
+grid.polyline(x=c(0.875, 0.945),
+             y=c(0.31, 0.31),
+             gp=gpar(col= "white", lwd = 1.5))
+
+grid.text(expression("1" ~ mu~"m"), x = 0.905, y = 0.29, 
+          gp = gpar(fontsize = 12, col = "white"))
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig4_withRaw.png")
+
+grid.raster(img)
+```
