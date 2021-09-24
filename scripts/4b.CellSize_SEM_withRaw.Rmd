@@ -1,0 +1,571 @@
+---
+title: "Evolution of the minimal cell"
+author: "Roy Moger-Reischer and Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Making Figure 4: changes in cell size
+
+## Clear workspace and set directory
+```{r setup, include=FALSE, echo=FALSE}
+rm(list=ls())
+require("knitr")
+getwd()
+setwd("~/GitHub/MinimalCell")
+getwd()
+```
+
+## Load packages and functions
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+sem <- function(x) sqrt(var(x)/length(x))
+```
+
+# Load and process data
+```{r}
+# Load data
+size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/SEM_Stein_cases.csv")
+
+size.raw <- as_tibble(size.raw)
+colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")
+#colnames(size.raw_no.mutant) <- c("strain", "timepoint", "sub.strain", "diameter")
+size.raw<-mutate(size.raw, volume = 4/3*pi*(diameter/2)^3)
+size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter), mean.v=mean(volume),sem.v=sem(volume))
+size$strain <- as.factor(size$strain)
+size$timepoint <- as.factor(size$timepoint)
+
+fsize<-size %>% filter(timepoint!="Evolved")
+esize<-size %>% filter(timepoint!="Mutant")
+
+# Add x-values for plotting
+time.x <- c(1,3,1,3)
+fsize <- data.frame(fsize, time.x)
+esize <- data.frame(esize, time.x)
+```
+
+## Tests significance
+```{r}
+# Subset data
+size.reps <- size.raw %>% 
+   dplyr::select(strain, timepoint, sub.strain, diameter, volume) %>%
+   group_by(timepoint, strain, sub.strain) %>%
+   summarize(mean.diam = mean(diameter),mean.vol=mean(volume)) 
+
+s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
+B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
+
+##Statistical tests using cell diameter
+
+equal.var.anc <- var.test(s1_anc.reps$diameter, B_anc.reps$diameter)
+anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter, alternative = "two.sided", var.equal = TRUE, mu = 0)
+
+# Difference in cell size between wt and minimal at ancestor timepoint?
+# Test for equal variance: p-value = 0.2658 --> homogeneous variance
+# Results: t = 7.2946, df = 61, p-value = 2.322EE-11
+#Non-minimal mean diameter: 439 nm. Minimal mean diameter: 305 nm
+
+s1_ftsZ.reps <- filter(size.raw, sub.strain == "s1_ftsZ")
+B_ftsZ.reps <- filter(size.raw, sub.strain == "B_ftsZ")
+
+equal.var.s1.ftsZ <- var.test(s1_anc.reps$diameter, s1_ftsZ.reps$diameter)
+s1.ftsZ.t.test <- t.test(x = s1_anc.reps$diameter, s1_ftsZ.reps$diameter, alternative = "two.sided", var.equal = TRUE, mu = 0)
+
+# Difference in cell size between wt and wt ftsZ mutant?
+# Test for equal variance: P = p-value = 0.2274 --> homogeneous variance
+# Results: t = -5.5553, df = 118, p-value = 1.741EE-07
+#Non-minimal mean diameter: 439 nm. Non-minimal ftsZ mutant mean diameter: 550 nm
+
+equal.var.B.ftsZ <- var.test(B_anc.reps$diameter, B_ftsZ.reps$diameter)
+B.ftsZ.t.test <- t.test(x = B_anc.reps$diameter, B_ftsZ.reps$diameter, alternative = "two.sided", var.equal = FALSE, mu = 0)
+
+# Difference in cell size between minimal and minimal ftsZ mutant?
+# Test for equal variance: p-value = 0.01685 --> non-homogeneous variance
+# Results: t = 3.2865, df = 122.14, p-value = 0.001325
+#minimal mean diameter: 305 nm. Minimal ftsZ mutant mean diameter: 247 nm
+
+evo.reps <- filter(size.reps, timepoint == "Evolved") %>%
+   group_by(strain, sub.strain)
+
+equal.var.evo <- var.test(evo.reps$mean.diam[1:4], evo.reps$mean.diam[5:8])
+
+evo.t.test <- t.test(evo.reps$mean.diam ~ evo.reps$strain, var.equal = T)
+# Difference in cell size between wt and minimal at evolved timepoint?
+# Test for equal variance: p-value = 0.05954 --> homogeneous variance
+# Results: t = -3.1494, df = 6, p-value = 0.01983
+# mean of minimal: 375 nm. Mean of wt: 792 nm
+
+
+# Difference in cell size between Non-minimal ancestor and Non-minimal evolved lines?
+s1_delta.t.test <- t.test(x = evo.reps$mean.diam[5:8], mu = size.reps$mean.diam[2], alternative = 'two.sided')
+
+# Answer = Yes, marginally: t = 2.7619, df = 3, p-value = 0.07004
+# Non-minimal ancestor is 439 nm, Non-minimal evolved are 792 nm on average
+
+
+# Difference in cell size between minimal ancestor and minimal evolved lines?
+B_delta.t.test <- t.test(x = evo.reps$mean.diam[1:4], mu = size.reps$mean.diam[1], alternative = 't')
+
+# Answer = No: t = 2.0305, df = 3, p-value = 0.1353
+# Minimal ancestor is 305 nm, minimal evolved is 375 nm on average)
+
+
+
+##Statistical tests using cell volume
+
+equal.var.anc.v <- var.test(s1_anc.reps$volume, B_anc.reps$volume)
+anc.t.test.v <- t.test(x = s1_anc.reps$volume, B_anc.reps$volume, alternative = "two.sided", var.equal = F, mu = 0)
+
+# Difference in cell vol between wt and minimal at ancestor timepoint?
+# Test for equal variance: p-value = 0.2.974EE-05 --> heterogeneous variance
+# Results: t = 5.8935, df = 95.517, p-value = 5.667EE-08
+
+equal.var.s1.ftsZ.v <- var.test(s1_anc.reps$volume, s1_ftsZ.reps$volume)
+s1.ftsZ.t.test.v <- t.test(x = s1_anc.reps$volume, s1_ftsZ.reps$volume, alternative = "two.sided", var.equal = F, mu = 0)
+
+# Difference in cell vol between wt and wt ftsZ mutant?
+# Test for equal variance: p-value = 7.137EE-06 --> heterogeneous variance
+# Results: t = -5.0275, df = 87.188, p-value = 2.628EE-06
+
+equal.var.B.ftsZ.v <- var.test(B_anc.reps$volume, B_ftsZ.reps$volume)
+B.ftsZ.t.test.v <- t.test(x = B_anc.reps$volume, B_ftsZ.reps$volume, alternative = "two.sided", var.equal = FALSE, mu = 0)
+
+# Difference in cell vol between minimal and minimal ftsZ mutant?
+# Test for equal variance: p-value = 4.175EE-07 --> non-homogeneous variance
+# Results: t = 3.7794, df = 114.16, p-value = 0.0002516
+
+equal.var.evo.v <- var.test(evo.reps$mean.vol[1:4], evo.reps$mean.vol[5:8])
+evo.t.test.v <- t.test(evo.reps$mean.vol ~ evo.reps$strain, var.equal = F)
+# Difference in cell vol between wt and minimal at evolved timepoint?
+# Test for equal variance: p-value = 0.000302 --> heterogeneous variance
+# Results: t = -1.6959, df = 3.012, p-value = 0.1881
+
+
+# Difference in cell vol between Non-minimal ancestor and Non-minimal evolved lines?
+s1_delta.t.test.v <- t.test(x = evo.reps$mean.vol[5:8], mu = size.reps$mean.vol[2], alternative = 'two.sided')
+
+# Answer = Yes, marginally: t = 1.6478, df = 3, p-value = 0.1979
+
+# Difference in cell size between minimal ancestor and minimal evolved lines?
+B_delta.t.test.v <- t.test(x = evo.reps$mean.vol[1:4], mu = size.reps$mean.vol[1], alternative = 't')
+
+# Answer = No: t = 1.4667, df = 3, p-value = 0.2387
+
+```
+
+## Summarize data for plotting
+
+```{r}
+#Generate matrices with rows/cols for ancestor and evolved
+esize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v, time.x)
+fsize.wt  <- filter(esize, strain == "Non-minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+
+esize.min  <- filter(esize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+fsize.min  <- filter(fsize, strain== "Minimal") %>%
+  dplyr::select(timepoint, mean, sem, mean.v,sem.v,time.x)
+
+
+#Supply correct values to matrices for ancestor and evolved
+esize.wt$mean[2] <- mean(evo.reps$mean.diam[5:8])
+esize.wt$sem[2] <- sem(evo.reps$mean.diam[5:8])
+esize.wt$mean.v[2]<-mean(evo.reps$mean.vol[5:8])
+esize.wt$sem.v[2]<-sem(evo.reps$mean.vol[5:8])
+
+esize.min$mean[2] <- mean(evo.reps$mean.diam[1:4])
+esize.min$sem[2] <- sem(evo.reps$mean.diam[1:4])
+esize.min$mean.v[2]<-mean(evo.reps$mean.vol[1:4])
+esize.min$sem.v[2]<-sem(evo.reps$mean.vol[1:4])
+
+#Generate matrices with rows/cols for ancestor and ftsZ mutant
+size.wt.ftsZ <- esize.wt
+size.wt.ftsZ$timepoint <- as.character(size.wt.ftsZ$timepoint)
+size.wt.ftsZ$timepoint[2] <- "ftsZ E315*"
+size.wt.ftsZ$timepoint <- factor(size.wt.ftsZ$timepoint)
+
+size.min.ftsZ <- esize.min
+size.min.ftsZ$timepoint <- as.character(size.min.ftsZ$timepoint)
+size.min.ftsZ$timepoint[2] <- "ftsZ E315*"
+size.min.ftsZ$timepoint <- factor(size.min.ftsZ$timepoint)
+
+#Supply correct values to matrices for ancestor and ftsZ mutant
+size.wt.ftsZ$mean[2] <- mean(s1_ftsZ.reps$diameter)
+size.wt.ftsZ$sem[2] <- sem(s1_ftsZ.reps$diameter)
+size.wt.ftsZ$mean.v[2] <- mean(s1_ftsZ.reps$volume)
+size.wt.ftsZ$sem.v[2] <- sem(s1_ftsZ.reps$volume)
+
+size.min.ftsZ$mean[2] <- mean(B_ftsZ.reps$diameter)
+size.min.ftsZ$sem[2] <- sem(B_ftsZ.reps$diameter)
+size.min.ftsZ$mean.v[2] <- mean(B_ftsZ.reps$volume)
+size.min.ftsZ$sem.v[2] <- sem(B_ftsZ.reps$volume)
+```
+
+# Initiate figure
+```{r}
+# Make figure for ancestor and evolved
+png(filename="~/GitHub/MinimalCell/figures/FigS3_withRaw.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+
+# initiate plot with points for syn3B ancestor (minimal)
+plot(jitter(rep(1, length(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)), amount = 0.5), 
+     filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter, ylim = c(0, 1.15), xlim = c(0, 4.55), 
+     pch = 21, bg = "pink", col = "pink", lwd = 2, cex = .3, yaxt = "n", 
+      xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
+
+# add points for for syn 1.0 ancestor (non-minimal)
+points(jitter(rep(1, length(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)), amount = 0.35), 
+       filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = .3)
+
+# add points for for syn 3B evolved (minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Minimal")$mean.diam, pch = 21, bg = "pink", col = "pink", 
+       lwd = 2, cex = .3)
+
+# add points for for syn 3B evolved (non-minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Non-minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Non-minimal")$mean.diam, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = .3)
+
+
+# Add non-minimal means
+points(esize.wt$time.x, esize.wt$mean, pch = 21, 
+      bg = "blue", col = "blue", lwd = 2, cex = 2)
+
+# Add minimal means
+points(esize.min$time.x, esize.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean + esize.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean - esize.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean + esize.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean - esize.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.00", "0.25", "0.50", "0.75", "1.00"), at = c(0, 0.25, 0.5, 0.75, 1.00))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 0.25, 0.5, 0.75, 1.00), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "Evolved"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(esize.wt$time.x[1], esize.wt$mean[1], esize.wt$time.x[2], 
+         esize.wt$mean[2], col = "blue", lwd = 2)
+segments(esize.min$time.x[1], esize.min$mean[1], esize.min$time.x[2], 
+         esize.min$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+#mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
+#mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
+
+# Add strain identifier
+text(3.9, esize.wt$mean[2], labels = "Non-minimal", cex = 1.0)
+text(3.8, esize.min$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS3_withRaw.png")
+
+grid.raster(img)
+```
+
+```{r}
+# Make figure for ancestor and evolved
+png(filename="~/GitHub/MinimalCell/figures/FigS3_withRaw_randomresample.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+
+# initiate plot with points for syn3B ancestor (minimal)
+plot(jitter(rep(1, length(sample(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)[1:4])), amount = 0.5), 
+     sample(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)[1:4], ylim = c(0, 1.15), xlim = c(0, 4.55), 
+     pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 1.3, yaxt = "n", 
+      xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
+
+# add points for for syn 1.0 ancestor (non-minimal)
+points(jitter(rep(1, length(sample(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)[1:4])), amount = 0.35), 
+       sample(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)[1:4], pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = 1.3)
+
+# add points for for syn 3B evolved (minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Minimal")$mean.diam, pch = 21, bg = "pink", col = "pink", 
+       lwd = 2, cex = 1.3)
+
+# add points for for syn 3B evolved (non-minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Non-minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Non-minimal")$mean.diam, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = 1.3)
+
+
+# Add non-minimal means
+points(esize.wt$time.x, esize.wt$mean, pch = 21, 
+      bg = "blue", col = "blue", lwd = 2, cex = 2)
+
+# Add minimal means
+points(esize.min$time.x, esize.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean + esize.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean - esize.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean + esize.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean - esize.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.00", "0.25", "0.50", "0.75", "1.00"), at = c(0, 0.25, 0.5, 0.75, 1.00))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 0.25, 0.5, 0.75, 1.00), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "Evolved"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(esize.wt$time.x[1], esize.wt$mean[1], esize.wt$time.x[2], 
+         esize.wt$mean[2], col = "blue", lwd = 2)
+segments(esize.min$time.x[1], esize.min$mean[1], esize.min$time.x[2], 
+         esize.min$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+#mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
+#mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
+
+# Add strain identifier
+text(3.9, esize.wt$mean[2], labels = "Non-minimal", cex = 1.0)
+text(3.8, esize.min$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS3_withRaw_randomresample.png")
+
+grid.raster(img)
+```
+
+# Initiate figure
+```{r}
+# Make figure for ancestor and evolved
+png(filename="~/GitHub/MinimalCell/figures/FigS3_withRaw_rightside.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+
+# initiate plot with points for syn1.0 evolved ancestor (non-minimal)
+plot(jitter(rep(3, length(filter(evo.reps,strain=="Non-minimal")$mean.diam)), amount = 0.5), 
+     filter(evo.reps,strain=="Non-minimal")$mean.diam, ylim = c(0, 1.15), xlim = c(0, 4.55), 
+     pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 1.3, yaxt = "n", 
+      xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
+
+# add points for for syn 3B evolved (minimal)
+points(jitter(rep(3, length(filter(evo.reps,strain=="Minimal")$mean.diam)), amount = 0.25), 
+       filter(evo.reps,strain=="Minimal")$mean.diam, pch = 21, bg = "pink", col = "pink", 
+       lwd = 2, cex = 1.3)
+
+
+# Add non-minimal points
+points(esize.wt$time.x, esize.wt$mean, pch = 21, 
+      bg = "blue", col = "blue", lwd = 2, cex = 2)
+
+# Add minimal points
+points(esize.min$time.x, esize.min$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean + esize.wt$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.wt$time.x, y0 = esize.wt$mean, 
+       y1 = esize.wt$mean - esize.wt$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean + esize.min$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = esize.min$time.x, y0 = esize.min$mean, 
+       y1 = esize.min$mean - esize.min$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.00", "0.25", "0.50", "0.75", "1.00"), at = c(0, 0.25, 0.5, 0.75, 1.00))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 0.25, 0.5, 0.75, 1.00), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "Evolved"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(esize.wt$time.x[1], esize.wt$mean[1], esize.wt$time.x[2], 
+         esize.wt$mean[2], col = "blue", lwd = 2)
+segments(esize.min$time.x[1], esize.min$mean[1], esize.min$time.x[2], 
+         esize.min$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+#mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
+#mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
+
+# Add strain identifier
+text(3.9, esize.wt$mean[2], labels = "Non-minimal", cex = 1.0)
+text(3.8, esize.min$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS3_withRaw_rightside.png")
+
+grid.raster(img)
+```
+
+```{r}
+# Make figure for ftsZ E315*
+
+png(filename="~/GitHub/MinimalCell/figures/FigS4_withRaw.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+# initiate plot with points for syn3B ancestor (minimal)
+plot(jitter(rep(1, length(filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter)), amount = 0.5), 
+     filter(size.raw,timepoint=="Ancestor" & strain=="Minimal")$diameter, ylim = c(0, 1), xlim = c(0, 4.55), 
+     pch = 21, bg = "pink", col = "pink", lwd = 2, cex = .3, yaxt = "n", 
+      xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
+
+# add points for for syn 1.0 ancestor (non-minimal)
+points(jitter(rep(1, length(filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter)), amount = 0.35), 
+       filter(size.raw,timepoint=="Ancestor" & strain=="Non-minimal")$diameter, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = .3)
+
+# add points for for syn 3B ftsZ (minimal)
+points(jitter(rep(3, length(B_ftsZ.reps$diameter)), amount = 0.25), 
+       B_ftsZ.reps$diameter, pch = 21, bg = "pink", col = "pink", 
+       lwd = 2, cex = .3)
+
+# add points for for syn 3B ftsZ (non-minimal)
+points(jitter(rep(3, length(s1_ftsZ.reps$diameter)), amount = 0.25), 
+       s1_ftsZ.reps$diameter, pch = 21, bg = "lightblue", col = "lightblue", 
+       lwd = 2, cex = .3)
+
+# Add non-minimal means
+points(esize.wt$time.x, size.wt.ftsZ$mean, pch = 21, 
+      bg = "blue", col = "blue", lwd = 2, cex = 2)
+
+# Add minimal means
+points(size.min.ftsZ$time.x, size.min.ftsZ$mean, pch = 21, 
+      bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add error bars
+arrows(x0 = size.wt.ftsZ$time.x, y0 = size.wt.ftsZ$mean, 
+       y1 = size.wt.ftsZ$mean + size.wt.ftsZ$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = size.wt.ftsZ$time.x, y0 = size.wt.ftsZ$mean, 
+       y1 = size.wt.ftsZ$mean - size.wt.ftsZ$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "blue")
+arrows(x0 = size.min.ftsZ$time.x, y0 = size.min.ftsZ$mean, 
+       y1 = size.min.ftsZ$mean + size.min.ftsZ$sem, 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+arrows(x0 = size.min.ftsZ$time.x, y0 = size.min.ftsZ$mean, 
+       y1 = size.min.ftsZ$mean - size.min.ftsZ$sem, 
+       angle = 90, length=0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.00", "0.25", "0.50", "0.75","1.00"), at = c(0, 0.25, 0.5, 0.75,1))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 0.2, 0.4, 0.6), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "ftsZ E315*"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Timepoint'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.45)
+
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(size.wt.ftsZ$time.x[1], size.wt.ftsZ$mean[1], size.wt.ftsZ$time.x[2], 
+         size.wt.ftsZ$mean[2], col = "blue", lwd = 2)
+segments(size.min.ftsZ$time.x[1], size.min.ftsZ$mean[1], size.min.ftsZ$time.x[2], 
+         size.min.ftsZ$mean[2], col = "red", lwd = 2)
+
+# Add P-values
+#mtext(expression("Timepoint x Strain:"), line = -2.5, cex = 0.8, at = 0.9)
+#mtext(expression(~italic("P")~"< 0.0001"), line = -3.5, cex = 0.8, at = 0.9)
+
+# Add strain identifier
+text(3.9, size.wt.ftsZ$mean[2], labels = "Non-minimal", cex = 1.0)
+text(3.8, size.min.ftsZ$mean[2], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS4_withRaw.png")
+
+grid.raster(img)
+```
