@@ -119,7 +119,7 @@ pp.pprint(mm1v);pp.pprint(mm3v);pp.pprint(mm4v);pp.pprint(mm6v)
 #%%
 
 #%%
-#values for N and S were calculated using gdtools COUNT -b. This is NOT the correct value because i) mycoplasma uses a modified codon table wherein UGA codes for Trp, not STOP ii) we can incorporate data from the mutation spectrum to improve our predictions of syn and nonsyn target sizes---see Yang 2006 book, pg 51
+#values for N and S were calculated using gdtools COUNT -b. This is a perfectly accurate value because i) mycoplasma uses a modified codon table wherein UGA codes for Trp, not STOP ii) we can incorporate data from the mutation spectrum to improve our predictions of syn and nonsyn target sizes---see Yang 2006 book, pg 51
 mm9 = (1081335,287360,11,3)
 mm10 = (1081335,287360,10,1)#the true value is 0. I've added 1 dummy synonymous difference so that I don't divide by 0
 mm11 = (1081335,287360,13,2)
