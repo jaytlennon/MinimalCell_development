@@ -135,7 +135,7 @@ ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
 
 
-########ROY: delete below if code is "bad"
+########
 
 
 # Make table for contingency analyses
@@ -465,4 +465,16 @@ n63B<-sum(MA3B$in_CDS)+sum(MA3B$not_in_CDS)
 CDSprops1 <- prop.test(x = x63B, n = n63B, p = (479721/543379), alternative = 'two.sided');CDSprops1
 #sample prop = 0.856
 #P 0.069. There is a marginally significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86%, compared to expected 88%
+
+#########################################################################################################################
+#########################################################################################################################
+#Part 4: Address questions of R3
+x7s1e<-6;n7s1tot<-14
+x7s1emax<-493;n7s1totmax<-901
+twoprop_essentialins1<-prop.test(x=c(x7s1e,x7s1emax),n=c(14,901),alternative = 'two.sided')
+#p=0.5393. No bias.
+
+R3_mutn_numbers<-read.csv("~/GitHub/MinimalCell/datafiles/R3_mutation.numbers.csv")
+is_there_bias<-t.test(x=R3_mutn_numbers$essential,y=R3_mutn_numbers$nonessential.corrected,alternative='two.sided',mu=0,paired=TRUE)
+is_there_bias
 ```

@@ -1,0 +1,9 @@
+ID,Strain,Genomepartition,dNdS_gdtools,
+mm1,Wildtype,nonessential,1.290020216,
+mm3,Wildtype,nonessential,0.301001223,
+mm4,Wildtype,nonessential,0.451504172,
+mm6,Wildtype,nonessential,0.774010643,
+mm1,Wildtype,essential,0.708653451,
+mm3,Wildtype,essential,1.062982798,
+mm4,Wildtype,essential,0.708653451,
+mm6,Wildtype,essential,2.125970218,0.35439097
