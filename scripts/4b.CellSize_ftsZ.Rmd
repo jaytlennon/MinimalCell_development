@@ -1,0 +1,219 @@
+---
+title: "Evolution of the minimal cell"
+author: "Roy Moger-Reischer and Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Making Figure 4: changes in cell size
+
+## Clear workspace and set directory
+```{r setup, include=FALSE, echo=FALSE}
+rm(list=ls())
+require("knitr")
+getwd()
+setwd("~/GitHub/MinimalCell")
+getwd()
+```
+
+## Load packages and functions
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+sem <- function(x) sqrt(var(x)/length(x))
+```
+
+# Load and process data
+```{r}
+# Load data
+size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/SEM_Stein_cases.csv")
+
+size.raw <- as_tibble(size.raw)
+colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")
+size.raw<-mutate(size.raw, volume = 4/3*pi*(diameter/2)^3)
+size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter), mean.v=mean(volume),sem.v=sem(volume))
+size$strain <- as.factor(size$strain)
+size$timepoint <- as.factor(size$timepoint)
+
+fsize<-size %>% filter(timepoint!="Evolved")
+#esize<-size %>% filter(timepoint!="Mutant")
+
+# Add x-values for plotting
+time.x <- c(1,3,1,3)
+fsize <- data.frame(fsize, time.x)
+#esize <- data.frame(esize, time.x)
+```
+
+## Statistical tests
+```{r}
+# Subset data
+size.reps <- size.raw %>% 
+   dplyr::select(strain, timepoint, sub.strain, diameter, volume) %>%
+   group_by(timepoint, strain, sub.strain) %>%
+   summarize(mean.diam = mean(diameter),mean.vol=mean(volume)) 
+
+s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
+B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
+s1_ftsZ.reps <- filter(size.raw, sub.strain == "s1_ftsZ")
+B_ftsZ.reps <- filter(size.raw, sub.strain == "B_ftsZ")
+
+# Cell diameter
+
+# 1. how is non-minimal strain affected by ftsZ mutation?
+
+equal.var.s1.ftsZ <- var.test(s1_anc.reps$diameter, s1_ftsZ.reps$diameter)
+# Test for equal variance: p-value = 0.2274 --> homogeneous variance
+s1.ftsZ.t.test <- t.test(x = s1_anc.reps$diameter, s1_ftsZ.reps$diameter, 
+                  alternative = "two.sided", var.equal = TRUE, mu = 0)
+# Results: t = -5.5553, df = 118, p-value = 1.741EE-07
+# non-minimal mean diameter: 439 nm; non-minimal ftsZ mutant mean diameter: 550 nm
+# Mutation increased cell size by 25% or 1.25-fold
+
+# 2. how is minimal strain affected by ftsZ mutation?
+equal.var.B.ftsZ <- var.test(B_anc.reps$diameter, B_ftsZ.reps$diameter)
+# Test for equal variance: p-value = 0.01685 --> non-homogeneous variance
+B.ftsZ.t.test <- t.test(x = B_anc.reps$diameter, B_ftsZ.reps$diameter, 
+                alternative = "two.sided", var.equal = FALSE, mu = 0)
+# Results: t = 3.2865, df = 122.14, p-value = 0.001325
+# minimal mean diameter: 305 nm. Minimal ftsZ mutant mean diameter: 246 nm
+# Mutation decreased cell size by 19% or 0.8-fold
+
+
+# Cell volume 
+
+# 1. how is non-minimal strain affected by ftsZ mutation?
+
+equal.var.s1.ftsZ.v <- var.test(s1_anc.reps$volume, s1_ftsZ.reps$volume)
+# Test for equal variance: p-value = 7.137EE-06 --> heterogeneous variance
+s1.ftsZ.t.test.v <- t.test(x = s1_anc.reps$volume, s1_ftsZ.reps$volume, 
+                           alternative = "two.sided", var.equal = F, mu = 0)
+# Results: t = -5.0275, df = 87.188, p-value = 2.628e-06
+# non-minimal volume: 0.052 um3; non-minimal ftsZ mutant volume:  0.099 um3
+# Mutation increased cell size by 90% or 1.9-fold
+
+# 2. how is non-minimal strain affected by ftsZ mutation?
+equal.var.B.ftsZ.v <- var.test(B_anc.reps$volume, B_ftsZ.reps$volume)
+# Test for equal variance: p-value = 4.175e-07 --> heterogeneous variance
+B.ftsZ.t.test.v <- t.test(x = B_anc.reps$volume, B_ftsZ.reps$volume, 
+            alternative = "two.sided", var.equal = FALSE, mu = 0)
+#Results: t = 3.7794, df = 114.16, p-value = 0.0002516
+# minimal volume: 0.0213 um3; minimal ftsZ mutant volume: 0.0106 um3
+# Mutation decreased cell size by 18% or 0.5-fold
+```
+
+## Resample raw data for visualization in figure
+```{r}
+
+# randomly sample from minimal ancestor
+min.anc.rand.all <- size.raw %>%
+  filter(strain == "Minimal" & timepoint == "Ancestor")
+set.seed(2)
+min.anc.rand <- sample(min.anc.rand.all$diameter, size = 50)
+
+# randomly sample from non-minimal ancestor
+nmin.anc.rand.all <- size.raw %>%
+  filter(strain == "Non-minimal" & timepoint == "Ancestor")
+set.seed(2)
+nmin.anc.rand <- sample(nmin.anc.rand.all$diameter, size = 50)
+
+# randomly sample from minimal ftsZ mutant
+set.seed(2)
+min.ftsZ.rand <- sample(B_ftsZ.reps$diameter, size = 50)
+
+# randomly sample from non-minimal ftsZ mutant
+set.seed(2)
+nmin.ftsZ.rand <- sample(s1_ftsZ.reps$diameter, size = 50)
+```
+
+
+# Initiate figure
+
+```{r}
+## Create main plot
+png(filename="~/GitHub/MinimalCell/figures/FigExt4.png",
+    width = 1200, height = 1200, res = 96*2)
+
+plot.new()
+par(mar = c(7, 7, 5, 7))
+
+# Add non-minimal ancestor: resampled raw points 
+
+plot(jitter(rep(1,length(nmin.anc.rand)), amount = 0.5), nmin.anc.rand, xlim = c(0.25, 4.55),
+     ylim = c(-0.05, 1), type = "p", pch = 21, bg = "lightblue", 
+     col = "lightblue", cex = 0.75, ylab = "", xlab = "", 
+     cex.lab = 1.5, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
+box(lwd = 2)
+
+# Add minimal ancestor: resmapled points
+points(jitter(rep(1,length(min.anc.rand)), amount = 0.5), min.anc.rand,
+       pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+# Add non-minimal evolved: resmapled points
+points(jitter(rep(3,length(nmin.ftsZ.rand)), amount = 0.25), nmin.ftsZ.rand,
+       pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+
+# Add minimal evolved: resmapled points
+points(jitter(rep(3,length(min.ftsZ.rand)), amount = 0.25), min.ftsZ.rand,
+       pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+# Add error bars
+
+  # Non-minimal
+arrows(x0 = c(1,3), y0 = size$mean[c(4,6)], 
+       y1 = size$mean[c(4,6)] + size$sem[c(4,6)], 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+
+arrows(x0 = c(1,3), y0 = size$mean[c(4,6)], 
+       y1 = size$mean[c(4,6)] - size$sem[c(4,6)], 
+       angle = 90, length = 0.1, lwd = 2, col = "blue")
+
+  # Minimal
+arrows(x0 = c(1,3), y0 = size$mean[c(1,3)], 
+       y1 = size$mean[c(1,3)] + size$sem[c(1,3)], 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+
+arrows(x0 = c(1,3), y0 = size$mean[c(1,3)], 
+       y1 = size$mean[c(1,3)] - size$sem[c(1,3)], 
+       angle = 90, length = 0.1, lwd = 2, col = "red")
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.0", "0.5", "1.0"), at = c(0, 0.5, 1))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0, 0.5, 1), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("Ancestor", "ftsZ E315*"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Strain'), side = 1,
+      outer = TRUE, cex = 1.5, line = -3.5, adj = 0.5)
+mtext(expression(paste("Cell diameter (",mu, "m)")), side = 2, 
+      outer = TRUE, cex = 1.5, line = -3, adj = 0.55)
+
+# Add line segments
+segments(1, size$mean[4], 3, size$mean[6], col = "blue", lwd = 2)
+segments(1, size$mean[1], 3, size$mean[3], col = "red", lwd = 2)
+
+
+# Add means
+points(c(1,3), size$mean[c(4,6)], pch = 22, bg = "blue", col = "blue", lwd = 2, cex = 2)
+points(c(1,3), size$mean[c(1,3)], pch = 22, bg = "red", col = "red", lwd = 2, cex = 2)
+
+# Add strain identifier
+text(3.9, size$mean[6], labels = "Non-minimal", cex = 1.0)
+text(3.9, size$mean[3], labels = "Minimal", cex = 1.0)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigExt4.png")
+
+grid.raster(img)
+```
