@@ -133,6 +133,7 @@ ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f", prop))
 order.2 <- c(2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11) 
 ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
+<<<<<<< HEAD
 
 
 ########
@@ -172,7 +173,10 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # 10 C:G to G:C non-minimal  6.90461823 47.673752850 5.033862e-12 1.510159e-11
 # 11 C:G to T:A non-minimal -9.47528700 89.781063769 2.660284e-21 1.596170e-20
 # 12 C:G to A:T non-minimal  3.68512950 13.580179403 2.285864e-04 0.00034
+=======
+>>>>>>> 7722b326854bd74c40a493cbb80654c47a69da22
 ```
+
 
 # Make Figure 1
 
@@ -181,7 +185,7 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 #font_import()
 #fonts()
 
-png(filename="~/GitHub/MinimalCell/figures/Fig1b.png",
+png(filename="~/GitHub/MinimalCell/figures/Fig1.png",
     width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
@@ -362,8 +366,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-#img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
-img <- readPNG("~/GitHub/MinimalCell/figures/Fig1b.png")
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig1.png")
 grid.raster(img)
 ```
 
