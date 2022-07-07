@@ -8,7 +8,7 @@ output: pdf_document
 geometry: margin=2.54cm
 ---
 
-## Making Figure S1: ratio of nonsynoymous to synonmyous mutations (dN/dS)
+## Ratio of nonsynoymous to synonmyous mutations (dN/dS)
 
 ## Clear workspace and set directory
 ```{r setup}
@@ -60,23 +60,34 @@ UL.95.dnds.min <- UL.95(dnds.min$dnds)
 mean.dnds.min<-mean(dnds.min$dnds)
 sem.dnds.min<-sem(dnds.min$dnds)
 
-#Address R3 concerns
-dndsR3<-read.csv("~/GitHub/MinimalCell/datafiles/DNDS_freqs_COPY.FOR.R3.csv")
+# Non-minimal data: essential vs. non-essential 
+dndds.nonmin <- read.csv("~/GitHub/MinimalCell/datafiles/non-minimal.DNDS_freqs.csv")
 ```
 
-## t-test
+## Statistics
 ```{r}
-# Test for equal variance: P = 0.283 --> homogeneous variance
+
+# Minimal vs. non-minimal
+
 equal.var <- var.test(dnds.wt$dnds, dnds.min$dnds)
+# Test for equal variance : P = 0.283 --> homogeneous variance
 
-# Test for differences between strains: P = 0.282 --> no difference
 dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative = 'two.sided')
+# Results: t = -1.1822, df = 6, p-value = 0.2818 --> no difference
 
-# Test for differences in dN/dS between the essential and nonessential partitions of the nonminimal cell's genome
-dndsR3.ttest <- t.test(x=dndsR3$dNdS_gdtools[1:4],y=dndsR3$dNdS_gdtools[5:8],mu=0,alternative="two.sided",paired=TRUE)
 
-dndsR3.ttest
+# Non-minimal: essential vs. non-essential
+dnds.nomin.ttest <- t.test(x = dndds.nonmin$dNdS_gdtools[1:4], y = dndds.nonmin$dNdS_gdtools[5:8], 
+          mu = 0, alternative ="two.sided", paired = TRUE)
+# Results: t = -1.0928, df = 3, p-value = 0.3544 --> no difference
 
+# Non-minimal: non-essential dN/dS different from 1?
+dnds.nomin.nonessential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[1:4], mu = 1, alternative ="two.sided")
+# Results: t = -1.3522, df = 3, p-value = 0.2692. Not different from neutral
+
+# Non-minimal: essential dN/dS different from 1?
+dnds.nomin.essential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[5:8], mu = 1, alternative ="two.sided")
+# Results: t = 0.45194, df = 3, p-value = 0.682. Not different from neutral
 ```
 
 # Initiate figure
