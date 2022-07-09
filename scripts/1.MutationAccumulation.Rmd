@@ -9,7 +9,7 @@ geometry: margin=2.54cm
 ---
 
 ## Clear workspace and set directory
-```{r setup, include=FALSE, echo=FALSE}
+```{r setup}
 rm(list=ls())
 getwd()
 setwd("~/GitHub/MinimalCell") 
@@ -379,14 +379,24 @@ levels(MAALL$strain)[levels(MAALL$strain)=="MA_s1"] <- "Non-minimal"
 levels(MAALL$strain)[levels(MAALL$strain)=="MA_3B"] <- "Minimal"
 MAALL$strain <- factor(MAALL$strain, levels=c("Non-minimal","Minimal"))
 
+#####Description of annotation for all proportion tests:
+#X: This variable name represents X, the count of successes, as defined: https://en.wikipedia.org/wiki/Population_proportion
+#n: This variable name represents N, the number of trials, as defined: https://en.wikipedia.org/wiki/Population_proportion
+#p: In prop.test, p is the null hypothesis proportion. It is P as defined here: https://en.wikipedia.org/wiki/Population_proportion
+#s1: This variable name represents the non-minimal cell, JCVI-syn1.0. (syn --> s, 1.0 --> 1)
+#3B: This variable name represents the minimal cell, JCVI-syn3B. (syn3B --> 3B)
+#Variables are typically named with a prefix, a number representing the ordinal index of the corresponding test, and a suffix
+#For example, x1s1 represents: x (X as defined); 1 (the first proportion test...); s1 (...for JCVI-syn1.0)
+
+
 # Part 1: test for insertion bias or deletion bias, not counting the large deletions >100 bp
-x1s1<-sum(MAs1$'in')+sum(MAs1$SVin)
-n1s1<-sum(MAs1$'in')+sum(MAs1$SVin)+sum(MAs1$del)
+x1s1<-sum(MAs1$'in.')+sum(MAs1$SVin)
+n1s1<-sum(MAs1$'in.')+sum(MAs1$SVin)+sum(MAs1$del)
 indelprops1 <- prop.test(x = x1s1, n = n1s1, alternative = 'two.sided');indelprops1
 #sample prop = 0.215; P-val < 2.2e-16
 
-x13B <- sum(MA3B$'in')+sum(MAs1$SVin)
-n13B<-sum(MA3B$'in')+sum(MAs1$SVin)+sum(MA3B$del)
+x13B <- sum(MA3B$'in.')+sum(MAs1$SVin)
+n13B<-sum(MA3B$'in.')+sum(MAs1$SVin)+sum(MA3B$del)
 indelprop3B<-prop.test(x=x13B,n=n13B,p=0.5,alternative="two.sided"); indelprop3B
 #sample prop = 0.241; P-val = 4.0e-06
 
@@ -443,29 +453,30 @@ twoprop_ATbias_NSE_ung<-prop.test(x=c(x3s1_NSE_ung, x33B_NSE_ung),n=c(n3s1_NSE_u
 #For each strain, look at the total number of CDS SNMs and non-CDS SNMs. Do they occur in proportions significantly different from the null expectation?
 x6s1<-sum(MAs1$in_CDS)
 n6s1<-sum(MAs1$in_CDS)+sum(MAs1$not_in_CDS)
+#Define p empirically: Total length of CDS: 926310 bp. Total length of genome (CDS + non-CDS): 1078809 bp. Hence, p = (926310/1078809)
 CDSprops1 <- prop.test(x = x6s1, n = n6s1, p = (926310/1078809), alternative = 'two.sided');CDSprops1
 # Sample prop: 0.860
 # P = 0.876. There is not significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86% compared to expected 86%
 
 x63B<-sum(MA3B$in_CDS)
 n63B<-sum(MA3B$in_CDS)+sum(MA3B$not_in_CDS)
+#Define p empirically: Total length of CDS: 479721 bp. Total length of genome (CDS + non-CDS): 543379 bp. Hence, p = (479721/543379)
 CDSprops1 <- prop.test(x = x63B, n = n63B, p = (479721/543379), alternative = 'two.sided');CDSprops1
 #sample prop = 0.856
 #P 0.069. There is a marginally significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86%, compared to expected 88%
 
 # Part 4: Comparison of essential and non-essential genes in the non-minimal cell
 # Genes under putatively positive selection: any bias between non-essential and essential genes
-x7s1e <- 6
-n7s1tot<-14
-x7s1emax <- 493
-n7s1totmax<- 901
+x7s1e <- 6 #From Extended Data Table S2
+n7s1tot<-14#From Extended Data Table S2
+x7s1emax <- 493#Number of genes shared with syn3B
+n7s1totmax<- 901#Total number of genes
 twoprop_essentialins1 <- prop.test(x = c(x7s1e, x7s1emax), n = c(14,901), alternative = 'two.sided')
 # Results: X-squared = 0.37687, df = 1, p-value = 0.5393 --> No bias.
 
 # Differences in the number of mutations falling into non-essential vs. essential categories in non-minimal cell
 nmin.mut.numbers <- read.csv("~/GitHub/MinimalCell/datafiles/nonmin_mutation.numbers.csv", header = TRUE, sep = ",")
-nmin.bias <- t.test(x = nmin.mut.numbers$essential, y = nmin.mut.numbers$nonessential.corrected, 
-                    alternative = 'two.sided', mu = 0, paired = TRUE)
+nmin.bias <- t.test(x = nmin.mut.numbers$essential, y = nmin.mut.numbers$nonessential.corrected, alternative = 'two.sided', mu = 0, paired = TRUE)
 # Results: t = -0.64553, df = 3, p-value = 0.5646 --> no bias
 # 
 ```
