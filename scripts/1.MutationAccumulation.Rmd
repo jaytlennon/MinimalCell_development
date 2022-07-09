@@ -100,10 +100,10 @@ ma.type.p.adj <- p.adjust(ma.type.p, method="BH")
 ma.type.post.hoc <- data.frame(ma.type.z, ma.type.x2, ma.type.p, ma.type.p.adj)
 colnames(ma.type.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
-#       type   strain         z     chi2         p    p.adj
-# 1 insertion  minimal -1.444750 2.087301 0.14852825 0.1721046
-# 2  deletion  minimal -1.365472 1.864515 0.17210460 0.1721046
-# 3       snm  minimal  1.931879 3.732157 0.05337443 0.1601233
+#       type   strain         z       chi2         p      p.adj
+# 1 insertion  minimal    -1.444750 2.087301 0.14852825 0.1721046
+# 2  deletion  minimal    -1.365472 1.864515 0.17210460 0.1721046
+# 3       snm  minimal     1.931879 3.732157 0.05337443 0.1601233
 # 4 insertion non-minimal  1.444750 2.087301 0.14852825 0.1721046
 # 5  deletion non-minimal  1.365472 1.864515 0.17210460 0.1721046
 # 6       snm non-minimal -1.931879 3.732157 0.05337443 0.1601233
@@ -133,14 +133,9 @@ ma.snm <- ma.snm %>% mutate(prop2 = sprintf("%0.2f", prop))
 order.2 <- c(2, 4, 6, 8, 10, 12, 1, 3, 5, 7, 9, 11) 
 ma.snm <- data.frame(ma.snm,order.2)
 ma.snm <- ma.snm[order(ma.snm$order.2),] 
-<<<<<<< HEAD
-
-
-########
 
 
 # Make table for contingency analyses
-#ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = F)#############This code is bad. Produces an incorrect matrix
 ma.snm.mat <- matrix(ma.snm$count, ncol = 2, byrow = T)
 colnames(ma.snm.mat) <- c("non-minimal","minimal")
 rownames(ma.snm.mat) <- c("A:T to C:G","A:T to G:C","A:T to T:A", "C:G to G:C",
@@ -159,13 +154,13 @@ ma.snm.p.adj <- p.adjust(ma.snm.p, method="BH")
 ma.snm.post.hoc <- data.frame(ma.snm.z, ma.snm.x2, ma.snm.p, ma.snm.p.adj)
 colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 
-#         type   strain           z     chi2        p          p.adj
-# 1  A:T to C:G  minimal  0.44851026  0.201161457 6.537850e-01 0.785
-# 2  A:T to G:C  minimal -4.84321140 23.456696673 1.277572e-06 2.555145e-06
-# 3  A:T to T:A  minimal  0.08639216  0.007463605 9.311547e-01 0.931
-# 4  C:G to G:C  minimal -6.90461823 47.673752850 5.033862e-12 1.510159e-11
-# 5  C:G to T:A  minimal  9.47528700 89.781063769 2.660284e-21 1.596170e-20
-# 6  C:G to A:T  minimal -3.68512950 13.580179403 2.285864e-04 0.00034
+#         type   strain           z     chi2          p          p.adj
+# 1  A:T to C:G  minimal   0.44851026  0.201161457 6.537850e-01 0.785
+# 2  A:T to G:C  minimal  -4.84321140 23.456696673 1.277572e-06 2.555145e-06
+# 3  A:T to T:A  minimal   0.08639216  0.007463605 9.311547e-01 0.931
+# 4  C:G to G:C  minimal  -6.90461823 47.673752850 5.033862e-12 1.510159e-11
+# 5  C:G to T:A  minimal   9.47528700 89.781063769 2.660284e-21 1.596170e-20
+# 6  C:G to A:T  minimal  -3.68512950 13.580179403 2.285864e-04 0.00034
 
 # 7  A:T to C:G non-minimal -0.44851026  0.201161457 6.537850e-01 0.785
 # 8  A:T to G:C non-minimal  4.84321140 23.456696673 1.277572e-06 2.555145e-06
@@ -173,8 +168,6 @@ colnames(ma.snm.post.hoc) <- c("type", "strain", "z", "chi2", "p", "p.adj")
 # 10 C:G to G:C non-minimal  6.90461823 47.673752850 5.033862e-12 1.510159e-11
 # 11 C:G to T:A non-minimal -9.47528700 89.781063769 2.660284e-21 1.596170e-20
 # 12 C:G to A:T non-minimal  3.68512950 13.580179403 2.285864e-04 0.00034
-=======
->>>>>>> 7722b326854bd74c40a493cbb80654c47a69da22
 ```
 
 
@@ -371,11 +364,9 @@ grid.raster(img)
 ```
 
 
-
+# Statistical tests to evaluate mutation spectrum
 
 ```{r}
-######Statistical tests to evaluate mutation spectrum
-
 myALL<-read.csv("~/GitHub/MinimalCell/datafiles/MA_summary_for_R.csv")
 my3B<-read.csv("~/GitHub/MinimalCell/datafiles/MA_3B_summary_for_R.csv")
 mys1<-read.csv("~/GitHub/MinimalCell/datafiles/MA_s1_summary_for_R.csv")
@@ -388,9 +379,7 @@ levels(MAALL$strain)[levels(MAALL$strain)=="MA_s1"] <- "Non-minimal"
 levels(MAALL$strain)[levels(MAALL$strain)=="MA_3B"] <- "Minimal"
 MAALL$strain <- factor(MAALL$strain, levels=c("Non-minimal","Minimal"))
 
-
-##############################################################
-####Part 1: test for insertion bias or deletion bias, not counting the large deletions >100 bp
+# Part 1: test for insertion bias or deletion bias, not counting the large deletions >100 bp
 x1s1<-sum(MAs1$'in')+sum(MAs1$SVin)
 n1s1<-sum(MAs1$'in')+sum(MAs1$SVin)+sum(MAs1$del)
 indelprops1 <- prop.test(x = x1s1, n = n1s1, alternative = 'two.sided');indelprops1
@@ -407,9 +396,7 @@ twoprop_indel<-prop.test(x=c(x1s1, x13B),n=c(n1s1,n13B),alternative = "two.sided
 #p-val > 0.05
 #infer that there is not a significant difference in the magnitude of the deletion bias between the two strains
 
-##############################################################
-##############################################################
-####PART 2: investigate to-AT-biased or to-GC-biased mutation spectrum
+# PART 2: investigate to-AT-biased or to-GC-biased mutation spectrum
 x3s1<-sum(MAs1$to_AT_tot);n3s1<-x3s1+sum(MAs1$to_CG_tot)
 #toATprops1<-prop.test(x=x3s1,n=n3s1,p=(1-0.760011272),alternative = 'two.sided');toATprops1
 toATprops1<-prop.test(x=x3s1,n=n3s1,p=(1-0.76),alternative = 'two.sided');toATprops1
@@ -422,7 +409,7 @@ toATprop3B<-prop.test(x=x33B,n=n33B,p=(1-0.76),alternative = 'two.sided');toATpr
 
 #the two strains have identical expectation proportions to 2 significant figures. I will go ahead and compare them.
 twoprop_ATbias<-prop.test(x=c(x3s1, x33B),n=c(n3s1,n33B),alternative = "two.sided"); twoprop_ATbias
-#p-val = 3.1e-06 signif difference suggesting that AT bias is stronger in syn3B. Note that syn3B had a very slightly higher expectation proportion. We do know that they are signifly different because the confidence interval does not include the actual expected difference--- CI = [-0.089, -0.045], when the expected difference is -0.003
+#p-val = 3.1e-06 signif difference suggesting that AT bias is stronger in syn3B. Note that syn3B had a very slightly higher expectation proportion. We do know that they are significantly different because the confidence interval does not include the actual expected difference--- CI = [-0.089, -0.045], when the expected difference is -0.003
 #Expected difference is -0.002858346 (i.e., higher for 3B).
 #95 percent confidence interval:
 # -0.08939673 -0.04458173
@@ -451,17 +438,14 @@ x33B_NSE_ung<-21;n33B_NSE_ung<-43
 twoprop_ATbias_NSE_ung<-prop.test(x=c(x3s1_NSE_ung, x33B_NSE_ung),n=c(n3s1_NSE_ung,n33B_NSE_ung),alternative = "two.sided"); twoprop_ATbias_NSE_ung
 #no difference in the relative proportions of C-->T mutations between the strains. Suggests that this aspect of the mutation spectrum did not influence adaptation.
 
-
-#########################################################################################################################
-#########################################################################################################################
-#Part 3: Compare proportion of called SNMs in CDS regions versus non-CDS regions to the theoretical null expectation.
+# Part 3: Compare proportion of called SNMs in CDS regions versus non-CDS regions to the theoretical null expectation.
 
 #For each strain, look at the total number of CDS SNMs and non-CDS SNMs. Do they occur in proportions significantly different from the null expectation?
 x6s1<-sum(MAs1$in_CDS)
 n6s1<-sum(MAs1$in_CDS)+sum(MAs1$not_in_CDS)
 CDSprops1 <- prop.test(x = x6s1, n = n6s1, p = (926310/1078809), alternative = 'two.sided');CDSprops1
-#sample prop: 0.860
-#P = 0.876. There is not significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86% compared to expected 86%
+# Sample prop: 0.860
+# P = 0.876. There is not significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86% compared to expected 86%
 
 x63B<-sum(MA3B$in_CDS)
 n63B<-sum(MA3B$in_CDS)+sum(MA3B$not_in_CDS)
@@ -469,15 +453,19 @@ CDSprops1 <- prop.test(x = x63B, n = n63B, p = (479721/543379), alternative = 't
 #sample prop = 0.856
 #P 0.069. There is a marginally significant deviation from the proportion of mutations falling in CDS regions expected due to chance alone. 86%, compared to expected 88%
 
-#########################################################################################################################
-#########################################################################################################################
-#Part 4: Address questions of R3
-x7s1e<-6;n7s1tot<-14
-x7s1emax<-493;n7s1totmax<-901
-twoprop_essentialins1<-prop.test(x=c(x7s1e,x7s1emax),n=c(14,901),alternative = 'two.sided')
-#p=0.5393. No bias.
+# Part 4: Comparison of essential and non-essential genes in the non-minimal cell
+# Genes under putatively positive selection: any bias between non-essential and essential genes
+x7s1e <- 6
+n7s1tot<-14
+x7s1emax <- 493
+n7s1totmax<- 901
+twoprop_essentialins1 <- prop.test(x = c(x7s1e, x7s1emax), n = c(14,901), alternative = 'two.sided')
+# Results: X-squared = 0.37687, df = 1, p-value = 0.5393 --> No bias.
 
-R3_mutn_numbers<-read.csv("~/GitHub/MinimalCell/datafiles/R3_mutation.numbers.csv")
-is_there_bias<-t.test(x=R3_mutn_numbers$essential,y=R3_mutn_numbers$nonessential.corrected,alternative='two.sided',mu=0,paired=TRUE)
-is_there_bias
+# Differences in the number of mutations falling into non-essential vs. essential categories in non-minimal cell
+nmin.mut.numbers <- read.csv("~/GitHub/MinimalCell/datafiles/nonmin_mutation.numbers.csv", header = TRUE, sep = ",")
+nmin.bias <- t.test(x = nmin.mut.numbers$essential, y = nmin.mut.numbers$nonessential.corrected, 
+                    alternative = 'two.sided', mu = 0, paired = TRUE)
+# Results: t = -0.64553, df = 3, p-value = 0.5646 --> no bias
+# 
 ```
