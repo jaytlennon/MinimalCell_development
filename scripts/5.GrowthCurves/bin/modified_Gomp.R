@@ -1,7 +1,7 @@
 ################################################################################
 #                                                                              #
 #	Lennon Lab Growth Curve Analysis (using Synergy MX Plate Reader)             #
-#   Uses OD data to fit Gomphertz model and estimate parameters                #
+#   Uses OD data to fit Gompertz model and estimate parameters                 #
 #                                                                              #
 ################################################################################
 #                                                                              #
@@ -23,7 +23,7 @@ growth.modGomp <- function(input = " ", output.name = " ", skip = "",
     # Intercept.guess = initial guess for y intercept
     # delta = minimum change in OD required for analysis
     # synergy = TRUE if the data comes from the synergy mx machine
-    #   If FALSE data should be deliminated in proper format
+    # If FALSE data should be delimited in proper format
     # skip = the number of lines to initially skip when importing synergy data
     # temp = TRUE if there temperature data include for QC purposes
     # trim = TRUE if you want to trim the data
@@ -87,7 +87,7 @@ growth.modGomp <- function(input = " ", output.name = " ", skip = "",
     s <- data.in[,which(colnames(data.in) == samples[i])]
     if (max(s) - min(s) < delta) {
       plot(s ~ t, main=samples[i], 
-           ylab=expression(paste("Absorbance"[600])), 
+           ylab=expression(paste("Absorbance"[415])), 
            xlab=expression(paste("Time (hrs)")),
            pch=19, las = 1, cex.axis = 1, cex.lab = 1.5)
       legend("topleft", legend = bquote(Delta ~ "OD <" ~ .(delta)), bty = "n")
@@ -193,7 +193,7 @@ growth.modGomp <- function(input = " ", output.name = " ", skip = "",
     par(mar = c(6, 6, 4, 2))
     plot(s ~ t, main=samples[i], 
          ylim = c(0, (coef(best.f1)[2] + coef(best.f1)[1]) * 1.1),
-         ylab=expression(paste("Absorbance"[600])), 
+         ylab=expression(paste("Absorbance"[415])), 
          xlab=expression(paste("Time (hrs)")),
          pch=19, las = 1, cex.axis = 1, cex.lab = 1.5, data=realdata)
     curve(m.gomp(x + tmpdata$t[1],coef(best.f1)[1:4]),
@@ -205,15 +205,26 @@ growth.modGomp <- function(input = " ", output.name = " ", skip = "",
     b0 = coef(best.f1)[1]
     umax = coef(best.f1)[3]
     #abline(v = L + tmpdata$t[1], lty = 2, col = "gray", lwd = 2)
+    # vertical line for lag
     abline(v = L, lty = 2, col = "gray", lwd = 2)
     
-    abline(h = A, lty = 2, col = "gray", lwd = 2)
+    # horizontal line for yield
+   # abline(h = A, lty = 2, col = "gray", lwd = 2)
+    
+    # horizontal line for corrected yield
     abline(h = A + b0, lty = 2, col = "blue", lwd = 2)
+    
     #abline(-A + b0, umax, lty = 2, col = "red", lwd = 2)
+    
+    # function for umax
     abline(-umax*(L- (b0/umax)), umax, lty = 2, col = "red", lwd = 2)
-    abline(v = L - exp(1)*(b0/umax), lty = 2, col = "blue", lwd = 2)
-    abline(h = 0, lty = 3, lwd = 2)
-    legend("bottomright", legend = c("umax", "A and L", "Corrected A and L"),
+    
+    # function for Gompertz
+ #   abline(v = L - exp(1)*(b0/umax), lty = 2, col = "blue", lwd = 2)
+    
+ #  line for zero  
+ #   abline(h = 0, lty = 3, lwd = 2)
+    legend("bottomright", legend = c("umax", "lag", "yield"),
            lty = 2, col = c("red", "gray", "blue"), bty = "n", cex = 0.8)
 
 	# attempt profiling

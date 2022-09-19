@@ -24,6 +24,7 @@ getwd()
 require("png")
 require("dplyr")
 require("grid")
+require("tidyverse")
 sem <- function(x) sqrt(var(x)/length(x))
 ```
 
@@ -200,8 +201,7 @@ nmin.evo.rand.s1_6.all <- size.raw %>%
 set.seed(2)
 nmin.evo.rand.s1_6 <- sample(nmin.evo.rand.s1_6.all$diameter, size = 15)
 
-
-# concatenate resampled evoled data
+# concatenate resampled evolved data
 
 min.evo.rand <- as.data.frame(c(min.evo.rand.B_1, 
     min.evo.rand.B_2, min.evo.rand.B_3, min.evo.rand.B_5))
@@ -392,6 +392,183 @@ graphics.off()
 
 # Show Plot
 img <- readPNG("~/GitHub/MinimalCell/figures/Fig4.png")
+
+grid.raster(img)
+```
+
+# Percent change in size (Supplementary figure)
+```{r}
+# Calculate percent change in cell diameter
+
+m.per.diam <- size.reps %>% 
+  filter(strain == "Minimal" & timepoint != "Mutant") %>%
+  group_by(strain) %>%
+  mutate(per = ((mean.diam-first(mean.diam))/first(mean.diam))) %>%
+  filter(timepoint != "Ancestor")
+
+m.per.diam.summary <- m.per.diam %>%
+  group_by(strain) %>%
+  dplyr::summarise(mean = mean(per), sem = sem(per))
+
+nm.per.diam <- size.reps %>% 
+  filter(strain == "Non-minimal" & timepoint != "Mutant") %>%
+  group_by(strain) %>%
+  mutate(per = ((mean.diam-first(mean.diam))/first(mean.diam))) %>%
+  filter(timepoint != "Ancestor")
+
+nm.per.diam.summary <- nm.per.diam %>%
+  group_by(strain) %>%
+  dplyr::summarise(mean = mean(per), sem = sem(per))
+
+# Percent change diameter statistics 
+equal.var.per.diam <- var.test(m.per.diam$per, nm.per.diam$per)
+# Test for equal variance: p-value = 0.1568 --> variance are equal
+
+#m.per.diam$per <-log10(m.per.diam$per+0.1)
+#nm.per.diam$per <-log10(nm.per.diam$per+0.1)
+
+oneway.m.per.diam <- t.test(x = m.per.diam$per, mu = log(0.01), alternative = 'two.sided')
+# Percent change not different from zero: t = 2.0305, df = 3, p-value = 0.06764
+# Log transform (mu = log(0.01)): t = 9.5383, df = 3, p-value = 0.002444
+
+oneway.nm.per.diam <- t.test(x = nm.per.diam$per, mu = log(0.01), alternative = 'two.sided')
+# Percent change marginally increased: t = 2.7619, df = 3, p-value = 0.07004
+# Log transform (mu = log(0.01)): t = 23.939, df = 3, p-value = 0.0001597
+
+ttest.per.diam <- t.test(m.per.diam$per, nm.per.diam$per)
+# Percent change not different between strains: t = -1.8339, df = 3.8944, p-value = 0.1425
+# Log transform: t = -1.7204, df = 4.3033, p-value = 0.1554
+
+
+# Percent change volume statistics 
+
+m.per.vol <- size.reps %>% 
+  filter(strain == "Minimal" & timepoint != "Mutant") %>%
+  group_by(strain) %>%
+  mutate(per = ((mean.vol-first(mean.vol))/first(mean.vol))) %>%
+  filter(timepoint != "Ancestor")
+
+m.per.vol.summary <- m.per.vol %>%
+  group_by(strain) %>%
+  dplyr::summarise(mean = mean(per), sem = sem(per))
+
+nm.per.vol <- size.reps %>% 
+  filter(strain == "Non-minimal" & timepoint != "Mutant") %>%
+  group_by(strain) %>%
+  mutate(per = ((mean.vol-first(mean.vol))/first(mean.vol))) %>%
+  filter(timepoint != "Ancestor")
+
+nm.per.vol.summary <- nm.per.vol %>%
+  group_by(strain) %>%
+  dplyr::summarise(mean = mean(per), sem = sem(per))
+
+
+# Make figure
+png(filename="~/GitHub/MinimalCell/figures/FigS6.png",
+               width = 1200, height = 1200, res = 96*2)
+
+plot.new()
+#layout(matrix(c(1:2), byrow = T))
+
+par(mfrow=c(1,2))
+par(mar=c(6,4,4,1), xpd = TRUE)
+par(oma=c(4,4,6,0))
+
+#plot.new()
+#par(mar = c(7, 7, 5, 7))
+
+# Add minimal points
+plot(jitter(rep(1, length(m.per.diam$per)), amount = 0.2), m.per.diam$per, 
+     xlim = c(0, 4), ylim = c(0.07, 2.5), type = "p", pch = 21, bg = "pink", 
+     col = "pink", cex = 1.0, ylab = "", xlab = "", log = "y",
+     cex.lab = 2.0, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
+box(lwd=2)
+
+# Add non-minimal points
+points(jitter(rep(3, length(nm.per.diam$per)), amount = 0.2), nm.per.diam$per, 
+       pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 1.0)
+
+# Add confidence intervals
+arrows(x0 = c(1), y0 = m.per.diam.summary$mean, y1 =  m.per.diam.summary$mean +  
+         m.per.diam.summary$sem, angle = 90,length = 0.1, lwd = 2, col = "red")
+arrows(x0 = c(1), y0 = m.per.diam.summary$mean, y1 = m.per.diam.summary$mean - 
+         m.per.diam.summary$sem, angle = 90, length=0.1, lwd = 2, col = "red")
+arrows(x0 = c(3), y0 =  nm.per.diam.summary$mean, y1 = nm.per.diam.summary$mean + 
+         nm.per.diam.summary$sem, angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = c(3), y0 = nm.per.diam.summary$mean, y1 = nm.per.diam.summary$mean - 
+         nm.per.diam.summary$sem, angle = 90, length=0.1, lwd = 2, col = "blue")
+
+# Add means
+points(1, m.per.diam.summary$mean, pch = 22, col = "red", 
+       bg = "red", lwd = 2, cex = 2) 
+points(3, nm.per.diam.summary$mean, pch = 22, col = "blue", 
+       bg = "blue", lwd = 2, cex = 2) 
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("10", "100"), at = c(0.1, 1))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0.1, 1), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 0.85, las = 1,
+     labels = c("Minimal", "Non-minimal"), 
+     col.axis = "darkgray", at = c(1, 3))
+mtext(expression('Strain'), side = 1,
+      outer = TRUE, cex = 1.5, line = -2, adj = 0.55)
+mtext(expression("Change in cell size (%)"), side = 2,
+      outer = TRUE, cex = 1.5, line = 0, adj = 0.6)
+#text(1,3, "Diameter", cex = 1)
+text(x= 2, y = 5, "Diameter", srt = 0, xpd = NA, cex = 1.5)
+
+# Create volume plot
+
+# Add minimal points
+plot(jitter(rep(1, length(m.per.vol$per)), amount = 0.2), log = "y", m.per.vol$per, 
+     xlim = c(0, 4), ylim = c(0.05, 30), type = "p", pch = 21, bg = "pink", 
+     col = "pink", cex = 1.0, ylab = "", xlab = "", 
+     cex.lab = 2.0, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
+box(lwd=2)
+
+# Add non-minimal points
+points(jitter(rep(3, length(nm.per.vol$per)), amount = 0.2), nm.per.vol$per, 
+       pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 1.0)
+
+# Add confidence intervals
+arrows(x0 = c(1), y0 = m.per.vol.summary$mean, y1 =  m.per.vol.summary$mean +  
+         m.per.vol.summary$sem, angle = 90,length = 0.1, lwd = 2, col = "red")
+arrows(x0 = c(1), y0 = m.per.vol.summary$mean, y1 = m.per.vol.summary$mean - 
+         m.per.vol.summary$sem, angle = 90, length=0.1, lwd = 2, col = "red")
+arrows(x0 = c(3), y0 =  nm.per.vol.summary$mean, y1 = nm.per.vol.summary$mean + 
+         nm.per.vol.summary$sem, angle = 90, length = 0.1, lwd = 2, col = "blue")
+arrows(x0 = c(3), y0 = nm.per.vol.summary$mean, y1 = nm.per.vol.summary$mean - 
+         nm.per.vol.summary$sem, angle = 90, length=0.1, lwd = 2, col = "blue")
+
+# Add means
+points(1, m.per.vol.summary$mean, pch = 22, col = "red", 
+       bg = "red", lwd = 2, cex = 2) 
+points(3, nm.per.vol.summary$mean, pch = 22, col = "blue", 
+       bg = "blue", lwd = 2, cex = 2) 
+
+# Add axes and labels
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("10", "100", "1000"), at = c(0.1, 1, 10))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at=c(0.1, 1, 2.5), labels = F)
+axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     at = c(1, 3), labels = F)
+axis(side = 1, lwd.ticks = 2, cex.axis = 0.85, las = 1,
+     labels = c("Minimal", "Non-minimal"), 
+     col.axis = "darkgray", at = c(1, 3))
+
+text(x= 2, y = 105, "Volume", srt = 0, xpd = NA, cex = 1.5)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/FigS6.png")
 
 grid.raster(img)
 ```

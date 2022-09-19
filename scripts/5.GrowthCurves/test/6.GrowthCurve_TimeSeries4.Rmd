@@ -11,7 +11,7 @@ geometry: margin=2.54cm
 ## Clear workspace and set directory
 ```{r setup}
 rm(list=ls())
-setwd("~/Github/MinimalCell/scripts/5.GrowthRates/test")
+setwd("~/Github/MinimalCell/scripts/5.GrowthCurves/test")
 ```
 
 ## Load packages and functions
@@ -37,7 +37,7 @@ cv <- function(x) 100*( sd(x)/mean(x))
 nm.b1 <- read.csv("../data/batch_NM_1.csv")
 
 # Change times to numeric
-nm.b1 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b1 $Time))
+nm.b1$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b1 $Time))
 head(nm.b1, header = T)
 
 # Pull out wells over time

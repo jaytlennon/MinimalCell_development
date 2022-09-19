@@ -1,23 +1,33 @@
 ################################################################################
-#	Bacterial Growth Curve Models                                              #
-#		- Modified Gompertz                                                    #
-#		- new 'modified' gompertz                                              #
+#	Bacterial Growth Curve Models                                                #
+#		- Modified Gompertz                                                        #
+#		- new 'modified' gompertz                                                  #
 #         with 2 extra parameters capable of long term decay                   #
-#		- confint.FI() function for calculating the Fisher Information 		   #
-#  		  confidence  														   #
+#		- confint.FI() function for calculating the Fisher Information 		         #
+#  		  confidence  														                               #
 #      intervals; useful when profiling fails to converge/flat likelihood      #
 #      surfaces                                                                #
 #                                                                              #
-#	Code by Colin T. Kremer                                                    #
+#	Code by Colin T. Kremer                                                      #
 #                                                                              #
-#	Last update: 4/17/12                                                       #
+#	Last update: 4/17/12                                                         #
 #                                                                              #
 ################################################################################
 # Tools for fitting modified modified gompertz                                 #
 # Reference: ___________                                                       #
 ################################################################################
 
-# Modified Gompertz Equation
+
+# Modified Gompertz Equation (without b0 parameter)
+# m.gomp <- function(t, pars){
+#   #b0 <-   pars[1]
+#   A <-    pars[1]
+#   umax <- pars[2]
+#   L <-    pars[3]
+#   A*exp(-exp((umax*exp(1))/A)*(L-t)+1)
+# }
+
+# Modified Gompertz Equation (with b0 parameter for intercept)
 m.gomp <- function(t, pars){
 	b0 <-   pars[1]
 	A <-    pars[2]
@@ -36,7 +46,7 @@ new.gomp <- function(t,pars){
 	A <- exp(pars[2])	 # formerly the carrying capacity (this interpretation fails in new model)
 	umax <- pars[3]	     # maximum growth rate
 	L <- pars[4]		 # lag before onset of exponential growth
-	d <- pars[5]		 # controls rate of decreas after maximum population abundance
+	d <- pars[5]		 # controls rate of decrease after maximum population abundance
 	topt <- pars[6]	     # controls onset of population decrease
 	# constrain decay to set in after linear umax portion would reach A if unconstrained
 	sig <- A/umax+L
