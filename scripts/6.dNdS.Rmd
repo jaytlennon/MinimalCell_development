@@ -25,6 +25,7 @@ require("grid")
 LL.95 <- function(x) t.test(x)$conf.int[1]
 UL.95 <- function(x) t.test(x)$conf.int[2]
 sem <- function(x) sqrt(var(x)/length(x))
+cv <- function(x) sd(x)/sqrt(mean(x))
 ```
 
 # Load and process data
@@ -64,34 +65,40 @@ sem.dnds.min<-sem(dnds.min$dnds)
 dndds.nonmin <- read.csv("~/GitHub/MinimalCell/datafiles/non-minimal.DNDS_freqs.csv")
 ```
 
-## Statistics
+## Essential genes in the minimal vs. non-minal cell
 ```{r}
-
-# Minimal vs. non-minimal
-
 equal.var <- var.test(dnds.wt$dnds, dnds.min$dnds)
 # Test for equal variance : P = 0.170 --> homogeneous variance
 
+# Non-minimal vs. minimal 
 dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative = 'two.sided')
 # Results: t = 0.81011, df = 6, p-value = 0.488 --> no difference
 
+# Non-minimal: dN/dS different from 1?
+dnds.nonmin.ttest <- t.test(dnds.wt$dnds, mu = 1, alternative ="two.sided")
+# Results: t = -0.3605, df = 3, p-value = 0.7425. Not different
 
-# Non-minimal: essential vs. non-essential
-dnds.nomin.ttest <- t.test(x = dndds.nonmin$dNdS_gdtools[1:4], y = dndds.nonmin$dNdS_gdtools[5:8], 
-          mu = 0, alternative ="two.sided", paired = TRUE)
-# Results: t = -0.91262, df = 3, p-value = 0.4287 --> no difference
+# Minimal: dN/dS different from 1?
+dnds.min.ttest <- t.test(dnds.min$dnds, mu = 1, alternative ="two.sided")
+# Results: t = -3.3607, df = 3, p-value = 0.05496. Marginally less than 1.
 
-# Non-minimal: non-essential dN/dS different from 1?
-dnds.nomin.nonessential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[1:4], mu = 1, alternative ="two.sided")
-# Results: t = -4.5473, df = 3, p-value = 0.01992. Yes, different from neutral
+# what if we remove the potential outlier?
+dnds.wt.noout <- dnds.wt %>%
+  filter(dnds < "2")
 
-# Non-minimal: essential dN/dS different from 1?
-dnds.nomin.essential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[5:8], mu = 1, alternative ="two.sided")
-# Results: t = -2.0872, df = 3, p-value = 0.1281. Not different from neutral
-```
+equal.var <- var.test(dnds.wt.noout$dnds, dnds.min$dnds)
+# Test for equal variance : P = 0.132 --> homogeneous variance
 
-# Initiate figure
-```{r}
+# Non-minimal vs. minimal 
+dnds.ttest <- t.test(dnds.wt.noout$dnds, dnds.min$dnds, 
+                    var.equal = TRUE, alternative = 'two.sided')
+# Results: t = -0.252, df = 5, p-value = 0.8114 --> no difference
+
+# Non-minimal: dN/dS different from 1?
+dnds.nonmin.ttest <- t.test(dnds.wt.noout$dnds, mu = 1, alternative ="two.sided")
+# Results: t = -11.025, df = 2, p-value = 0.008. Significantly less than 1. 
+
+
 # Make figure
 png(filename="~/GitHub/MinimalCell/figures/FigExt2.png",
     width = 1200, height = 1200, res = 96*2)
@@ -101,7 +108,7 @@ par(mar = c(7, 7, 5, 7))
 
 # Add Non-minimal points
 plot(jitter(rep(1, length(dnds.wt$dnds)), amount = 0.2), dnds.wt$dnds, 
-     xlim = c(0, 4), ylim = c(0.0, 3.5), type = "p", pch = 21, bg = "lightblue", 
+     xlim = c(0, 4), ylim = c(0.0, 2.5), type = "p", pch = 21, bg = "lightblue", 
      col = "lightblue", cex = 1.0, ylab = "", xlab = "", 
      cex.lab = 2.0, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
@@ -157,8 +164,28 @@ img <- readPNG("~/GitHub/MinimalCell/figures/FigExt2.png")
 grid.raster(img)
 ```
 
+
+# Essential vs. non-essential genes in non-minimal cell
 ```{r}
-# Make figure
+# Non-minimal: essential vs. non-essential
+equal.var.nmin <- var.test(dndds.nonmin$dNdS_gdtools[1:4], y = dndds.nonmin$dNdS_gdtools[5:8])
+# Test for equal variance : P = 0.589 --> homogeneous variance
+
+dnds.nomin.ttest <- t.test(x = dndds.nonmin$dNdS_gdtools[1:4], y = dndds.nonmin$dNdS_gdtools[5:8], 
+          mu = 0, alternative ="two.sided", paired = TRUE)
+# Results: t = -0.91262, df = 3, p-value = 0.4287 --> no difference
+
+# Non-minimal: non-essential dN/dS different from 1?
+dnds.nomin.nonessential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[1:4], 
+                          mu = 1, alternative ="two.sided")
+# Results: t = -4.5473, df = 3, p-value = 0.01992. Yes, different from neutral (mean = 0.41)
+
+# Non-minimal: essential dN/dS different from 1?
+dnds.nomin.essential.ttest <- t.test(dndds.nonmin$dNdS_gdtools[5:8], mu = 1, 
+                          alternative ="two.sided")
+# Results: t = -2.0872, df = 3, p-value = 0.1281. Not different from neutral
+
+# Calculations for figure
 nonessdf<-filter(dndds.nonmin,Genomepartition=="nonessential")
 colnames(nonessdf)[4] <- "dnds"
 essdf<-filter(dndds.nonmin,Genomepartition=="essential")
@@ -176,6 +203,7 @@ UL.95.dnds.ess <- UL.95(essdf$dnds)
 mean.dnds.ess<-mean(essdf$dnds)
 sem.dnds.ess<-sem(essdf$dnds)
 
+# Make figure
 png(filename="~/GitHub/MinimalCell/figures/FigS7.png",
     width = 1200, height = 1200, res = 96*2)
 
@@ -184,7 +212,7 @@ par(mar = c(7, 7, 5, 7))
 
 # Add nonessential points
 plot(jitter(rep(1, length(nonessdf$dnds)), amount = 0.2), nonessdf$dnds, 
-     xlim = c(0, 4), ylim = c(0.0, 2.5), type = "p", pch = 21, bg = "lightblue", 
+     xlim = c(0, 4), ylim = c(0.0, 1.5), type = "p", pch = 21, bg = "lightblue", 
      col = "lightblue", cex = 1.0, ylab = "", xlab = "", 
      cex.lab = 2.0, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
@@ -222,7 +250,7 @@ axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      labels = c("Nonessential", "Essential"), 
      col.axis = "darkgray", at = c(1, 3))
-mtext(expression('Partition'), side = 1,
+mtext(expression('Genome partition'), side = 1,
       outer = TRUE, cex = 1.5, line = -3.5, adj = 0.5)
 mtext(expression(italic("dN/dS")), side = 2,
       outer = TRUE, cex = 1.5, line = -3.0)

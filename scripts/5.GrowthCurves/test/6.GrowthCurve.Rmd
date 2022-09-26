@@ -32,7 +32,7 @@ cv <- function(x) 100*( sd(x)/mean(x))
 
 # NM: bioreplicate 1 plate
 
-nm.b1 <- read.csv("../data/retry/batch_NM_1.csv")
+nm.b1 <- read.csv("../data/batch_NM_1.csv")
 
 # Change times to numeric
 nm.b1$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b1 $Time))
@@ -61,44 +61,44 @@ jcvi <-  nm.b1[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-nm.t0.1 <- growth.modGomp(input = nm.0, output.name = "nm.t0.1.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-nm.t10.1 <- growth.modGomp(input = nm.10, output.name = "nm.t10.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t20.1  <- growth.modGomp(input = nm.20, output.name = "nm.t20.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t30.1  <- growth.modGomp(input = nm.30, output.name = "nm.t30.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t40.1  <- growth.modGomp(input = nm.40, output.name = "nm.t40.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t50.1  <- growth.modGomp(input = nm.50, output.name = "nm.t50.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t60.1  <- growth.modGomp(input = nm.60, output.name = "nm.t60.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t80.1  <- growth.modGomp(input = nm.80, output.name = "nm.t80.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t100.1  <- growth.modGomp(input = nm.100, output.name = "nm.t100.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t120.1  <- growth.modGomp(input = nm.120, output.name = "nm.t120.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t140.1  <- growth.modGomp(input = nm.140, output.name = "nm.t140.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t160.1  <- growth.modGomp(input = nm.160, output.name = "nm.t160.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t200.1  <- growth.modGomp(input = nm.200, output.name = "nm.t200.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t220.1  <- growth.modGomp(input = nm.220, output.name = "nm.t220.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t240.1  <- growth.modGomp(input = nm.240, output.name = "nm.t240.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t260.1  <- growth.modGomp(input = nm.260, output.name = "nm.t260.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t280.1  <- growth.modGomp(input = nm.280, output.name = "nm.t280.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t300.1  <- growth.modGomp(input = nm.300, output.name = "nm.t300.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.jcvi.t1000.1  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t0.1 <- growth.modGomp(input = nm.0, output.name = "nm.t0.1.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t10.1 <- growth.modGomp(input = nm.10, output.name = "nm.t10.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t20.1  <- growth.modGomp(input = nm.20, output.name = "nm.t20.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t30.1  <- growth.modGomp(input = nm.30, output.name = "nm.t30.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t40.1  <- growth.modGomp(input = nm.40, output.name = "nm.t40.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t50.1  <- growth.modGomp(input = nm.50, output.name = "nm.t50.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t60.1  <- growth.modGomp(input = nm.60, output.name = "nm.t60.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t80.1  <- growth.modGomp(input = nm.80, output.name = "nm.t80.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t100.1  <- growth.modGomp(input = nm.100, output.name = "nm.t100.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t120.1  <- growth.modGomp(input = nm.120, output.name = "nm.t120.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t140.1  <- growth.modGomp(input = nm.140, output.name = "nm.t140.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t160.1  <- growth.modGomp(input = nm.160, output.name = "nm.t160.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t200.1  <- growth.modGomp(input = nm.200, output.name = "nm.t200.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t220.1  <- growth.modGomp(input = nm.220, output.name = "nm.t220.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t240.1  <- growth.modGomp(input = nm.240, output.name = "nm.t240.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t260.1  <- growth.modGomp(input = nm.260, output.name = "nm.t260.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t280.1  <- growth.modGomp(input = nm.280, output.name = "nm.t280.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t300.1  <- growth.modGomp(input = nm.300, output.name = "nm.t300.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.jcvi.t1000.1  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.nm.1 <- read.table("../output/nm.t0.1.parms.txt", sep = ",", header=TRUE)
 t10.out.nm.1 <- read.table("../output/nm.t10.1.parms.txt", sep = ",", header=TRUE)
@@ -120,13 +120,13 @@ t280.out.nm.1 <- read.table("../output/nm.t280.1.parms.txt", sep = ",", header=T
 t300.out.nm.1 <- read.table("../output/nm.t300.1.parms.txt", sep = ",", header=TRUE)
 t1000.out.nm.1 <- read.table("../output/nm.jcvi.t1000.1.parms.txt", sep = ",", header=TRUE)
 
-treats.nm.1 <- read.csv("../data/retry/treatments_batch1_NM.csv")
+treats.nm.1 <- read.csv("../data/treatments_batch1_NM.csv")
 treats.nm.1[rep(seq_len(nrow(treats.nm.1)), each = 19), ]
 
 
 # NM: bioreplicate 2 plate
 
-nm.b2 <- read.csv("../data/retry/batch_NM_2.csv")
+nm.b2 <- read.csv("../data/batch_NM_2.csv")
 
 # Change times to numeric
 nm.b2 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b2 $Time))
@@ -155,44 +155,44 @@ jcvi <-  nm.b2[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-nm.t0.2 <- growth.modGomp(input = nm.0, output.name = "nm.t0.2.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-nm.t10.2 <- growth.modGomp(input = nm.10, output.name = "nm.t10.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t20.2  <- growth.modGomp(input = nm.20, output.name = "nm.t20.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t30.2  <- growth.modGomp(input = nm.30, output.name = "nm.t30.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t40.2  <- growth.modGomp(input = nm.40, output.name = "nm.t40.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t50.2  <- growth.modGomp(input = nm.50, output.name = "nm.t50.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t60.2  <- growth.modGomp(input = nm.60, output.name = "nm.t60.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t80.2  <- growth.modGomp(input = nm.80, output.name = "nm.t80.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t100.2  <- growth.modGomp(input = nm.100, output.name = "nm.t100.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t120.2  <- growth.modGomp(input = nm.120, output.name = "nm.t120.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t140.2  <- growth.modGomp(input = nm.140, output.name = "nm.t140.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t160.2  <- growth.modGomp(input = nm.160, output.name = "nm.t160.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t200.2  <- growth.modGomp(input = nm.200, output.name = "nm.t200.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t220.2  <- growth.modGomp(input = nm.220, output.name = "nm.t220.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t240.2  <- growth.modGomp(input = nm.240, output.name = "nm.t240.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t260.2  <- growth.modGomp(input = nm.260, output.name = "nm.t260.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t280.2  <- growth.modGomp(input = nm.280, output.name = "nm.t280.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t300.2  <- growth.modGomp(input = nm.300, output.name = "nm.t300.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.jcvi.t1000.2  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t0.2 <- growth.modGomp(input = nm.0, output.name = "nm.t0.2.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t10.2 <- growth.modGomp(input = nm.10, output.name = "nm.t10.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t20.2  <- growth.modGomp(input = nm.20, output.name = "nm.t20.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t30.2  <- growth.modGomp(input = nm.30, output.name = "nm.t30.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t40.2  <- growth.modGomp(input = nm.40, output.name = "nm.t40.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t50.2  <- growth.modGomp(input = nm.50, output.name = "nm.t50.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t60.2  <- growth.modGomp(input = nm.60, output.name = "nm.t60.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t80.2  <- growth.modGomp(input = nm.80, output.name = "nm.t80.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t100.2  <- growth.modGomp(input = nm.100, output.name = "nm.t100.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t120.2  <- growth.modGomp(input = nm.120, output.name = "nm.t120.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t140.2  <- growth.modGomp(input = nm.140, output.name = "nm.t140.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t160.2  <- growth.modGomp(input = nm.160, output.name = "nm.t160.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t200.2  <- growth.modGomp(input = nm.200, output.name = "nm.t200.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t220.2  <- growth.modGomp(input = nm.220, output.name = "nm.t220.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t240.2  <- growth.modGomp(input = nm.240, output.name = "nm.t240.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t260.2  <- growth.modGomp(input = nm.260, output.name = "nm.t260.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t280.2  <- growth.modGomp(input = nm.280, output.name = "nm.t280.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t300.2  <- growth.modGomp(input = nm.300, output.name = "nm.t300.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.jcvi.t1000.2  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.nm.2 <- read.table("../output/nm.t0.2.parms.txt", sep = ",", header=TRUE)
 t10.out.nm.2 <- read.table("../output/nm.t10.2.parms.txt", sep = ",", header=TRUE)
@@ -214,13 +214,13 @@ t280.out.nm.2 <- read.table("../output/nm.t280.2.parms.txt", sep = ",", header=T
 t300.out.nm.2 <- read.table("../output/nm.t300.2.parms.txt", sep = ",", header=TRUE)
 t1000.out.nm.2 <- read.table("../output/nm.jcvi.t1000.2.parms.txt", sep = ",", header=TRUE)
 
-treats.nm.2 <- read.csv("../data/retry/treatments_batch2_NM.csv")
+treats.nm.2 <- read.csv("../data/treatments_batch2_NM.csv")
 treats.nm.2[rep(seq_len(nrow(treats.nm.2)), each = 19), ]
 
 
 # NM: bioreplicate 3 plate
 
-nm.b3 <- read.csv("../data/retry/batch_NM_3.csv")
+nm.b3 <- read.csv("../data/batch_NM_3.csv")
 
 # Change times to numeric
 nm.b3 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b3 $Time))
@@ -249,44 +249,44 @@ jcvi <-  nm.b3[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-nm.t0.3 <- growth.modGomp(input = nm.0, output.name = "nm.t0.3.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-nm.t10.3 <- growth.modGomp(input = nm.10, output.name = "nm.t10.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t20.3  <- growth.modGomp(input = nm.20, output.name = "nm.t20.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t30.3  <- growth.modGomp(input = nm.30, output.name = "nm.t30.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t40.3  <- growth.modGomp(input = nm.40, output.name = "nm.t40.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t50.3  <- growth.modGomp(input = nm.50, output.name = "nm.t50.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t60.3  <- growth.modGomp(input = nm.60, output.name = "nm.t60.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t80.3  <- growth.modGomp(input = nm.80, output.name = "nm.t80.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t100.3  <- growth.modGomp(input = nm.100, output.name = "nm.t100.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t120.3  <- growth.modGomp(input = nm.120, output.name = "nm.t120.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t140.3  <- growth.modGomp(input = nm.140, output.name = "nm.t140.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t160.3  <- growth.modGomp(input = nm.160, output.name = "nm.t160.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t200.3  <- growth.modGomp(input = nm.200, output.name = "nm.t200.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t220.3  <- growth.modGomp(input = nm.220, output.name = "nm.t220.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t240.3  <- growth.modGomp(input = nm.240, output.name = "nm.t240.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t260.3  <- growth.modGomp(input = nm.260, output.name = "nm.t260.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t280.3  <- growth.modGomp(input = nm.280, output.name = "nm.t280.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t300.3  <- growth.modGomp(input = nm.300, output.name = "nm.t300.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.jcvi.t1000.3  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t0.3 <- growth.modGomp(input = nm.0, output.name = "nm.t0.3.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t10.3 <- growth.modGomp(input = nm.10, output.name = "nm.t10.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t20.3  <- growth.modGomp(input = nm.20, output.name = "nm.t20.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t30.3  <- growth.modGomp(input = nm.30, output.name = "nm.t30.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t40.3  <- growth.modGomp(input = nm.40, output.name = "nm.t40.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t50.3  <- growth.modGomp(input = nm.50, output.name = "nm.t50.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t60.3  <- growth.modGomp(input = nm.60, output.name = "nm.t60.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t80.3  <- growth.modGomp(input = nm.80, output.name = "nm.t80.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t100.3  <- growth.modGomp(input = nm.100, output.name = "nm.t100.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t120.3  <- growth.modGomp(input = nm.120, output.name = "nm.t120.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t140.3  <- growth.modGomp(input = nm.140, output.name = "nm.t140.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t160.3  <- growth.modGomp(input = nm.160, output.name = "nm.t160.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t200.3  <- growth.modGomp(input = nm.200, output.name = "nm.t200.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t220.3  <- growth.modGomp(input = nm.220, output.name = "nm.t220.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t240.3  <- growth.modGomp(input = nm.240, output.name = "nm.t240.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t260.3  <- growth.modGomp(input = nm.260, output.name = "nm.t260.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t280.3  <- growth.modGomp(input = nm.280, output.name = "nm.t280.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t300.3  <- growth.modGomp(input = nm.300, output.name = "nm.t300.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.jcvi.t1000.3  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.nm.3 <- read.table("../output/nm.t0.3.parms.txt", sep = ",", header=TRUE)
 t10.out.nm.3 <- read.table("../output/nm.t10.3.parms.txt", sep = ",", header=TRUE)
@@ -308,12 +308,12 @@ t280.out.nm.3 <- read.table("../output/nm.t280.3.parms.txt", sep = ",", header=T
 t300.out.nm.3 <- read.table("../output/nm.t300.3.parms.txt", sep = ",", header=TRUE)
 t1000.out.nm.3 <- read.table("../output/nm.jcvi.t1000.3.parms.txt", sep = ",", header=TRUE)
 
-treats.nm.3 <- read.csv("../data/retry/treatments_batch3_NM.csv")
+treats.nm.3 <- read.csv("../data/treatments_batch3_NM.csv")
 treats.nm.3[rep(seq_len(nrow(treats.nm.3)), each = 19), ]
 
 # NM: bioreplicate 4 plate
 
-nm.b4 <- read.csv("../data/retry/batch_NM_4.csv")
+nm.b4 <- read.csv("../data/batch_NM_4.csv")
 
 # Change times to numeric
 nm.b4 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b4 $Time))
@@ -342,44 +342,44 @@ jcvi <-  nm.b4[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-nm.t0.4 <- growth.modGomp(input = nm.0, output.name = "nm.t0.4.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-nm.t10.4 <- growth.modGomp(input = nm.10, output.name = "nm.t10.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t20.4  <- growth.modGomp(input = nm.20, output.name = "nm.t20.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t30.4  <- growth.modGomp(input = nm.30, output.name = "nm.t30.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t40.4  <- growth.modGomp(input = nm.40, output.name = "nm.t40.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t50.4  <- growth.modGomp(input = nm.50, output.name = "nm.t50.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t60.4  <- growth.modGomp(input = nm.60, output.name = "nm.t60.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t80.4  <- growth.modGomp(input = nm.80, output.name = "nm.t80.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t100.4  <- growth.modGomp(input = nm.100, output.name = "nm.t100.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t120.4  <- growth.modGomp(input = nm.120, output.name = "nm.t120.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t140.4  <- growth.modGomp(input = nm.140, output.name = "nm.t140.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t160.4  <- growth.modGomp(input = nm.160, output.name = "nm.t160.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t200.4  <- growth.modGomp(input = nm.200, output.name = "nm.t200.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t220.4  <- growth.modGomp(input = nm.220, output.name = "nm.t220.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t240.4  <- growth.modGomp(input = nm.240, output.name = "nm.t240.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t260.4  <- growth.modGomp(input = nm.260, output.name = "nm.t260.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t280.4  <- growth.modGomp(input = nm.280, output.name = "nm.t280.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.t300.4  <- growth.modGomp(input = nm.300, output.name = "nm.t300.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-nm.jcvi.t1000.4  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t0.4 <- growth.modGomp(input = nm.0, output.name = "nm.t0.4.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# nm.t10.4 <- growth.modGomp(input = nm.10, output.name = "nm.t10.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t20.4  <- growth.modGomp(input = nm.20, output.name = "nm.t20.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t30.4  <- growth.modGomp(input = nm.30, output.name = "nm.t30.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t40.4  <- growth.modGomp(input = nm.40, output.name = "nm.t40.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t50.4  <- growth.modGomp(input = nm.50, output.name = "nm.t50.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t60.4  <- growth.modGomp(input = nm.60, output.name = "nm.t60.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t80.4  <- growth.modGomp(input = nm.80, output.name = "nm.t80.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t100.4  <- growth.modGomp(input = nm.100, output.name = "nm.t100.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t120.4  <- growth.modGomp(input = nm.120, output.name = "nm.t120.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t140.4  <- growth.modGomp(input = nm.140, output.name = "nm.t140.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t160.4  <- growth.modGomp(input = nm.160, output.name = "nm.t160.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t200.4  <- growth.modGomp(input = nm.200, output.name = "nm.t200.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t220.4  <- growth.modGomp(input = nm.220, output.name = "nm.t220.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t240.4  <- growth.modGomp(input = nm.240, output.name = "nm.t240.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t260.4  <- growth.modGomp(input = nm.260, output.name = "nm.t260.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t280.4  <- growth.modGomp(input = nm.280, output.name = "nm.t280.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.t300.4  <- growth.modGomp(input = nm.300, output.name = "nm.t300.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# nm.jcvi.t1000.4  <- growth.modGomp(input = jcvi, output.name = "nm.jcvi.t1000.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.nm.4 <- read.table("../output/nm.t0.4.parms.txt", sep = ",", header=TRUE)
 t10.out.nm.4 <- read.table("../output/nm.t10.4.parms.txt", sep = ",", header=TRUE)
@@ -401,13 +401,13 @@ t280.out.nm.4 <- read.table("../output/nm.t280.4.parms.txt", sep = ",", header=T
 t300.out.nm.4 <- read.table("../output/nm.t300.4.parms.txt", sep = ",", header=TRUE)
 t1000.out.nm.4 <- read.table("../output/nm.jcvi.t1000.4.parms.txt", sep = ",", header=TRUE)
 
-treats.nm.4 <- read.csv("../data/retry/treatments_batch4_NM.csv")
+treats.nm.4 <- read.csv("../data/treatments_batch4_NM.csv")
 treats.nm.4[rep(seq_len(nrow(treats.nm.4)), each = 19), ]
 
 
 # M: bioreplicate 1 plate
 
-m.b1 <- read.csv("../data/retry/batch_M_1.csv")
+m.b1 <- read.csv("../data/batch_M_1.csv")
 
 # Change times to numeric
 m.b1 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.b1 $Time))
@@ -436,44 +436,44 @@ jcvi <-  m.b1[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-m.t0.1 <- growth.modGomp(input = m.0, output.name = "m.t0.1.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-m.t10.1 <- growth.modGomp(input = m.10, output.name = "m.t10.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t20.1  <- growth.modGomp(input = m.20, output.name = "m.t20.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t30.1  <- growth.modGomp(input = m.30, output.name = "m.t30.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t40.1  <- growth.modGomp(input = m.40, output.name = "m.t40.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t50.1  <- growth.modGomp(input = m.50, output.name = "m.t50.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t60.1  <- growth.modGomp(input = m.60, output.name = "m.t60.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t80.1  <- growth.modGomp(input = m.80, output.name = "m.t80.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t100.1  <- growth.modGomp(input = m.100, output.name = "m.t100.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t120.1  <- growth.modGomp(input = m.120, output.name = "m.t120.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t140.1  <- growth.modGomp(input = m.140, output.name = "m.t140.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t160.1  <- growth.modGomp(input = m.160, output.name = "m.t160.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t200.1  <- growth.modGomp(input = m.200, output.name = "m.t200.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t220.1  <- growth.modGomp(input = m.220, output.name = "m.t220.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t240.1  <- growth.modGomp(input = m.240, output.name = "m.t240.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t260.1  <- growth.modGomp(input = m.260, output.name = "m.t260.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t280.1  <- growth.modGomp(input = m.280, output.name = "m.t280.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t300.1  <- growth.modGomp(input = m.300, output.name = "m.t300.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.jcvi.t1000.1  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.1.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# m.t0.1 <- growth.modGomp(input = m.0, output.name = "m.t0.1.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# m.t10.1 <- growth.modGomp(input = m.10, output.name = "m.t10.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t20.1  <- growth.modGomp(input = m.20, output.name = "m.t20.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t30.1  <- growth.modGomp(input = m.30, output.name = "m.t30.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t40.1  <- growth.modGomp(input = m.40, output.name = "m.t40.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t50.1  <- growth.modGomp(input = m.50, output.name = "m.t50.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t60.1  <- growth.modGomp(input = m.60, output.name = "m.t60.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t80.1  <- growth.modGomp(input = m.80, output.name = "m.t80.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t100.1  <- growth.modGomp(input = m.100, output.name = "m.t100.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t120.1  <- growth.modGomp(input = m.120, output.name = "m.t120.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t140.1  <- growth.modGomp(input = m.140, output.name = "m.t140.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t160.1  <- growth.modGomp(input = m.160, output.name = "m.t160.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t200.1  <- growth.modGomp(input = m.200, output.name = "m.t200.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t220.1  <- growth.modGomp(input = m.220, output.name = "m.t220.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t240.1  <- growth.modGomp(input = m.240, output.name = "m.t240.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t260.1  <- growth.modGomp(input = m.260, output.name = "m.t260.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t280.1  <- growth.modGomp(input = m.280, output.name = "m.t280.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t300.1  <- growth.modGomp(input = m.300, output.name = "m.t300.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.jcvi.t1000.1  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.1.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.m.1 <- read.table("../output/m.t0.1.parms.txt", sep = ",", header=TRUE)
 t10.out.m.1 <- read.table("../output/m.t10.1.parms.txt", sep = ",", header=TRUE)
@@ -495,13 +495,13 @@ t280.out.m.1 <- read.table("../output/m.t280.1.parms.txt", sep = ",", header=TRU
 t300.out.m.1 <- read.table("../output/m.t300.1.parms.txt", sep = ",", header=TRUE)
 t1000.out.m.1 <- read.table("../output/m.jcvi.t1000.1.parms.txt", sep = ",", header=TRUE)
 
-treats.m.1 <- read.csv("../data/retry/treatments_batch1_m.csv")
+treats.m.1 <- read.csv("../data/treatments_batch1_m.csv")
 treats.m.1[rep(seq_len(nrow(treats.m.1)), each = 19), ]
 
 
 # M: bioreplicate 2 plate
 
-m.b2 <- read.csv("../data/retry/batch_M_2_rerun.csv")
+m.b2 <- read.csv("../data/batch_M_2.csv")
 
 # Change times to numeric
 m.b2$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.b2$Time))
@@ -530,44 +530,44 @@ jcvi <-  m.b2[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-m.t0.2 <- growth.modGomp(input = m.0, output.name = "m.t0.2.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-m.t10.2 <- growth.modGomp(input = m.10, output.name = "m.t10.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t20.2  <- growth.modGomp(input = m.20, output.name = "m.t20.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t30.2  <- growth.modGomp(input = m.30, output.name = "m.t30.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t40.2  <- growth.modGomp(input = m.40, output.name = "m.t40.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t50.2  <- growth.modGomp(input = m.50, output.name = "m.t50.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t60.2  <- growth.modGomp(input = m.60, output.name = "m.t60.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t80.2  <- growth.modGomp(input = m.80, output.name = "m.t80.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t100.2  <- growth.modGomp(input = m.100, output.name = "m.t100.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t120.2  <- growth.modGomp(input = m.120, output.name = "m.t120.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t140.2  <- growth.modGomp(input = m.140, output.name = "m.t140.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t160.2  <- growth.modGomp(input = m.160, output.name = "m.t160.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t200.2  <- growth.modGomp(input = m.200, output.name = "m.t200.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t220.2  <- growth.modGomp(input = m.220, output.name = "m.t220.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t240.2  <- growth.modGomp(input = m.240, output.name = "m.t240.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t260.2  <- growth.modGomp(input = m.260, output.name = "m.t260.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t280.2  <- growth.modGomp(input = m.280, output.name = "m.t280.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t300.2  <- growth.modGomp(input = m.300, output.name = "m.t300.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.jcvi.t1000.2  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.2.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# m.t0.2 <- growth.modGomp(input = m.0, output.name = "m.t0.2.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# m.t10.2 <- growth.modGomp(input = m.10, output.name = "m.t10.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t20.2  <- growth.modGomp(input = m.20, output.name = "m.t20.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t30.2  <- growth.modGomp(input = m.30, output.name = "m.t30.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t40.2  <- growth.modGomp(input = m.40, output.name = "m.t40.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t50.2  <- growth.modGomp(input = m.50, output.name = "m.t50.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t60.2  <- growth.modGomp(input = m.60, output.name = "m.t60.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t80.2  <- growth.modGomp(input = m.80, output.name = "m.t80.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t100.2  <- growth.modGomp(input = m.100, output.name = "m.t100.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t120.2  <- growth.modGomp(input = m.120, output.name = "m.t120.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t140.2  <- growth.modGomp(input = m.140, output.name = "m.t140.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t160.2  <- growth.modGomp(input = m.160, output.name = "m.t160.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t200.2  <- growth.modGomp(input = m.200, output.name = "m.t200.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t220.2  <- growth.modGomp(input = m.220, output.name = "m.t220.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t240.2  <- growth.modGomp(input = m.240, output.name = "m.t240.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t260.2  <- growth.modGomp(input = m.260, output.name = "m.t260.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t280.2  <- growth.modGomp(input = m.280, output.name = "m.t280.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t300.2  <- growth.modGomp(input = m.300, output.name = "m.t300.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.jcvi.t1000.2  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.2.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.m.2 <- read.table("../output/m.t0.2.parms.txt", sep = ",", header=TRUE)
 t10.out.m.2 <- read.table("../output/m.t10.2.parms.txt", sep = ",", header=TRUE)
@@ -589,13 +589,13 @@ t280.out.m.2 <- read.table("../output/m.t280.2.parms.txt", sep = ",", header=TRU
 t300.out.m.2 <- read.table("../output/m.t300.2.parms.txt", sep = ",", header=TRUE)
 t1000.out.m.2 <- read.table("../output/m.jcvi.t1000.2.parms.txt", sep = ",", header=TRUE)
 
-treats.m.2 <- read.csv("../data/retry/treatments_batch2_rerun_M.csv")
+treats.m.2 <- read.csv("../data/treatments_batch2_rerun_M.csv")
 treats.m.2[rep(seq_len(nrow(treats.m.2)), each = 18), ]
 
 
 # M: bioreplicate 3 plate
 
-m.b3 <- read.csv("../data/retry/batch_m_3.csv")
+m.b3 <- read.csv("../data/batch_m_3.csv")
 
 # Change times to numeric
 m.b3 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.b3 $Time))
@@ -624,44 +624,44 @@ jcvi <-  m.b3[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-m.t0.3 <- growth.modGomp(input = m.0, output.name = "m.t0.3.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-m.t10.3 <- growth.modGomp(input = m.10, output.name = "m.t10.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t20.3  <- growth.modGomp(input = m.20, output.name = "m.t20.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t30.3  <- growth.modGomp(input = m.30, output.name = "m.t30.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t40.3  <- growth.modGomp(input = m.40, output.name = "m.t40.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t50.3  <- growth.modGomp(input = m.50, output.name = "m.t50.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t60.3  <- growth.modGomp(input = m.60, output.name = "m.t60.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t80.3  <- growth.modGomp(input = m.80, output.name = "m.t80.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t100.3  <- growth.modGomp(input = m.100, output.name = "m.t100.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t120.3  <- growth.modGomp(input = m.120, output.name = "m.t120.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t140.3  <- growth.modGomp(input = m.140, output.name = "m.t140.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t160.3  <- growth.modGomp(input = m.160, output.name = "m.t160.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t200.3  <- growth.modGomp(input = m.200, output.name = "m.t200.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t220.3  <- growth.modGomp(input = m.220, output.name = "m.t220.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t240.3  <- growth.modGomp(input = m.240, output.name = "m.t240.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t260.3  <- growth.modGomp(input = m.260, output.name = "m.t260.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t280.3  <- growth.modGomp(input = m.280, output.name = "m.t280.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t300.3  <- growth.modGomp(input = m.300, output.name = "m.t300.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.jcvi.t1000.3  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.3.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# m.t0.3 <- growth.modGomp(input = m.0, output.name = "m.t0.3.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# m.t10.3 <- growth.modGomp(input = m.10, output.name = "m.t10.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t20.3  <- growth.modGomp(input = m.20, output.name = "m.t20.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t30.3  <- growth.modGomp(input = m.30, output.name = "m.t30.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t40.3  <- growth.modGomp(input = m.40, output.name = "m.t40.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t50.3  <- growth.modGomp(input = m.50, output.name = "m.t50.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t60.3  <- growth.modGomp(input = m.60, output.name = "m.t60.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t80.3  <- growth.modGomp(input = m.80, output.name = "m.t80.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t100.3  <- growth.modGomp(input = m.100, output.name = "m.t100.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t120.3  <- growth.modGomp(input = m.120, output.name = "m.t120.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t140.3  <- growth.modGomp(input = m.140, output.name = "m.t140.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t160.3  <- growth.modGomp(input = m.160, output.name = "m.t160.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t200.3  <- growth.modGomp(input = m.200, output.name = "m.t200.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t220.3  <- growth.modGomp(input = m.220, output.name = "m.t220.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t240.3  <- growth.modGomp(input = m.240, output.name = "m.t240.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t260.3  <- growth.modGomp(input = m.260, output.name = "m.t260.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t280.3  <- growth.modGomp(input = m.280, output.name = "m.t280.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t300.3  <- growth.modGomp(input = m.300, output.name = "m.t300.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.jcvi.t1000.3  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.3.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.m.3 <- read.table("../output/m.t0.3.parms.txt", sep = ",", header=TRUE)
 t10.out.m.3 <- read.table("../output/m.t10.3.parms.txt", sep = ",", header=TRUE)
@@ -683,13 +683,13 @@ t280.out.m.3 <- read.table("../output/m.t280.3.parms.txt", sep = ",", header=TRU
 t300.out.m.3 <- read.table("../output/m.t300.3.parms.txt", sep = ",", header=TRUE)
 t1000.out.m.3 <- read.table("../output/m.jcvi.t1000.3.parms.txt", sep = ",", header=TRUE)
 
-treats.m.3 <- read.csv("../data/retry/treatments_batch3_M.csv")
+treats.m.3 <- read.csv("../data/treatments_batch3_M.csv")
 treats.m.3[rep(seq_len(nrow(treats.m.3)), each = 19), ]
 
 
 # M: bioreplicate 4 plate
 
-m.b4 <- read.csv("../data/retry/batch_M_4.csv")
+m.b4 <- read.csv("../data/batch_M_4.csv")
 
 # Change times to numeric
 m.b4 $Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.b4 $Time))
@@ -718,44 +718,44 @@ jcvi <-  m.b4[,c(1,11,21,31)]
 
 # Run Gompertz (only need to run once then comment out)
 
-m.t0.4 <- growth.modGomp(input = m.0, output.name = "m.t0.4.parms",
-              synergy = F, temp = F, smooth = T, trim = T)
-m.t10.4 <- growth.modGomp(input = m.10, output.name = "m.t10.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t20.4  <- growth.modGomp(input = m.20, output.name = "m.t20.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t30.4  <- growth.modGomp(input = m.30, output.name = "m.t30.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t40.4  <- growth.modGomp(input = m.40, output.name = "m.t40.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t50.4  <- growth.modGomp(input = m.50, output.name = "m.t50.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t60.4  <- growth.modGomp(input = m.60, output.name = "m.t60.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t80.4  <- growth.modGomp(input = m.80, output.name = "m.t80.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t100.4  <- growth.modGomp(input = m.100, output.name = "m.t100.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t120.4  <- growth.modGomp(input = m.120, output.name = "m.t120.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t140.4  <- growth.modGomp(input = m.140, output.name = "m.t140.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t160.4  <- growth.modGomp(input = m.160, output.name = "m.t160.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t200.4  <- growth.modGomp(input = m.200, output.name = "m.t200.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t220.4  <- growth.modGomp(input = m.220, output.name = "m.t220.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t240.4  <- growth.modGomp(input = m.240, output.name = "m.t240.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t260.4  <- growth.modGomp(input = m.260, output.name = "m.t260.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t280.4  <- growth.modGomp(input = m.280, output.name = "m.t280.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.t300.4  <- growth.modGomp(input = m.300, output.name = "m.t300.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.jcvi.t1000.4  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.4.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+# m.t0.4 <- growth.modGomp(input = m.0, output.name = "m.t0.4.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+# m.t10.4 <- growth.modGomp(input = m.10, output.name = "m.t10.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t20.4  <- growth.modGomp(input = m.20, output.name = "m.t20.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t30.4  <- growth.modGomp(input = m.30, output.name = "m.t30.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t40.4  <- growth.modGomp(input = m.40, output.name = "m.t40.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t50.4  <- growth.modGomp(input = m.50, output.name = "m.t50.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t60.4  <- growth.modGomp(input = m.60, output.name = "m.t60.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t80.4  <- growth.modGomp(input = m.80, output.name = "m.t80.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t100.4  <- growth.modGomp(input = m.100, output.name = "m.t100.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t120.4  <- growth.modGomp(input = m.120, output.name = "m.t120.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t140.4  <- growth.modGomp(input = m.140, output.name = "m.t140.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t160.4  <- growth.modGomp(input = m.160, output.name = "m.t160.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t200.4  <- growth.modGomp(input = m.200, output.name = "m.t200.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t220.4  <- growth.modGomp(input = m.220, output.name = "m.t220.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t240.4  <- growth.modGomp(input = m.240, output.name = "m.t240.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t260.4  <- growth.modGomp(input = m.260, output.name = "m.t260.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t280.4  <- growth.modGomp(input = m.280, output.name = "m.t280.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.t300.4  <- growth.modGomp(input = m.300, output.name = "m.t300.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
+# m.jcvi.t1000.4  <- growth.modGomp(input = jcvi, output.name = "m.jcvi.t1000.4.parms",
+#                synergy = F, temp = F, smooth = T, trim = T)
 
 t0.out.m.4 <- read.table("../output/m.t0.4.parms.txt", sep = ",", header=TRUE)
 t10.out.m.4 <- read.table("../output/m.t10.4.parms.txt", sep = ",", header=TRUE)
@@ -777,7 +777,7 @@ t280.out.m.4 <- read.table("../output/m.t280.4.parms.txt", sep = ",", header=TRU
 t300.out.m.4 <- read.table("../output/m.t300.3.parms.txt", sep = ",", header=TRUE)
 t1000.out.m.4 <- read.table("../output/m.jcvi.t1000.3.parms.txt", sep = ",", header=TRUE)
 
-treats.m.4 <- read.csv("../data/retry/treatments_batch4_M.csv")
+treats.m.4 <- read.csv("../data/treatments_batch4_M.csv")
 treats.m.4[rep(seq_len(nrow(treats.m.4)), each = 19), ]
 ```
 
@@ -1237,7 +1237,7 @@ legend(1100, 32.5, "Minimal", pch = 21, pt.bg = "red",
 
 # Add non-minimal points
 plot(jitter(ts.nm$gen,1), ts.nm$A, xlim = c(-10, 2010), 
-     ylim = c(-0.1, 1.1), type = "p", pch = 21, bg = "white", 
+     ylim = c(-0.1, 1.25), type = "p", pch = 21, bg = "white", 
      col = "white", cex = 1.25, ylab = "", xlab = "", 
      cex.lab = 1.25, las = 1, lwd = 2, yaxt = "n", xaxt = "n")
 box(lwd=2)
