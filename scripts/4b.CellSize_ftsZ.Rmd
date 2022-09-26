@@ -34,8 +34,9 @@ size.raw <-read.csv("~/GitHub/MinimalCell/datafiles/SEM_Stein_cases.csv")
 
 size.raw <- as_tibble(size.raw)
 colnames(size.raw) <- c("strain", "timepoint", "sub.strain", "diameter")
-size.raw<-mutate(size.raw, volume = 4/3*pi*(diameter/2)^3)
-size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), sem = sem(diameter), mean.v=mean(volume),sem.v=sem(volume))
+size.raw <- mutate(size.raw, volume = 4/3*pi*(diameter/2)^3)
+size <- size.raw %>% group_by(strain, timepoint) %>% summarise(mean = mean(diameter), 
+                    sem = sem(diameter), mean.v=mean(volume),sem.v=sem(volume))
 size$strain <- as.factor(size$strain)
 size$timepoint <- as.factor(size$timepoint)
 
