@@ -234,13 +234,39 @@ box(lwd = 2)
 points(jitter(rep(size$time.x[3],length(min.anc.rand)), amount = 0.5), min.anc.rand,
        pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
 
-# Add non-minimal evolved: resmapled points
-points(jitter(rep(size$time.x[2],dim(nmin.evo.rand)[1]), amount = 0.25), nmin.evo.rand$diam,
-       pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+# # Add non-minimal evolved: resmapled points
+
+# points(jitter(rep(size$time.x[2],dim(nmin.evo.rand)[1]), amount = 0.25), nmin.evo.rand$diam,
+#        pch = 21, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[2],length(nmin.evo.rand.s1_1)), amount = 0.25), nmin.evo.rand.s1_1,
+       pch = 22, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[2],length(nmin.evo.rand.s1_3)), amount = 0.25), nmin.evo.rand.s1_3,
+       pch = 23, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[2],length(nmin.evo.rand.s1_4)), amount = 0.25), nmin.evo.rand.s1_4,
+       pch = 24, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[2],length(nmin.evo.rand.s1_6)), amount = 0.25), nmin.evo.rand.s1_6,
+       pch = 25, bg = "lightblue", col = "lightblue", lwd = 2, cex = 0.75)
 
 # Add minimal evolved: resmapled points
-points(jitter(rep(size$time.x[4],dim(nmin.evo.rand)[1]), amount = 0.25), min.evo.rand$diam,
-       pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+# points(jitter(rep(size$time.x[4],dim(nmin.evo.rand)[1]), amount = 0.25), min.evo.rand$diam,
+#        pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[4],length(min.evo.rand.B_1)), amount = 0.25), min.evo.rand.B_1,
+       pch = 22, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[4],length(min.evo.rand.B_2)), amount = 0.25), min.evo.rand.B_2,
+       pch = 23, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[4],length(min.evo.rand.B_3)), amount = 0.25), min.evo.rand.B_3,
+       pch = 24, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
+
+points(jitter(rep(size$time.x[4],length(min.evo.rand.B_5)), amount = 0.25), min.evo.rand.B_5,
+       pch = 25, bg = "pink", col = "pink", lwd = 2, cex = 0.75)
 
 # Add error bars
 
