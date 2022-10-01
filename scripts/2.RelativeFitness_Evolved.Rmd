@@ -62,25 +62,30 @@ rel.fit.min  <- filter(rel.fit, strain== "Minimal") %>%
 rel.fit.anc  <- filter(rel.fit.raw, timepoint == "Ancestor") %>%
   dplyr::select(strain, W_1.0)
 
-# Test for equal variance: P = p-value = 0.04398 --> non-homogenous variance
+# Test for equal variance: P = p-value = 0.0462 --> non-homogenous variance
 equal.var.anc <-var.test(rel.fit.anc$W_1.0[1:3], rel.fit.anc$W_1.0[4:7])
 
 test.anc <- t.test(rel.fit.anc$W_1.0 ~ rel.fit.anc$strain, var.equal = F)
 
 # Differences in relative fitness between evolved (wt vs. min)?
-# Answer = Yes: t = 4.7586, df = 6, p-value = 0.003131
+# Answer = Yes: t = 11.471, df = 3.19, p-value = 0.001068
 # After evolution, minimization has 48 % reduction in fitness
 
 rel.fit.evo  <- filter(rel.fit.raw, timepoint == "Evolved") %>%
   dplyr::select(strain, W_1.0)
 
-# Test for equal variance: P = 0.24 --> homogeneous variance
+# Test for equal variance: P = 0.09 --> homogeneous variance
 equal.var.evo <-var.test(rel.fit.evo$W_1.0[1:4], rel.fit.evo$W_1.0[5:8])
 
 test.evo <- t.test(rel.fit.evo$W_1.0 ~ rel.fit.evo$strain, var.equal = T)
 
-# Difference in fitness change between minimal and wt over time?
-# Answer = No: t = -0.3975, df = 6, p-value = 0.7048
+# Difference in fitness between minimal and wt after evolution?
+# Answer = Yes: t = 5.501, df = 6, p-value = 0.001068
+
+test.minvswtanc <- t.test(x=rel.fit.evo$W_1.0[5:8], mu = 1, alternative = 't')
+test.minvswtanc
+#Difference in fitness between evolved minimal cel popns and non-min anc fitness?
+#No. p = .92
 
 wt.w  <- filter(rel.fit.evo, strain == "JCVI-syn1.0") %>%
   dplyr::select(W_1.0)
@@ -97,6 +102,9 @@ colnames(delta.w) <-c("Non-minimal", "Minimal")
 equal.var.delta <- var.test(delta.w$"Non-minimal", delta.w$Minimal)
 
 test.delta <- t.test(delta.w$"Non-minimal", delta.w$Minimal, var.equal = T)
+
+#Does the magnitude of fitness-increase differ between the minimal and the non-minimal populations?
+#No, but it's close, t= 2.16, df=6, p=0.07441
 ```
 
 # Initiate figure
@@ -109,7 +117,7 @@ par(mar = c(7, 7, 5, 7))
 # initiate plot with points for syn3B ancestor (minimal)
 plot(jitter(rep(1, length(rel.fit.anc$W_1.0[1:3])), amount = 0.5), 
      rel.fit.anc$W_1.0[1:3], ylim = c(0.25, 1.65), xlim = c(0, 4.55), 
-     pch = 21, bg = "red", col = "red", lwd = 2, cex = 1.3, yaxt = "n", 
+     pch = 21, bg = "pink", col = "pink", lwd = 2, cex = 1.3, yaxt = "n", 
       xaxt = "n", cex.lab = 1.5, las = 1,  ylab = "", xlab = "")
 
 box(lwd=2)
@@ -119,12 +127,12 @@ points(jitter(rep(1, length(rel.fit.anc$W_1.0[4:7])), amount = 0.5),
        rel.fit.anc$W_1.0[4:7], pch = 21, bg = "lightblue", col = "lightblue", 
        lwd = 2, cex = 1.3)
 
-# add points for for syn 3B evolved (minimal)
+# add points for syn 3B evolved (minimal)
 points(jitter(rep(3, length(rel.fit.evo$W_1.0[5:8])), amount = 0.4), 
        rel.fit.evo$W_1.0[5:8], pch = 21, bg = "pink", col = "pink", 
        lwd = 2, cex = 1.3)
 
-# add points for for syn 3B evolved (non-minimal)
+# add points for syn1.0 evolved (non-minimal)
 points(jitter(rep(3, length(rel.fit.evo$W_1.0[1:4])), amount = 0.4), 
        rel.fit.evo$W_1.0[1:4], pch = 21, bg = "lightblue", col = "lightblue", 
        lwd = 2, cex = 1.3)
