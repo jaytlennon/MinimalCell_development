@@ -24,6 +24,9 @@ require("dplyr")
 require("grid")
 require("gtools")
 require("MPN")
+require("nlme")
+require("MuMIn")
+source("../bin/modified_Gomp.R")
 library(tidyverse)
 LL.95 <- function(x) t.test(x)$conf.int[1]
 UL.95 <- function(x) t.test(x)$conf.int[2]
@@ -79,8 +82,6 @@ plot(nm.mpn.out[,1],log10(nm.mpn.out[,3]))
 ```{r}
 # Load data and run Gompertz
 
-# Nonminimal plate
-
 nm.plate <- read.csv("../data/mpn.platereader.NM.csv")
 m.plate <- read.csv("../data/mpn.platereader.M.csv")
 
@@ -92,14 +93,29 @@ m.plate$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.plate$Time))
 head(m.plate, header = T)
 
 # Pull out wells over time
-nm.wells <-  nm.b1[,c(1,2,12,22)]
-m.wells <-  nm.b1[,c(1,2,12,22)]
+nm.wells <-  nm.plate[,c(1:48)]
+m.wells <-  m.plate[,c(1,11:16,19:24,27:32,36:40,43:48,52:56)]
 
 # Run Gompertz (only need to run once then comment out)
 
-nm.curves <- growth.modGomp(input = nm.wells, output.name = "nm.platereader.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
-m.curves <- growth.modGomp(input = m.wells, output.name = "m.platereader.parms",
-               synergy = F, temp = F, smooth = T, trim = T)
+#nm.curves <- growth.modGomp(input = nm.wells, output.name = "nm.platereader.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+#m.curves <- growth.modGomp(input = m.wells, output.name = "m.platereader.parms",
+#               synergy = F, temp = F, smooth = T, trim = T)
+
+nm.curves.out <- read.table("../output/nm.platereader.parms.txt", 
+                            sep = ",", header=TRUE)
+
+# find Curve with min and max umax. 
+# fit Gompertz with those parameters
+# plot polygons
+# plot lines for umax, lag, and yield...for the averages of all Curves
+# add MPN data on second y axis
+# MPN observations should fall within range
+
+m.curves.out <- read.table("../output/m.platereader.parms.txt", 
+                            sep = ",", header=TRUE)
+
+#https://r-charts.com/evolution/area-between-lines/
 ```
 
