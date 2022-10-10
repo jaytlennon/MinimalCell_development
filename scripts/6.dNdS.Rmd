@@ -152,7 +152,7 @@ mtext(expression(italic("dN/dS")), side = 2,
       outer = TRUE, cex = 1.5, line = -3.0)
 
 # Add P-values
-mtext(expression(~italic("P")~"= 0.488"), line = -2.0, cex = 1.0, at = 0.5)
+#mtext(expression(~italic("P")~"= 0.488"), line = -2.0, cex = 1.0, at = 0.5)
 
 # Close Plot Device
 dev.off()
