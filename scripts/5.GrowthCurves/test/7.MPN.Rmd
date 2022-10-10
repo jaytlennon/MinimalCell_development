@@ -1,0 +1,105 @@
+---
+title: "Evolution of the minimal cell"
+author: "Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+   - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Phenol red growth curves: palte reader and most probable number
+
+## Clear workspace and set directory
+```{r setup}
+rm(list=ls())
+getwd()
+setwd("~/Github/MinimalCell/scripts/5.GrowthCurves/test")
+```
+
+## Load packages and functions
+```{r}
+require("png")
+require("dplyr")
+require("grid")
+require("gtools")
+require("MPN")
+library(tidyverse)
+LL.95 <- function(x) t.test(x)$conf.int[1]
+UL.95 <- function(x) t.test(x)$conf.int[2]
+sem <- function(x) sqrt(var(x)/length(x))
+cv <- function(x) sd(x)/sqrt(mean(x))
+```
+
+# MPN data
+
+```{r}
+# experiment based on most probable number
+# six dilution-to-extinction series of four biological replicates over a growth curve
+data <- read.csv("../data/mpn.csv")
+
+# mpn parameters
+# tubes <- rep(6, 12)# ni = number of "tubes" or aliquots of same dilution
+# d <- 10^(-1:-11)
+# d <- 10^(0:-11) # volume in microliters
+# v <- 20 * d #zi transfer volume of original culture
+
+data <- data  %>%
+  mutate(vol = dilutions * 20, .before = pos) %>%
+  mutate(tubes = rep(6, nrow(data)), .before = pos)
+
+# Minimal
+m.group <- filter(data, cell == "min") %>%
+  group_by(time, biorep) %>%
+  dplyr::summarise(MPN = mpn(pos, tubes, vol))
+
+# pull out each mpn estimate from function
+m.mpn.out <- m.group[seq(1, nrow(m.group), 9), ] 
+
+# convert, transpose, and plot mpn values 
+m.mpn.out <- t(do.call(rbind.data.frame, m.mpn.out))
+plot(m.mpn.out[,1],log10(m.mpn.out[,3]))
+
+
+# Non-minimal
+nm.group <- filter(data, cell == "nm") %>%
+  group_by(time, biorep) %>%
+  dplyr::summarise(MPN = mpn(pos, tubes, vol))
+
+# pull out each mpn estimate from function
+nm.mpn.out <- nm.group[seq(1, nrow(nm.group), 9), ] 
+
+# convert, transpose, and plot mpn values 
+nm.mpn.out <- t(do.call(rbind.data.frame, nm.mpn.out))
+plot(nm.mpn.out[,1],log10(nm.mpn.out[,3]))
+```
+
+# Plate reader data 
+
+```{r}
+# Load data and run Gompertz
+
+# Nonminimal plate
+
+nm.plate <- read.csv("../data/mpn.platereader.NM.csv")
+m.plate <- read.csv("../data/mpn.platereader.M.csv")
+
+# Change times to numeric
+nm.plate$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.plate$Time))
+head(nm.plate, header = T)
+
+m.plate$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", m.plate$Time))
+head(m.plate, header = T)
+
+# Pull out wells over time
+nm.wells <-  nm.b1[,c(1,2,12,22)]
+m.wells <-  nm.b1[,c(1,2,12,22)]
+
+# Run Gompertz (only need to run once then comment out)
+
+nm.curves <- growth.modGomp(input = nm.wells, output.name = "nm.platereader.parms",
+               synergy = F, temp = F, smooth = T, trim = T)
+m.curves <- growth.modGomp(input = m.wells, output.name = "m.platereader.parms",
+               synergy = F, temp = F, smooth = T, trim = T)
+```
+
