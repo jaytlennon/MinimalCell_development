@@ -64,7 +64,7 @@ m.mpn.out <- m.group[seq(1, nrow(m.group), 9), ]
 
 # Convert,transpose, and plot MPN values 
 m.mpn.out <- t(do.call(rbind.data.frame, m.mpn.out))
-plot(m.mpn.out[,1],log10(m.mpn.out[,3]))
+#plot(m.mpn.out[,1],log10(m.mpn.out[,3]))
 
 # Non-minimal
 nm.group <- filter(data, cell == "nm") %>%
@@ -76,7 +76,7 @@ nm.mpn.out <- nm.group[seq(1, nrow(nm.group), 9), ]
 
 # Convert, transpose, and plot MPN values 
 nm.mpn.out <- t(do.call(rbind.data.frame, nm.mpn.out))
-plot(nm.mpn.out[,1],log10(nm.mpn.out[,3]))
+#plot(nm.mpn.out[,1],log10(nm.mpn.out[,3]))
 ```
 
 # Plate reader data 
@@ -118,11 +118,15 @@ nm.umax.range <- nm.curves.out %>%
   filter(umax == min(umax) | umax == max(umax))
 nm.mean.parms <- nm.curves.out %>%
   plyr::summarise(b0 = mean(b0), A = mean(A), umax = mean(umax), lag = mean(L))
+nm.cv.parms <- nm.curves.out %>%
+  plyr::summarise(cv.A = cv(A), cv.umax = cv(umax), cv.lag = cv(L))
   
 m.umax.range <- m.curves.out %>%
   filter(umax == min(umax) | umax == max(umax))
 m.mean.parms <- m.curves.out %>%
   dplyr::summarise(b0 = mean(b0), A = mean(A), umax = mean(umax), lag = mean(L))
+m.cv.parms <- m.curves.out %>%
+  plyr::summarise(cv.A = cv(A), cv.umax = cv(umax), cv.lag = cv(L))
 
 # Calculate Gompertz lines to plot
 t <- seq(1, 28, 0.5)
