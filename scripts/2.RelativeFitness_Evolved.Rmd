@@ -197,3 +197,21 @@ img <- readPNG("~/GitHub/MinimalCell/figures/Fig2.png")
 
 grid.raster(img)
 ```
+
+# Demonstrate the equations to calculate relative fitness
+```{r}
+# Load data
+calcsheet <-read.csv("~/GitHub/MinimalCell/datafiles/Competition_2019.csv")
+calcsheet <- as_tibble(calcsheet)
+
+# Calculate the T0 abundance of the strain-of-interest by subtracting background noise
+calcsheet2<-mutate(calcsheet, T0_SOI_calculated=T0_SOI_raw-(T0_Cax_neg/T0_Cax_time*T0_Sampling_time))
+# Calc the T24 abundance of the SOI by subtracting background noise. Multiply by 100 to account for dilution difference.
+calcsheet3<-mutate(calcsheet2, T24_SOI_calculated=T24_SOI_raw-(T24_Cax_neg/T24_Cax_time*T24_Sampling_time*100))
+# Calculate fitness over 24 hr relative to the labeled competitor strain
+calcsheet4<-mutate(calcsheet3, W_vs_mCherry_calculated=log(T24_SOI_calculated/T0_SOI_calculated)/log(T24_mCherry/T0_mCherry))
+# Divide by the avg fitness of the syn1.0 ancestor
+calcsheet5<-mutate(calcsheet4, W_vs_syn1.0anc_calculated= W_vs_mCherry_calculated/1.479025287)
+# Divide by the avg fitness of the syn3B ancestor
+calcsheet6<-mutate(calcsheet5, W_vs_syn3Banc_calculated= W_vs_mCherry_calculated/0.69419982)
+```

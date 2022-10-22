@@ -201,3 +201,38 @@ img <- readPNG("~/GitHub/MinimalCell/figures/FigExt3.png")
 
 grid.raster(img)
 ```
+
+# Demonstrate the equations to calculate relative fitness
+```{r}
+# Load data
+calcsheet17 <-read.csv("~/GitHub/MinimalCell/datafiles/Competition_2021_strain17.strain16.csv")
+calcsheet17 <- as_tibble(calcsheet17)
+
+# Account for the 15 uL volume of inoculum
+calcsheet17_2<-mutate(calcsheet17, T0_mCherry_per_inoculated_V_calculated=T0_mCherry_raw_per_10_uL*1.5)
+# Account for the 165 uL or 285 uL volume of inoculum
+calcsheet17_3<-mutate(calcsheet17_2, T0_SOI_per_inoculated_V_calculated=T0_SOI_raw_per_10_uL*Inoculated_V)
+# Account for the difference in dilution factor at T24 sampling
+calcsheet17_4<-mutate(calcsheet17_3, T24_mCherry_calculated=T24_mCherry_raw*100)
+# Subtract background noise and multiply by 100 to account for difference in dilution
+calcsheet17_5<-mutate(calcsheet17_4, T24_SOI_calculated=(T24_SOI_raw-Amount_false_neg_to_subtract_as_proportion_of_true_pos_mCherry_cells*T24_mCherry_raw)*100)
+# Calculate fitness relative to the labeled competitor strain
+calcsheet17_6<-mutate(calcsheet17_5, W_W_calculated = log(T24_SOI_calculated/T0_SOI_per_inoculated_V_calculated)/log(T24_mCherry_calculated/T0_mCherry_per_inoculated_V_calculated))
+
+
+calcsheet19 <-read.csv("~/GitHub/MinimalCell/datafiles/Competition_2021_strain19.strain8.csv")
+calcsheet19 <- as_tibble(calcsheet19)
+
+# Get the false negatives as a proportion of the true positives
+calcsheet19_2<-mutate(calcsheet19, ratio_false_negs_per_true_pos_calculated=mCherry_false_negs_avg/mCherry_true_posvs_avg)
+# Account for the 40 uL volume of inoculum
+calcsheet19_3<-mutate(calcsheet19_2, T0_mCherry_calculated=T0_mCherry_raw*4)
+# Account for the 20 uL volume of inoculum
+calcsheet19_4<-mutate(calcsheet19_3, T0_SOI_calculated=T0_SOI_raw*2)
+# Multiply by 100 to account for difference in dilution
+calcsheet19_5<-mutate(calcsheet19_4, T24_mCherry_calculated=T24_mCherry_raw*100)
+# Subtract background noise and multiply by 100 to account for difference in dilution
+calcsheet19_6<-mutate(calcsheet19_5, T24_SOI_calculated= (T24_SOI_raw-(ratio_false_negs_per_true_pos_calculated*T24_mCherry_raw))*100)
+# Calculate fitness relative to the labeled competitor strain
+calcsheet19_7<-mutate(calcsheet19_6, W_W_calculated = log(T24_SOI_calculated/T0_SOI_calculated)/log(T24_mCherry_calculated/T0_mCherry_calculated))
+```
