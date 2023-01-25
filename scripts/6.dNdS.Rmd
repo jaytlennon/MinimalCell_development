@@ -37,6 +37,7 @@ colnames(dnds)[2] <- "strain"
 
 # Convert strain to factor
 dnds$strain <- as.factor(dnds$strain)
+dnds<-dnds[1:8,]
 
 # Add x-values for plotting
 x <- c(1,1,1,1,3,3,3,3)
@@ -68,7 +69,7 @@ dndds.nonmin <- read.csv("~/GitHub/MinimalCell/datafiles/non-minimal.DNDS_freqs.
 ## Essential genes in the minimal vs. non-minal cell
 ```{r}
 equal.var <- var.test(dnds.wt$dnds, dnds.min$dnds)
-# Test for equal variance : P = 0.170 --> homogeneous variance
+# Test for equal variance : P = 0.392 --> homogeneous variance
 
 # Non-minimal vs. minimal 
 dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative = 'two.sided')
@@ -76,11 +77,11 @@ dnds.ttest <- t.test(dnds.wt$dnds, dnds.min$dnds, var.equal = TRUE, alternative 
 
 # Non-minimal: dN/dS different from 1?
 dnds.nonmin.ttest <- t.test(dnds.wt$dnds, mu = 1, alternative ="two.sided")
-# Results: t = -0.3605, df = 3, p-value = 0.7425. Not different
+# Results: t = -0.34, df = 3, p-value = 0.7446. Not different
 
 # Minimal: dN/dS different from 1?
 dnds.min.ttest <- t.test(dnds.min$dnds, mu = 1, alternative ="two.sided")
-# Results: t = -3.3607, df = 3, p-value = 0.05496. Marginally less than 1.
+# Results: t = -0.92, df = 3, p-value = 0.4238. Not different from 1.
 
 # what if we remove the potential outlier?
 dnds.wt.noout <- dnds.wt %>%
