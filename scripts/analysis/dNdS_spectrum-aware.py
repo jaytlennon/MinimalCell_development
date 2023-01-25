@@ -11,9 +11,9 @@ import re, os,sys, math, operator,random, copy,collections; import numpy as np; 
 from itertools import groupby; import pprint as pp
 import matplotlib.pyplot as plt
 #%%
-def calc_targetsize(p=1/6,q=1/6,r=1/6,s=1/6,t=1/6,possATtoCG=0,possATtoGC=0,posstATtoTA=0,possCGtoGC=0,possCGtoTA=0,possGCtoTA=0):
+def calc_targetsize(p=1/6,q=1/6,r=1/6,s=1/6,t=1/6,possATtoCG=0,possATtoGC=0,possATtoTA=0,possCGtoGC=0,possCGtoTA=0,possGCtoTA=0):
     u=1-p-q-r-s-t
-    NorS=6*(p*possATtoCG + q*possATtoGC + r*possCGtoGC + s*possCGtoTA + t*possCGtoTA + u*possGCtoTA)
+    NorS=6*(p*possATtoCG + q*possATtoGC + r*possATtoTA + s*possCGtoGC + t*possCGtoTA + u*possGCtoTA)
     return NorS
 
 def calc_dNdS(N=1,S=1,DN=0,DS=0):
