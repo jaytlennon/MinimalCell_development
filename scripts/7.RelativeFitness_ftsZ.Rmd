@@ -81,7 +81,6 @@ t.test(c(filter(rel.fit.raw, strain == "JCVI-syn1.0", Mutation=="ftsZ")$W_1.0),
        c(filter(rel.fit.raw, strain == "JCVI-syn3B",Mutation=="ftsZ")$W_1.0),
        paired = F,alternative = "two.sided", mu = 0, var.equal = F)
 # Results: t = 11.287, df = 6.4972, p-value = 1.654e-05
-# Minimization led to 65% or 2.9-fold reduction in fitness
 # ftsZ mutant on non-min is 200% or 3.13-fold larger than ftsZ mutant on min
 
 
