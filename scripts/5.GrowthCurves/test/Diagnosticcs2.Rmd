@@ -1,0 +1,74 @@
+```{r}
+rm(list=ls())
+getwd()
+setwd("~/GitHub/BiofilmTrait")
+```
+
+Load package for writing figures
+```{r}
+require("png")
+require("bbmle")
+rmse <- function(x) sqrt(mean(x)^2) # residuals
+```
+
+## FIG. 4: RESPIRATION VS. WATER POTENTIAL
+
+Load data and run MLE analyses for multiple model comparisons
+
+```{r}
+setwd("~/GitHub/BiofilmTrait")
+resp.raw <- read.csv("./data/Biofilm_Respiration.csv", header = TRUE, sep =",")
+resp.trunc <- resp.raw[,1:3] # gets rid of trailing data
+resp.uneg <- resp.raw[,1]*-1 # convert MPa to positive values
+resp <- data.frame(resp.uneg,resp.trunc) # add uneg to dataframe
+colnames(resp)[1] <- "Wp" # "Wp" = uneg MPa (positive)
+
+
+#starting values for niche model
+A = 35 # Maximum respiratoin
+X = 0 # Optimum MPa
+B = 0.05 # Niche Breadth
+T = 1 # Tau, shape kernel
+Z = 7.5 # Error
+
+fit4 <- mle2(R ~ dnorm(mean = a*exp(-((abs(W + x))/b)^t), sd = z), 
+             method = "L-BFGS-B",lower = c(x = 0.0000, b = 0.001), 
+             start = list(a = A, x = X, b = B,t = T, z = Z), 
+             data = resp, parameters = c(x ~ Strain)) 
+             # opt water differs between strain 
+coef(fit4)
+predict(fit4)
+residuals(fit4)
+slotNames(fit4)
+
+resid.mle2 <- function(object, ...) {
+  # Extract the estimated parameters from the mle2 object
+  coef <- coef(object)
+  coef <- model@coef
+  
+  # Calculate the predicted values of the response variable
+  yhat <- predict(object, newdata = NULL, type = "response", ...)
+  
+  # Calculate the residuals (observed minus predicted)
+  residuals <- object@data$y - yhat
+  
+  return(residuals)
+}
+  
+ci.FI<-function(model){
+  #cfs<-coef(model)
+  cfs<-model@coef
+  ses<-sqrt(diag(vcov(model)))	# standard errors
+  lw<-cfs-1.96*ses
+  up<-cfs+1.96*ses
+  res<-cbind(lw,up)
+  dimnames(res)<-list(names(cfs),c("2.5 %","97.5 %"))	
+  res
+}
+
+> slotNames(fit4)
+ [1] "call"      "call.orig" "coef"      "fullcoef"  "vcov"      "min"       "details"   "minuslogl" "method"   
+[10] "data"      "formula"   "optimizer"
+
+
+```
