@@ -32,7 +32,8 @@ rel.fit.raw <-read.csv("~/GitHub/MinimalCell/datafiles/Interaction_data_fitness.
 rel.fit.raw <- as_tibble(rel.fit.raw)
 
 # Subset data
-rel.fit <- rel.fit.raw %>% group_by(timepoint, strain) %>% summarise(mean = mean(W_1.0), sem = sem(W_1.0))
+rel.fit <- rel.fit.raw %>% group_by(timepoint, strain) %>% 
+  summarise(mean = mean(W_1.0), sd = sd(W_1.0), sem = sem(W_1.0))
 
 # Set data as factors and rename levels
 rel.fit$strain <- as.factor(rel.fit$strain)
@@ -46,13 +47,13 @@ rel.fit <- data.frame(rel.fit, time.x)
 
 # Subset relative fitness by strain
 rel.fit.wt  <- filter(rel.fit, strain == "Non-minimal") %>%
-  dplyr::select(timepoint, mean, sem, time.x)
+  dplyr::select(timepoint, mean, sd, sem, time.x)
 
 rel.fit.min  <- filter(rel.fit, strain== "Minimal") %>%
-  dplyr::select(timepoint, mean, sem, time.x)
+  dplyr::select(timepoint, mean, sd, sem, time.x)
 ```
 
-## Tests significance
+## Test significance
 
 ```{r}
 # Differences in relative fitness between ancestors (wt vs. min)?
@@ -62,10 +63,12 @@ rel.fit.min  <- filter(rel.fit, strain== "Minimal") %>%
 rel.fit.anc  <- filter(rel.fit.raw, timepoint == "Ancestor") %>%
   dplyr::select(strain, W_1.0)
 
-# Test for equal variance: P = p-value = 0.0462 --> non-homogenous variance
+# Test for equal variance: P = p-value = 0.0462 --> non-homogeneous variance
 equal.var.anc <-var.test(rel.fit.anc$W_1.0[1:3], rel.fit.anc$W_1.0[4:7])
 
 test.anc <- t.test(rel.fit.anc$W_1.0 ~ rel.fit.anc$strain, var.equal = F)
+
+
 
 # Differences in relative fitness between evolved (wt vs. min)?
 # Answer = Yes: t = 11.471, df = 3.19, p-value = 0.001068
@@ -80,12 +83,16 @@ equal.var.evo <-var.test(rel.fit.evo$W_1.0[1:4], rel.fit.evo$W_1.0[5:8])
 test.evo <- t.test(rel.fit.evo$W_1.0 ~ rel.fit.evo$strain, var.equal = T)
 
 # Difference in fitness between minimal and wt after evolution?
-# Answer = Yes: t = 5.501, df = 6, p-value = 0.001068
+# Answer = Yes: t = 5.501, df = 6, p-value = 0.001513
 
+
+
+# Differences between fitness of evolved minimal cell and non-evolved ancestor?
 test.minvswtanc <- t.test(x=rel.fit.evo$W_1.0[5:8], mu = 1, alternative = 't')
 test.minvswtanc
-#Difference in fitness between evolved minimal cel popns and non-min anc fitness?
-#No. p = .92
+#Difference in fitness between evolved minimal and ancestral non-minimal fitness?
+# Answer = No: t = -0.11038, df = 3, p-value = 0.9191
+
 
 wt.w  <- filter(rel.fit.evo, strain == "JCVI-syn1.0") %>%
   dplyr::select(W_1.0)
@@ -103,9 +110,101 @@ equal.var.delta <- var.test(delta.w$"Non-minimal", delta.w$Minimal)
 
 test.delta <- t.test(delta.w$"Non-minimal", delta.w$Minimal, var.equal = T)
 
-#Does the magnitude of fitness-increase differ between the minimal and the non-minimal populations?
-#No, but it's close, t= 2.16, df=6, p=0.07441
+# Does the magnitude of fitness-increase differ between the minimal and the non-minimal populations?
+# No, but marginal: t = -2.1567, df = 6, p-value = 0.07441
+
+min.w.fix <- as.numeric(unlist(min.w))
+delta.mix  <- min.w.fix - rel.fit.wt[1,2]
+delta.mix.mean <- mean(delta.mix)
+delta.mix.sem <- sem(delta.mix)
+delta.mix.95.UL <- delta.mix.mean + qnorm(0.975) * delta.mix.sem
+delta.mix.95.LL <- delta.mix.mean + qnorm(0.025) * delta.mix.sem
+
+delta.min <- delta.w$Minimal
+delta.min.mean <- mean(delta.w$Minimal)
+delta.min.sem <- sem(delta.w$Minimal)
+delta.min.95.UL <- delta.min.mean + qnorm(0.975) * delta.min.sem
+delta.min.95.LL <- delta.min.mean + qnorm(0.025) * delta.min.sem
+
+delta.nmin <- delta.w$"Non-minimal"
+delta.nmin.mean <- mean(delta.w$"Non-minimal")
+delta.nmin.sem <- sem(delta.w$"Non-minimal")
+delta.nmin.95.UL <- delta.nmin.mean + qnorm(0.975) * delta.nmin.sem
+delta.nmin.95.LL <- delta.nmin.mean + qnorm(0.025) * delta.nmin.sem
+
+png(filename="~/GitHub/MinimalCell/figures/Fig2.Deltas.png",
+    width = 1200, height = 1200, res = 96*2) 
+
+par(mar = c(7, 7, 5, 7))
+
+delta.fig <- plot(jitter(rep(1, length(delta.mix)), amount = 0.1), 
+      delta.mix, ylim = c(-0.1, 0.7), xlim = c(0.5, 3.5), pch = 21, 
+      col = "lightgrey", bg = "lightgrey", lwd = 3.5, cex = 1.7, yaxt = "n", 
+      xaxt = "n", cex.lab = 2, cex.axis = 2, las = 1, ylab = "", xlab = "")
+      box(lwd = 2)
+      
+points(jitter(rep(2, length(delta.min)), amount = 0.1), delta.min, 
+       pch = 21, bg = "lightgrey", col = "lightgrey", lwd = 2, cex = 1.7)
+
+points(jitter(rep(3, length(delta.nmin)), amount = 0.1), delta.nmin, 
+       pch = 21, bg = "lightgrey", col = "lightgrey", lwd = 2, cex = 1.7)
+
+abline(h= 0, lty = 2, lwd = 1, col="grey")
+
+# Add mean  
+points(1, delta.mix.mean, pch = 21, col = "red", 
+       bg = "blue", lwd = 3, cex = 2)  
+points(2, delta.min.mean, pch = 21, col = "red", 
+       bg = "red", lwd = 2, cex = 2)
+points(3, delta.nmin.mean, pch = 21, col = "blue", 
+       bg = "blue", lwd = 2, cex = 2)
+
+
+box(lwd = 2)
+
+# Y-axis label # 
+mtext(expression('Delta W'), side = 2,
+      outer = FALSE, cex = 1.5, line = 3.5, adj = 0.5)
+
+mtext(expression('Ancestor-evolved comparison'), side = 1,
+      outer = TRUE, cex = 1.5, line = -2.5, adj = 0.5)
+
+# Major Axes
+axis(side = 2, lwd.ticks = 2, cex.axis = 1.25, las = 1,
+     labels = c("0.0", "0.2", "0.4", "0.6"), at = c(0, 0.2, 0.4, 0.6))
+axis(side = 4, lwd.ticks = 2, cex.axis = 1.5, las = 1,
+     at=c(-0.2, 0, 0.2, 0.4, 0.6), labels = F, tck = -0.05)
+axis(side = 1, lwd.ticks = 2, cex.axis = 1, las = 1,
+     labels = c("Min-NonMin", "Min-Min", "Nonmin-Nonmin" ), at = c(1, 2, 3))
+axis(side = 3, lwd.ticks = 2, cex.axis = 0.8, las = 1,
+     at = c(1, 2, 3), labels = F, tck = -0.05)
+
+# Add confidence intervals 
+arrows(x0 = 1, y0 = delta.mix.mean, y1 = delta.mix.95.UL, angle = 90,
+       length = 0.15, lwd = 2)
+arrows(x0 = 1, y0 = delta.mix.mean, y1 = delta.mix.95.LL, angle = 90,
+       length = 0.15, lwd = 2)
+
+arrows(x0 = 2, y0 = delta.min.mean, y1 = delta.min.95.UL, angle = 90,
+       length = 0.15, lwd = 2)
+arrows(x0 = 2, y0 = delta.min.mean, y1 = delta.min.95.LL, angle = 90,
+       length = 0.15, lwd = 2)
+
+arrows(x0 = 3, y0 = delta.nmin.mean, y1 = delta.min.95.UL, angle = 90,
+       length = 0.15, lwd = 2)
+arrows(x0 = 3, y0 = delta.nmin.mean, y1 = delta.nmin.95.LL, angle = 90,
+       length = 0.15, lwd = 2)
+
+# Close Plot Device
+dev.off()
+graphics.off()
+
+# Show Plot
+img <- readPNG("~/GitHub/MinimalCell/figures/Fig2.Deltas.png")
+
+grid.raster(img)
 ```
+
 
 # Initiate figure
 ```{r}

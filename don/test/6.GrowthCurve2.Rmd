@@ -1,0 +1,59 @@
+---
+title: "Evolution of the minimal cell - Growth Curves"
+author: "Jay T. Lennon"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+header-includes:
+  - \usepackage{array}
+output: pdf_document
+geometry: margin=2.54cm
+---
+
+## Clear workspace and set directory
+```{r setup}
+rm(list=ls())
+setwd("~/Github/MinimalCell/don/test")
+```
+
+## Load packages and functions
+```{r}
+require("dplyr")
+require("nlme")
+require("bbmle")
+source("../bin/modified_Gomp_diagnostic2.R")
+```
+
+# Load data and run Gompertz
+```{r}
+
+# NM: bioreplicate 1 plate
+
+# Load raw absorbance data from 96-well plate 
+# These are the meeasures of growth over time for one of the replicate populations
+nm.b1 <- read.csv("../data/batch_NM_1.csv") 
+
+# Change times to numeric
+nm.b1$Time <- as.numeric(sub("^(\\d+):(\\d+).*", "\\1.\\2", nm.b1 $Time))
+head(nm.b1, header = T)
+
+# Pull out technical replicates (n =3) for each evolutionary time point
+# Column 1 = time in hours
+# Example, "nm.10" = non-minimal cell replicate population 1 after 10 generations of evolution
+# Not included here, but there are 17 evolution time points on each of eight plates. 
+nm.0 <-  nm.b1[,c(1,2,12,22)]
+nm.10 <-  nm.b1[,c(1,32,41,50)]
+
+# Run Gompertz (a little slow)
+# See output folder for plots and parameters
+nm.t0.1 <- growth.modGomp(input = nm.0, output.name = "nm.t0.1.parms",
+               synergy = F, temp = F, smooth = T, trim = T)
+nm.t10.1 <- growth.modGomp(input = nm.10, output.name = "nm.t10.1.parms",
+                synergy = F, temp = F, smooth = T, trim = T)
+
+# Parameters
+t0.out.nm.1 <- read.table("../output/nm.t0.1.parms.txt", sep = ",", header=TRUE)
+t10.out.nm.1 <- read.table("../output/nm.t10.1.parms.txt", sep = ",", header=TRUE)
+
+# Match-up of experimental info
+treats.nm.1 <- read.csv("../data/treatments_batch1_NM.csv")
+treats.nm.1[rep(seq_len(nrow(treats.nm.1)), each = 19), ]
+```
