@@ -83,8 +83,8 @@ anc.t.test <- t.test(x = s1_anc.reps$diameter, B_anc.reps$diameter,
 # 2. Differences in cell size between evolved lines (non-minimal vs. minimal)?
 # Four replicate lines for each cell type. 
 # Answer = Yes: t = -3.9561, df = 4, p-value = 0.01189
-# Mean of evolved min: 375 nm; mean of evolved non-min: 792 nm
-# Evolved non-min is 112% or 2.11-fold larger than evolved non-minimal
+# Mean of evolved min: 439 nm; mean of evolved non-min: 811 nm
+# Evolved non-min is 87%  larger than evolved minimal
 
 evo.reps <- filter(size.reps, timepoint == "Evolved") %>%
    group_by(strain, sub.strain)
@@ -154,8 +154,8 @@ colnames(delta) <- c("delta.d", "comp")
 # (picks first [m.m] alphabetically and compares the others relative to that)
 # Minimal cell did not change; non-miminimal cell got bigger
 #          Estimate Std. Error t value Pr(>|t|)   
-# m.m    0.07034    0.09362   0.751  0.48089   
-# nm.nm  0.35294    0.09362   3.770  0.00929 **
+# m.m    0.08476    0.05602   1.513  0.18101   
+# nm.nm  0.23960    0.05602   4.277  0.00522 **
 
 delta.fit1 <- lm(delta.d ~ comp - 1, data = delta)
 
