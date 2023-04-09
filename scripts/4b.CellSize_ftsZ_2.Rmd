@@ -47,6 +47,17 @@ fsize<-size %>% filter(timepoint!="Evolved")
 time.x <- c(1,3,1,3)
 fsize <- data.frame(fsize, time.x)
 #esize <- data.frame(esize, time.x)
+
+# Subset data
+size.reps <- size.raw %>% 
+   dplyr::select(strain, timepoint, sub.strain, diameter, volume) %>%
+   group_by(timepoint, strain, sub.strain) %>%
+   summarize(mean.diam = mean(diameter),mean.vol=mean(volume)) 
+
+s1_anc.reps <- filter(size.raw, sub.strain == "s1_anc")
+B_anc.reps <- filter(size.raw, sub.strain == "B_anc")
+s1_ftsZ.reps <- filter(size.raw, sub.strain == "s1_ftsZ")
+B_ftsZ.reps <- filter(size.raw, sub.strain == "B_ftsZ")
 ```
 
 ## Statistical tests
@@ -137,8 +148,8 @@ nmin.ftsZ.rand <- sample(s1_ftsZ.reps$diameter, size = 50)
 
 ```{r}
 ## Create main plot
-png(filename="~/GitHub/MinimalCell/figures/FigExt4.png",
-    width = 1200, height = 1200, res = 96*2)
+png(filename="./../../../figures/2.extended.data/FigExt4.png",
+    width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
@@ -191,7 +202,7 @@ axis(side = 4, lwd.ticks = 2, cex.axis = 1.25, las = 1,
 axis(side = 3, lwd.ticks = 2, cex.axis = 1.25, las = 1,
      at = c(1, 3), labels = F)
 axis(side = 1, lwd.ticks = 2, cex.axis = 1.25, las = 1,
-     labels = c("Ancestor", "ftsZ E315*"), 
+     labels = c("Wild type", "ftsZ E315*"), 
      col.axis = "darkgray", at = c(1, 3))
 mtext(expression('Strain'), side = 1,
       outer = TRUE, cex = 1.5, line = -3.5, adj = 0.5)
@@ -216,7 +227,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/FigExt4.png")
+img <- readPNG("./../../../figures/2.extended.data/FigExt3.png")
 
 grid.raster(img)
 ```

@@ -101,8 +101,9 @@ dnds.nonmin.ttest <- t.test(dnds.wt.noout$dnds, mu = 1, alternative ="two.sided"
 
 
 # Make figure
-png(filename="~/GitHub/MinimalCell/figures/FigExt2.png",
-    width = 1200, height = 1200, res = 96*2)
+
+png(filename="./../../../figures/2.extended.data/FigExt2.png",
+    width = 1200, height = 1200, res = 96*2) 
 
 plot.new()
 par(mar = c(7, 7, 5, 7))
@@ -160,7 +161,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/FigExt2.png")
+img <- readPNG("./../../../figures/2.extended.data/FigExt2.png")
 
 grid.raster(img)
 ```
@@ -205,7 +206,8 @@ mean.dnds.ess<-mean(essdf$dnds)
 sem.dnds.ess<-sem(essdf$dnds)
 
 # Make figure
-png(filename="~/GitHub/MinimalCell/figures/FigS7.png",
+
+png(filename="./../../../figures/3.supplementary/FigS7.png",
     width = 1200, height = 1200, res = 96*2)
 
 plot.new()
@@ -264,7 +266,7 @@ dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/FigS7.png")
+img <- readPNG("./../../../figures/3.supplementary/FigS7.png")
 
 grid.raster(img)
 ```
