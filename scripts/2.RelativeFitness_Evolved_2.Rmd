@@ -157,34 +157,34 @@ delta.fit1 <- lm(delta.w ~ comp - 1, data = delta)
 
 delta.fit2 <- lm(delta.w ~ comp, data = delta)
 
-# Correct p-values for multiple comparisons
-
-p.val.anc <- test.anc$p.value
-p.val.evo <- test.evo$p.value
-p.values.fit1.all <- summary(delta.fit1)$coefficients[,c(4)]
-p.val.restore <- as.numeric(unlist(p.values.fit1.all[2]))
-p.val.fit2.all <- summary(delta.fit2)$coefficients[,c(4)]
-p.val.intx <- as.numeric(unlist(p.val.fit2.all[3]))   
-p.vals <- c(p.val.anc, p.val.evo, p.val.restore, p.val.intx)
-rank <- rank(p.vals)
-#m <- length(p.values.sorted)
-m <- length(p.vals)
-
-# Calculate the Benjamini-Hochberg adjusted p-values
-adjusted.p.vals <- (m / rank) * p.vals
-adjusted.p.vals <- pmin(adjusted.p.vals, 1) # Set adjusted p-values to 1 if they exceed 1
-
-# Sort the adjusted p-values by their corresponding original p-values
-sorted.indices <- order(p.vals)
-adjusted.p.vals <- adjusted.p.vals[sorted.indices]
-
-# Identify the significant tests using the adjusted p-value threshold
-alpha <- 0.05
-adjusted.alpha <- alpha / m
-significant.tests <- which(adjusted.p.vals <= adjusted.alpha)
-
-cat("Adjusted p-values:", adjusted.p.vals, "\n")
-cat("Significant tests:", significant.tests, "\n")
+# # Correct p-values for multiple comparisons
+# 
+# p.val.anc <- test.anc$p.value
+# p.val.evo <- test.evo$p.value
+# p.values.fit1.all <- summary(delta.fit1)$coefficients[,c(4)]
+# p.val.restore <- as.numeric(unlist(p.values.fit1.all[2]))
+# p.val.fit2.all <- summary(delta.fit2)$coefficients[,c(4)]
+# p.val.intx <- as.numeric(unlist(p.val.fit2.all[3]))   
+# p.vals <- c(p.val.anc, p.val.evo, p.val.restore, p.val.intx)
+# rank <- rank(p.vals)
+# #m <- length(p.values.sorted)
+# m <- length(p.vals)
+# 
+# # Calculate the Benjamini-Hochberg adjusted p-values
+# adjusted.p.vals <- (m / rank) * p.vals
+# adjusted.p.vals <- pmin(adjusted.p.vals, 1) # Set adjusted p-values to 1 if they exceed 1
+# 
+# # Sort the adjusted p-values by their corresponding original p-values
+# sorted.indices <- order(p.vals)
+# adjusted.p.vals <- adjusted.p.vals[sorted.indices]
+# 
+# # Identify the significant tests using the adjusted p-value threshold
+# alpha <- 0.05
+# adjusted.alpha <- alpha / m
+# significant.tests <- which(adjusted.p.vals <= adjusted.alpha)
+# 
+# cat("Adjusted p-values:", adjusted.p.vals, "\n")
+# cat("Significant tests:", significant.tests, "\n")
 ```
 
 # Create figure for relative finess (Fig. 2)
@@ -278,7 +278,7 @@ grid.raster(img)
 # Create figure for delta relative fitness (Fig. S2)
 
 ```{r}
-png(filename="~/GitHub/MinimalCell/figures/FigS2.png",
+png(filename="./../../../figures/4.figshare/delta_relfitness.png",
     width = 1200, height = 1200, res = 96*2) 
 
 par(mar = c(8, 7, 5, 7))
@@ -368,14 +368,14 @@ text(x = 3, y = -0.15, expression(~ italic("P")~ "< 0.0001"), cex = 0.95, col = 
 segments(2, 0.7, 3, 0.7, col = "grey", lwd = 1.25, xpd = NA)
 segments(2, 0.65, 2, 0.7, col = "grey", lwd = 1.25, xpd = NA)
 segments(3, 0.63, 3, 0.7, col = "grey", lwd = 1.25, xpd = NA)
-text(x = 2.5, y = 0.75, expression(~ italic("P")~ "= 0.043"), cex = 0.95, col = "grey")
+text(x = 2.5, y = 0.75, expression(~ italic("P")~ "= 0.032"), cex = 0.95, col = "grey")
 
 # Close Plot Device
 dev.off()
 graphics.off()
 
 # Show Plot
-img <- readPNG("~/GitHub/MinimalCell/figures/FigS2.png")
+img <- readPNG("./../../../figures/4.figshare/delta_relfitness.png")
 
 grid.raster(img)
 ```
