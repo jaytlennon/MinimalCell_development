@@ -1302,12 +1302,6 @@ umax <- data[,6]
 yield <- data[,5]
 lag <- data[,7]
 
-#yield.high <- data %>%
-#  filter(cell == "m" & A >= "0.5")
-
-#data.yield <- data %>%
-#  filter(cell == "nm" | A <= "0.5")
-
 data.orig <- data # run this one time to first identify outliers, which are pretty obvious
 
 # random intercept
